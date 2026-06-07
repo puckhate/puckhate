@@ -1,0 +1,35 @@
+# ───────────────────────── Node / frontend ─────────────────────────
+node_modules
+dist
+dist-ssr
+*.local
+
+# ───────────────────────── Python / backend ────────────────────────
+# SPA build output (emitted by Vite) + collected static
+backend/spa/
+backend/staticfiles/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ───────────────────────── Env / secrets ───────────────────────────
+.env
+*.env.local
+
+# ───────────────────────── Editors / OS ────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.sw?
+
+# ───────────────────────── Logs ────────────────────────────────────
+logs
+*.log
+npm-debug.log*

@@ -1,0 +1,74 @@
+[project]
+name = "puckcurl"
+version = "1.0.0"
+description = "puckcurl backend"
+readme = "README.md"
+requires-python = "==3.14.*"
+
+dependencies = [
+    "django<7.0.0",
+    "djangorestframework",
+    "django-cors-headers",
+    "django-filter",
+    "mysqlclient",
+    "gunicorn",
+    "whitenoise",
+]
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "ty",
+]
+
+[tool.uv]
+exclude-newer = "7 days"
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+target-version = "py314"
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle
+    "F", # pyflakes
+    "I", # isort
+]
+ignore = [
+    "F403", # unable to detect undefined names (import *)
+    "E501", # line too long
+]
+fixable = [
+    "I", # isort
+    "F401", # unused imports
+    "F841", # variable assigned but not used
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [
+    "F401", # unused imports
+]
+
+[tool.ruff.lint.isort]
+order-by-type = true
+combine-as-imports = true
+from-first = false
+default-section = "third-party"
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "django",
+    "first-party",
+    "local-folder",
+]
+
+[tool.ruff.lint.isort.sections]
+"django" = ["django"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

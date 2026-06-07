@@ -1,0 +1,36 @@
+import { Container } from "@components";
+
+import RaisedCard from "./RaisedCard";
+
+export interface HeroProps {
+  raised: number;
+  donors: number;
+  goals: number;
+}
+
+export default function Hero({ raised, donors, goals }: HeroProps) {
+  return (
+    <Container>
+      <section className="flex flex-col items-center justify-center gap-8 py-12 lg:flex-row lg:justify-between">
+        <div className="w-full lg:w-1/2">
+          <div className="font-heading text-heading-blue mb-5 text-sm font-extrabold tracking-widest uppercase">
+            She scores. We Fight Back.
+          </div>
+
+          <h1 className="font-heading text-body m-0 text-5xl leading-10 font-black tracking-tight uppercase md:text-7xl md:leading-15">
+            Every Goal
+            <br />
+            Has a <span className="text-heading-pink">Price.</span>
+          </h1>
+
+          <p className="text-muted my-8 text-lg leading-relaxed">
+            Every goal #77 Britta Curl scores becomes a donation to support the
+            trans community she decries.
+          </p>
+        </div>
+
+        <RaisedCard raised={raised} donors={donors} goals={goals} />
+      </section>
+    </Container>
+  );
+}

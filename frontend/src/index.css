@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import "tailwindcss";
+@import "react-loading-skeleton/dist/skeleton.css";
+
+@utility bg-protest {
+  background-color: var(--color-page);
+  background-image:
+    radial-gradient(
+      circle at 78% 18%,
+      --alpha(var(--color-heading-blue) / 14%),
+      transparent 52%
+    ),
+    radial-gradient(
+      circle at 12% 88%,
+      --alpha(var(--color-heading-pink) / 12%),
+      transparent 50%
+    );
+}
+
+@theme {
+  /* Fonts */
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-open-sans: "Open Sans", sans-serif;
+  --font-display: var(--font-open-sans);
+  --font-heading: var(--font-montserrat);
+
+  /* Text roles. Use as text-heading, text-body, text-muted, etc. */
+  --color-heading-pink: var(--color-cherry-blossom-200);
+  --color-heading-blue: var(--color-sky-aqua-400);
+  --color-body: var(--color-cream-50);
+  --color-muted: var(--color-space-indigo-300);
+  --color-subtle: var(--color-space-indigo-700);
+  --color-faint: var(--color-space-indigo-800);
+
+  /* Surfaces */
+  --color-page: var(--color-dark-amethyst-900);
+
+  /* Borders */
+  --color-border-light: var(--color-slate-600);
+  --color-border-dark: var(--color-slate-800);
+
+  /* Custom Colors */
+  --color-sky-aqua-50: #e6f8ff;
+  --color-sky-aqua-100: #cdf0fe;
+  --color-sky-aqua-200: #9be1fd;
+  --color-sky-aqua-300: #68d3fd;
+  --color-sky-aqua-400: #36c4fc; /*Root Color */
+  --color-sky-aqua-500: #04b5fb;
+  --color-sky-aqua-600: #0391c9;
+  --color-sky-aqua-700: #026d97;
+  --color-sky-aqua-800: #024864;
+  --color-sky-aqua-900: #012432;
+  --color-sky-aqua-950: #011923;
+
+  --color-cherry-blossom-50: #fde8ec;
+  --color-cherry-blossom-100: #fbd0d9;
+  --color-cherry-blossom-200: #f6a2b3; /* Root Color */
+  --color-cherry-blossom-300: #f2738c;
+  --color-cherry-blossom-400: #ee4466;
+  --color-cherry-blossom-500: #e91640;
+  --color-cherry-blossom-600: #bb1133;
+  --color-cherry-blossom-700: #8c0d26;
+  --color-cherry-blossom-800: #5d091a;
+  --color-cherry-blossom-900: #2f040d;
+  --color-cherry-blossom-950: #210309;
+
+  --color-cream-50: #f7f8ec;
+  --color-cream-100: #eff2d9; /* Root Color */
+  --color-cream-200: #e0e5b3;
+  --color-cream-300: #d0d88d;
+  --color-cream-400: #c1cb67;
+  --color-cream-500: #b1be41;
+  --color-cream-600: #8e9834;
+  --color-cream-700: #6a7227;
+  --color-cream-800: #474c1a;
+  --color-cream-900: #23260d;
+  --color-cream-950: #191b09;
+
+  --color-space-indigo-50: #f0f0f4;
+  --color-space-indigo-100: #e1e1ea;
+  --color-space-indigo-200: #c3c3d5;
+  --color-space-indigo-300: #a5a5c0;
+  --color-space-indigo-400: #8888aa;
+  --color-space-indigo-500: #6a6a95;
+  --color-space-indigo-600: #555577; /* Root Color */
+  --color-space-indigo-700: #3f3f5a;
+  --color-space-indigo-800: #2a2a3c;
+  --color-space-indigo-900: #15151e;
+  --color-space-indigo-950: #0f0f15;
+
+  --color-dark-amethyst-50: #ece8fc;
+  --color-dark-amethyst-100: #d8d2f9;
+  --color-dark-amethyst-200: #b1a4f4;
+  --color-dark-amethyst-300: #8b77ee;
+  --color-dark-amethyst-400: #6449e9;
+  --color-dark-amethyst-500: #3d1ce3;
+  --color-dark-amethyst-600: #3116b6;
+  --color-dark-amethyst-700: #251188;
+  --color-dark-amethyst-800: #180b5b;
+  --color-dark-amethyst-900: #0c062d; /* Root Color */
+  --color-dark-amethyst-950: #090420;
+}
+
+@layer base {
+  html {
+    @apply bg-protest bg-fixed;
+  }
+
+  body {
+    @apply text-body;
+    @apply font-display;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  h1,
+  h2,
+  h3,
+  h5,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .link {
+    @apply text-heading-blue underline underline-offset-2;
+    @apply hover:text-sky-aqua-100;
+  }
+}
+
+/* Toastify color scheme */
+.Toastify {
+  --toastify-font-family: var(--font-display);
+
+  /*--toastify-icon-color-info: var(--color-info-text);
+  --toastify-icon-color-success: var(--color-complete-text);
+  --toastify-icon-color-warning: var(--color-progress-text);
+  --toastify-icon-color-error: var(--color-error-text);
+
+  --toastify-color-progress-info: var(--color-info-text);
+  --toastify-color-progress-success: var(--color-complete-text);
+  --toastify-color-progress-warning: var(--color-progress-text);
+  --toastify-color-progress-error: var(--color-error-text);*/
+}
