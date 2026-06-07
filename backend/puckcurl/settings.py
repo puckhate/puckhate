@@ -117,12 +117,12 @@ STATICFILES_DIRS = [SPA_DIR] if SPA_DIR.exists() else []
 # - MEDIA_* is PUBLIC (e.g. logos, images) and may be served publicly.
 #   Nothing private may ever live under MEDIA_ROOT.
 # - PRIVATE_MEDIA_* holds sensitive uploads (donation receipts) and is served ONLY by
-#   the staff-gated `protected_media` view at /private/.
+#   the staff-gated `protected_media` view at /private-media/.
 MEDIA_URL = "/media/"
 MEDIA_ROOT = Path(get_env_variable("MEDIA_ROOT", str(BASE_DIR / "media")))
-PRIVATE_MEDIA_URL = "/private/"
+PRIVATE_MEDIA_URL = "/private-media/"
 PRIVATE_MEDIA_ROOT = Path(
-    get_env_variable("PRIVATE_MEDIA_ROOT", str(BASE_DIR / "private"))
+    get_env_variable("PRIVATE_MEDIA_ROOT", str(BASE_DIR / "private_media"))
 )
 
 STORAGES = {
@@ -156,3 +156,4 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = env_list("CORS_ALLOWED_ORIGINS", "http://localhost:5173")
 CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", "http://localhost:5173")

@@ -3,13 +3,13 @@ import Skeleton from "react-loading-skeleton";
 
 export interface RaisedCardProps {
   raised?: number;
-  donors?: number;
+  donations?: number;
   goals?: number;
   loading?: boolean;
 }
 
 export default function RaisedCard(props: RaisedCardProps) {
-  const { raised, donors, goals, loading = false } = props;
+  const { raised, donors: donations, goals, loading = false } = props;
   return (
     <div className="border-border-light bg-dark-amethyst-950 flex w-full flex-col justify-center rounded-3xl border p-10 px-11 shadow-xl lg:w-1/2">
       <div className="mb-4 flex items-center gap-2.5">
@@ -28,13 +28,13 @@ export default function RaisedCard(props: RaisedCardProps) {
       </div>
 
       <div className="mt-7 flex gap-10 border-t border-white/10 pt-6">
-        {/* Donors count */}
+        {/* Donations count */}
         <div>
           <div className="font-heading text-3xl font-black tabular-nums">
-            {loading ? <Skeleton /> : formatAsNumber(donors)}
+            {loading ? <Skeleton /> : formatAsNumber(donations)}
           </div>
           <div className="font-heading text-muted mt-1 text-xs font-bold tracking-wider uppercase">
-            Donors
+            Donations
           </div>
         </div>
 

@@ -3,6 +3,7 @@ const CONSTANTS = {
     HEALTH: `${import.meta.env.VITE_API_BASE_URL}/health/`,
     STATS: `${import.meta.env.VITE_API_BASE_URL}/stats/`,
     DONATIONS: `${import.meta.env.VITE_API_BASE_URL}/donations/`,
+    RECEIPTS: `${import.meta.env.VITE_API_BASE_URL}/receipts/`,
     CHARITIES: `${import.meta.env.VITE_API_BASE_URL}/charities/`,
   },
   ROUTES: {

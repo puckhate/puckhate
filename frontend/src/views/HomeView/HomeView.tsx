@@ -34,7 +34,7 @@ export default function HomeView() {
     <>
       <Hero
         raised={stats ? Number(stats.verified_total) : undefined}
-        donors={stats?.verified_count}
+        donations={stats?.verified_count}
         goals={stats?.goals_scored}
         loading={statsLoading}
       />

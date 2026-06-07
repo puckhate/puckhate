@@ -40,13 +40,13 @@ user-facing version.
 
 In **production** the app is served from a **single origin** by Django:
 
-| Path            | Served by                                          |
-| --------------- | -------------------------------------------------- |
-| `/api/...`      | DRF (the `api` app)                                |
-| `/admin/...`    | Django admin                                       |
-| `/static/...`   | WhiteNoise (hashed Vite assets + admin/DRF static) |
-| `/private/...`  | Staff-only view (donation receipts; never public)  |
-| everything else | the SPA's `index.html` → react-router takes over   |
+| Path                 | Served by                                          |
+| -------------------- | -------------------------------------------------- |
+| `/api/...`           | DRF (the `api` app)                                |
+| `/admin/...`         | Django admin                                       |
+| `/static/...`        | WhiteNoise (hashed Vite assets + admin/DRF static) |
+| `/private-media/...` | Staff-only view (donation receipts; never public)  |
+| everything else      | the SPA's `index.html` → react-router takes over   |
 
 The Vite build emits into `backend/spa/` (with `base=/static/`), Django's
 `collectstatic` gathers it into `STATIC_ROOT`, and WhiteNoise serves it. Any path that

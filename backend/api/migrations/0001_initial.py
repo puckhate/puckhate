@@ -57,8 +57,8 @@ class Migration(migrations.Migration):
                     "file",
                     models.FileField(
                         storage=django.core.files.storage.FileSystemStorage(
-                            base_url="/private/",
-                            location=pathlib.PurePosixPath("/app/private"),
+                            base_url="/private-media/",
+                            location=pathlib.PurePosixPath("/app/private_media"),
                         ),
                         upload_to=api.models.make_receipt_path,
                     ),

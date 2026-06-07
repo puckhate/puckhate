@@ -36,8 +36,8 @@ function InstagramIcon(props: IconProps) {
 }
 
 const SocialLinks = [
-  { label: "GitHub", href: constants.SOCIAL.github, Icon: GitHubIcon },
-  { label: "Bluesky", href: constants.SOCIAL.bluesky, Icon: BlueskyIcon },
+  // { label: "GitHub", href: constants.SOCIAL.github, Icon: GitHubIcon },
+  // { label: "Bluesky", href: constants.SOCIAL.bluesky, Icon: BlueskyIcon },
   { label: "Discord", href: constants.SOCIAL.discord, Icon: DiscordIcon },
   { label: "Instagram", href: constants.SOCIAL.instagram, Icon: InstagramIcon },
 ];

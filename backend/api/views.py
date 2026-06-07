@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
@@ -6,6 +7,8 @@ from rest_framework.response import Response
 from api.models import Charity, Donation, SiteStats
 from api.serializers import (
     CharitySerializer,
+    DonationCreateSerializer,
+    DonationReceiptSerializer,
     DonationSerializer,
     SiteStatsSerializer,
 )
@@ -32,12 +35,27 @@ def site_stats(request: Request) -> Response:
     return Response(serializer.data)
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 @permission_classes([AllowAny])
 def donations(request: Request) -> Response:
-    """List all verified donations"""
+    """List verified donations, or report a new one as a draft"""
+    if request.method == "POST":
+        serializer = DonationCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     serializer = DonationSerializer(Donation.verified_donations(), many=True)
     return Response(serializer.data)
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def receipts(request: Request) -> Response:
+    """Accept a proof-of-donation upload and return its id"""
+    serializer = DonationReceiptSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(["GET"])

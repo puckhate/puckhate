@@ -103,6 +103,19 @@ export default function Charities(): React.ReactNode {
             <TableBody>{tableBody}</TableBody>
           </Table>
         </section>
+
+        <p className="text-muted mt-5 text-xs">
+          A charity's name appearing on this list does not imply that
+          organization's endorsement of, or involvement in, this campaign.
+          <br />
+          If you are a representative of a charity who's name appears on this
+          list and would like to request that your organization be removed,
+          please reach out to us at{" "}
+          <a href="mailto:hello@puckcurl.com" className="link">
+            hello@puckcurl.com
+          </a>
+          .
+        </p>
       </article>
     </Container>
   );

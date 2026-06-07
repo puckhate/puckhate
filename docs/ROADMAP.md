@@ -1,14 +1,4 @@
-# Roadmap & Status
-
-A light snapshot of what's built vs. planned.
-
-### Still to build
-
-- **Log a donation (API)** — `LogDonation` form exists in the UI but does **not** submit
-  to the API yet, and there's no receipt-upload or donation-create endpoint yet (no DRF
-  serializers/views over the models).
-- **Charities / Plan views** — present but empty/stubbed.
-- **`/donations` route** — declared in `constants.ROUTES` but has no view yet.
+# Roadmap
 
 ## Future ideas
 

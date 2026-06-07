@@ -14,6 +14,12 @@ export interface Donation {
   charity: string;
 }
 
+/** A receipt created from an upload - POST /api/receipts/ */
+export interface DonationReceipt {
+  id: number;
+  created: string;
+}
+
 /** An approved charity - /api/charities/ */
 export interface Charity {
   id: number;

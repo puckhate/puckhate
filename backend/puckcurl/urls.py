@@ -7,6 +7,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     # Staff-only private media (receipts).
-    re_path(r"^private/(?P<path>.+)$", protected_media, name="protected-media"),
+    re_path(r"^private-media/(?P<path>.+)$", protected_media, name="protected-media"),
     # Anything not matched above is served the SPA by SPAFallbackMiddleware
 ]
