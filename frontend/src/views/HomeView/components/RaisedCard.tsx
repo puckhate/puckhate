@@ -9,7 +9,7 @@ export interface RaisedCardProps {
 }
 
 export default function RaisedCard(props: RaisedCardProps) {
-  const { raised, donors: donations, goals, loading = false } = props;
+  const { raised, donations, goals, loading = false } = props;
   return (
     <div className="border-border-light bg-dark-amethyst-950 flex w-full flex-col justify-center rounded-3xl border p-10 px-11 shadow-xl lg:w-1/2">
       <div className="mb-4 flex items-center gap-2.5">
