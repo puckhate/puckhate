@@ -1,8 +1,8 @@
-# Stage 1: Base runserver image
+# Backend development image
 FROM python:3.14-slim AS backend
 
-LABEL org.opencontainers.image.title="puckcurl backend"
-LABEL org.opencontainers.image.description="puckcurl django backend"
+LABEL org.opencontainers.image.title="puckcurl-backend"
+LABEL org.opencontainers.image.description="puckcurl backend development image"
 
 # Build dependencies
 RUN set -eux; \
@@ -34,18 +34,3 @@ RUN set -eux; uv sync --frozen
 EXPOSE 8000
 
 CMD ["uv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-# Stage 2: Python image + build SPA (for production)
-#
-#  `frontend` is a named build context pointing at the frontend builder image:
-#     docker build ./frontend --target builder -t puckcurl-spa
-#     docker build ./backend  --target app  --build-context frontend=docker-image://puckcurl-spa -t puckcurl
-#
-FROM backend AS app
-
-ENV DJANGO_DEBUG=0
-
-COPY --from=frontend /backend/spa ./spa
-RUN set -eux; uv run python manage.py collectstatic --noinput
-
-CMD ["uv", "run", "gunicorn", "puckcurl.wsgi:application", "--bind", "0.0.0.0:8000"]

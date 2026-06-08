@@ -1,0 +1,31 @@
+.git
+.gitignore
+.claude/
+docs/
+*.log
+.DS_Store
+
+# Secrets / local env — never bake into the image
+.env
+.env.*
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/*.egg-info/
+**/.venv/
+**/venv/
+**/.ruff_cache/
+**/.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / frontend build output (rebuilt inside the image)
+**/node_modules/
+frontend/dist/
+
+# Backend host-built artifacts (regenerated inside the image)
+backend/spa/
+backend/staticfiles/
+backend/media/
+backend/private_media/

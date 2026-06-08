@@ -2,6 +2,7 @@
 
 ## Future ideas
 
+- **USD/CAD Discrimination** — determine if a donation report was in USD or CAD and apply conversion on storage and retrieval to make the totals localized.
 - **Automatic goal/score import** — pull the player's scoring stats automatically
   from publicly available data instead of tracking them by hand.
 - **Score alerts** — notify subscribed users when the player scores so they can consider
