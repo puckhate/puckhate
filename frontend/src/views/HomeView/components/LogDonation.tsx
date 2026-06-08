@@ -204,7 +204,7 @@ export default function LogDonation() {
                   </p>
                   <DocumentArrowUpIcon className="text-space-indigo-600 my-4 size-12" />
                   <p className="text-muted mt-2 text-sm">
-                    Image or PDF files, up to {MAX_FILE_SIZE_MB}MB.
+                    Image or PDF files, up to {MAX_FILE_SIZE_MB}MB. You may redact personal information.
                   </p>
                   {fileUploadStatus == "error" && (
                     <p className="mt-2 text-sm text-red-400">{uploadError}</p>
