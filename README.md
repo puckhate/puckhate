@@ -5,20 +5,21 @@ campaign in the PWHL: when a particular player scores, fans are encouraged to do
 trans-supporting charities, and this app records those donations so the campaign's
 cumulative impact is publicly visible.
 
-It **records** donations made elsewhere, but it does not accept, process, or facilitate
-payments.
+This app records donations made elsewhere, but it does not accept, process, or facilitate
+payments itself.
 
-See **[docs/OVERVIEW.md](docs/OVERVIEW.md)** for the full picture (including scope and
+See **[OVERVIEW.md](docs/OVERVIEW.md)** for the full picture (including scope and
 constraints).
 
 ## Documentation
 
 More detail lives in [`docs/`](docs/):
 
-- **[OVERVIEW.md](docs/OVERVIEW.md)** — what the product is, the draft → approve flow, scope and legal constraints
-- **[ROADMAP.md](docs/ROADMAP.md)** — what's built vs. planned, and what's out of scope
+- **[OVERVIEW.md](docs/OVERVIEW.md)** — what the product is, the approval flow, scope and legal constraints
+- **[ROADMAP.md](docs/ROADMAP.md)** — what's planned, and what's out of scope
 - **[DESIGN.md](docs/DESIGN.md)** — color palette and typography
 - **[API.md](docs/API.md)** — the DRF endpoints under `/api/` and their response shapes
+- **[CONTRIBUTING.md](docs/CONTRIBUTING.md)** — how to contribute, conventions, and the project's ground rules
 
 ## Disclaimer
 
@@ -28,7 +29,7 @@ teams, or any of its players. Any commentary reflects the opinions of its organi
 only. All trademarks, team names, league names, and player names belong to their
 respective owners and are used solely for identification and commentary.
 
-The in-app **Disclaimer** (`frontend/src/views/Disclaimer.tsx`) is the authoritative,
+The in-app disclaimer (`frontend/src/views/Disclaimer.tsx`) is the authoritative,
 user-facing version.
 
 ## Stack
@@ -38,80 +39,72 @@ user-facing version.
 
 ## Architecture
 
-In **production** the app is served from a **single origin** by Django:
+In production the app is served from a single origin by Django:
 
-| Path                 | Served by                                          |
-| -------------------- | -------------------------------------------------- |
-| `/api/...`           | DRF (the `api` app)                                |
-| `/admin/...`         | Django admin                                       |
-| `/static/...`        | WhiteNoise (hashed Vite assets + admin/DRF static) |
-| `/private-media/...` | Staff-only view (donation receipts; never public)  |
-| everything else      | the SPA's `index.html` → react-router takes over   |
+| Path                 | Served by                                            |
+| -------------------- | ---------------------------------------------------- |
+| `/api/...`           | DRF (the `api` app)                                  |
+| `/admin/...`         | Django admin                                         |
+| `/static/...`        | WhiteNoise (hashed Vite assets + admin/DRF static)   |
+| `/private-media/...` | Staff-only view (donation receipts; never public)    |
+| everything else      | the frontend's `index.html`(react-router takes over) |
 
-The Vite build emits into `backend/spa/` (with `base=/static/`), Django's
+The Vite build emits into `backend/spa/`, Django's
 `collectstatic` gathers it into `STATIC_ROOT`, and WhiteNoise serves it. Any path that
 no backend route claims is served `index.html` by `SPAFallbackMiddleware` so client-side
 routes resolve.
 
-In **development** the Vite dev server (with HMR) serves the SPA at `:5173` and proxies
-`/api` → Django at `:8000`.
+In development the Vite dev server (with HMR) serves the SPA at `:5173` and proxies
+`/api` to Django at `:8000`.
 
-## Development (Docker, with HMR)
+## Development (Requires Docker)
+
+### Quick Start:
 
 ```bash
-cp .env.example .env
+cp .env.example .env  # swap out default passwords as needed
 docker compose up --build
 docker compose run --rm backend uv run python manage.py migrate
 ```
 
-- Frontend (Vite, HMR): http://localhost:5173
+- Frontend: http://localhost:5173
 - Backend API: http://localhost:8000/api/health/
+- Backend admin: http://localhost:8000/admin/
 - MySQL: localhost:3306
 
-Configuration is read from environment variables — see `.env.example`.
+Configuration is read from the `.env` file, see `docker-compose.yml` for how values are passed to the containers.
 
-## Django operations
+### Django operations
 
-Run Django management commands against the local environment. Two equivalent forms:
-prefix with `docker compose run --rm backend` (uses the Dockerized backend + MySQL), or
-run from `cd backend` directly once you've `uv sync`'d and have MySQL reachable.
+You will need to run Django management commands against the local environment for many operations,
+such as creating migrations, applying migrations, and creating superusers. A few examples:
 
 ```bash
-# Create migrations from model changes (api app)
+# Create migrations from model changes
 docker compose run --rm backend uv run python manage.py makemigrations
 
-# Apply migrations to the database
+# Apply migrations to the local database
 docker compose run --rm backend uv run python manage.py migrate
 
-# Create an admin/organizer login for the Django admin (interactive)
+# Create an admin login for the Django admin (interactive)
 docker compose run --rm backend uv run python manage.py createsuperuser
 
-# Run any management command (e.g. shell, dbshell, collectstatic)
+# Run any management command (e.g. shell)
 docker compose run --rm backend uv run python manage.py <command> [args]
+
+# Run the development server with cron scheduler
+docker compose --profile scheduler up
 ```
 
 The created superuser can sign in at http://localhost:8000/admin/ to review and approve
 donation drafts.
 
-## Production
+## Contributing
 
-Two images compose via a named build context: the frontend `builder` stage emits the
-SPA, then the backend `app` stage pulls it in, runs `collectstatic`, and serves
-everything via gunicorn + WhiteNoise on `:8000`.
+Contributions are welcome. Fork this repo, make your change, run the lint/format/type
+checks, and open a pull request against `master`.
 
-```bash
-docker build ./frontend --target builder -t puckcurl-spa
-docker build ./backend  --target app \
-  --build-context frontend=docker-image://puckcurl-spa \
-  -t puckcurl
-
-docker run --rm -p 8000:8000 \
-  -e DJANGO_SECRET_KEY=... \
-  -e DJANGO_ALLOWED_HOSTS=your.host \
-  -e DB_DEFAULT_HOST=... -e DB_DEFAULT_NAME=... \
-  -e DB_DEFAULT_USER=... -e DB_DEFAULT_PASSWORD=... \
-  puckcurl
-```
-
-`/`, `/api`, and `/admin` are then all served on `:8000`. (The backend image's default
-`backend` stage is the dev image that runs `runserver`.)
+Because this is a protest project, a few ground rules are non-negotiable: only
+publicly verifiable claims, no threats or harassment, and no copyrighted/branded
+assets (including PWHL or team logos). See **[CONTRIBUTING.md](docs/CONTRIBUTING.md)**
+for the full workflow, conventions, and these rules in detail.

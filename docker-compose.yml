@@ -44,6 +44,11 @@ services:
       - ./backend:/app:cached
     ports:
       - "8000:8000"
+    labels:
+      # Hourly orphan/expired receipt cleanup
+      ofelia.enabled: "true"
+      ofelia.job-exec.cleanup-receipts.schedule: "@every 1h"
+      ofelia.job-exec.cleanup-receipts.command: "uv run python manage.py cleanup_orphan_receipts"
     depends_on:
       db:
         condition: service_healthy
@@ -61,6 +66,17 @@ services:
       - /app/node_modules
     ports:
       - "5173:5173"
+    depends_on:
+      - backend
+
+  scheduler:
+    image: mcuadros/ofelia:latest
+    restart: unless-stopped
+    command: daemon --docker
+    profiles:
+      - scheduler
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on:
       - backend
 
