@@ -108,3 +108,10 @@ Because this is a protest project, a few ground rules are non-negotiable: only
 publicly verifiable claims, no threats or harassment, and no copyrighted/branded
 assets (including PWHL or team logos). See **[CONTRIBUTING.md](docs/CONTRIBUTING.md)**
 for the full workflow, conventions, and these rules in detail.
+
+## License
+
+Released under the [MIT License](LICENSE). The license covers the project's
+source code only. It does not grant rights to the "PUCKCURL!" name or any
+trademarks, team names, or player names referenced in the app (see the
+[Disclaimer](#disclaimer)).
