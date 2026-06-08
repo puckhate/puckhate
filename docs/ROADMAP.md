@@ -4,7 +4,7 @@
 
 - **USD/CAD Discrimination** — determine if a donation report was in USD or CAD and apply conversion on storage and retrieval to make the totals localized.
 - **Automatic goal/score import** — pull the player's scoring stats automatically
-  from publicly available data instead of tracking them by hand.
+  from publicly available data instead of tracking them by hand. (https://github.com/IsabelleLefebvre97/PWHL-Data-Reference)
 - **Score alerts** — notify subscribed users when the player scores so they can consider
   donating again.
 - **Email newsletter** - accept an optional email address when a user logs a donation. Send an email newsletter with updated total impact of the campaign.
