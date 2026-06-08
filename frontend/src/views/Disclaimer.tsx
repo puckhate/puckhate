@@ -23,7 +23,7 @@ export default function Disclaimer(): React.ReactNode {
             PUCKCURL is an independent, fan-organized initiative. It is not
             affiliated with, endorsed by, or sponsored by the Professional
             Women's Hockey League (PWHL), any of its teams, or any of its
-            players, including Britta Curl. All trademarks, team names, league
+            players, including Britta Curl-Salemme. All trademarks, team names, league
             names, and player names belong to their respective owners and are
             used solely for identification and commentary.
           </p>

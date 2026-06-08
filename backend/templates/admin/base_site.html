@@ -1,0 +1,90 @@
+{% extends "admin/base.html" %}
+
+{% comment %}
+Re-skins the Django admin to the PUCKCURL! palette (see docs/DESIGN.md) by
+overriding the admin's built-in CSS custom properties. Reproduces the default
+base_site.html branding block so the site_header link still renders.
+{% endcomment %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+  :root {
+    --font-family-primary:
+      "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+      Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  #site-name,
+  #content h1,
+  .module h2,
+  .module caption,
+  fieldset h2 {
+    font-family: "Montserrat", sans-serif;
+  }
+
+  #site-name {
+      font-weight: bold;
+  }
+
+  /* PUCKCURL! palette, try to keep in sync with docs/DESIGN.md */
+  :root,
+  html[data-theme="light"] {
+    --primary: #555577;            /* space indigo: breadcrumbs, buttons */
+    --secondary: #0c062d;          /* dark amethyst: header bar */
+    --accent: #36c4fc;             /* sky aqua: highlights */
+    --primary-fg: #eff2d9;         /* cream */
+
+    --header-color: #eff2d9;       /* cream */
+    --header-branding-color: #f6a2b3;  /* cherry blossom: the PUCKCURL! wordmark */
+    --header-bg: var(--secondary);
+    --header-link-color: var(--primary-fg);
+
+    --breadcrumbs-fg: #eff2d9;
+    --breadcrumbs-link-fg: var(--body-bg);
+    --breadcrumbs-bg: var(--primary);
+
+    --link-fg: #2a8fbd;            /* sky aqua, darkened for contrast on light bg */
+    --link-hover-color: #555577;
+    --link-selected-fg: #2a8fbd;
+
+    --button-bg: var(--primary);
+    --button-fg: #eff2d9;
+    --button-hover-bg: #3f3f5c;
+    --default-button-bg: #2a8fbd; /* sky aqua (darkened): primary actions, e.g. Save */
+    --default-button-hover-bg: #1f6e94;
+    --selected-row: #eff2d9;
+
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root,
+    html[data-theme="dark"] {
+      --accent: #36c4fc;
+      --primary: #555577;
+      --secondary: #0c062d;
+      --header-branding-color: #f6a2b3;
+      --header-color: #eff2d9;
+      --link-fg: #36c4fc;          /* sky aqua reads fine on the dark surface */
+      --link-hover-color: #f6a2b3;
+      --link-selected-fg: #36c4fc;
+      --button-bg: var(--primary);
+      --default-button-bg: #2a8fbd;
+      --default-button-hover-bg: #36c4fc;
+      --selected-row: #555577;
+    }
+  }
+</style>
+{% endblock %}
