@@ -6,7 +6,6 @@ GROUP_PERMISSIONS = {
     # Approve/reject donations and view/delete their receipts.
     "approval_admin": {
         "donation": ["add", "change", "delete", "view"],
-        "donationreceipt": ["view", "delete"],
     },
     # Full admin actions on charities
     "charity_admin": {
