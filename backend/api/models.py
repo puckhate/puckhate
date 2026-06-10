@@ -150,7 +150,7 @@ class Donation(models.Model):
 
 
 class SiteStats(models.Model):
-    """Singleton of hand-maintained display stats.
+    """Singleton of display stats shown on the public site.
 
     Access via SiteStats.load().
     """

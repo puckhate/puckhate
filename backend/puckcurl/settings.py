@@ -24,6 +24,14 @@ def env_list(name, default=""):
     return [item.strip() for item in raw.split(",") if item.strip()]
 
 
+def env_int(name, default):
+    value = os.environ.get(name, "")
+    try:
+        return int(value)
+    except ValueError:
+        return default
+
+
 DEBUG = env_bool("DJANGO_DEBUG", False)
 SECRET_KEY = get_env_variable("DJANGO_SECRET_KEY")
 if not SECRET_KEY:
@@ -94,7 +102,7 @@ DATABASES = {
         "PASSWORD": get_env_variable("DB_DEFAULT_PASSWORD", "puckcurl"),
         "HOST": get_env_variable("DB_DEFAULT_HOST", "127.0.0.1"),
         "PORT": get_env_variable("DB_DEFAULT_PORT", "3306"),
-        "CONN_MAX_AGE": int(get_env_variable("CONN_MAX_AGE", "0")),
+        "CONN_MAX_AGE": env_int("CONN_MAX_AGE", 0),
         "OPTIONS": {"charset": "utf8mb4"},
     },
 }
@@ -178,7 +186,7 @@ REST_FRAMEWORK = {
         "donations": "10/min",
     },
     # Number of trusted reverse proxies in front of the app
-    "NUM_PROXIES": int(get_env_variable("NUM_PROXIES", "1")),
+    "NUM_PROXIES": env_int("NUM_PROXIES", 1),
 }
 
 CACHES = {
@@ -201,7 +209,7 @@ CSRF_COOKIE_SECURE = env_bool("CSRF_COOKIE_SECURE", not DEBUG)
 SECURE_SSL_REDIRECT = env_bool("SECURE_SSL_REDIRECT", not DEBUG)
 
 # HSTS. Should be enabled only in production
-SECURE_HSTS_SECONDS = int(get_env_variable("SECURE_HSTS_SECONDS", "0"))
+SECURE_HSTS_SECONDS = env_int("SECURE_HSTS_SECONDS", 0)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool(
     "SECURE_HSTS_INCLUDE_SUBDOMAINS", SECURE_HSTS_SECONDS > 0
 )
@@ -209,3 +217,10 @@ SECURE_HSTS_PRELOAD = env_bool("SECURE_HSTS_PRELOAD", False)
 
 # CurrencyLayer API
 CURRENCYLAYER_API_KEY = os.environ.get("CURRENCYLAYER_API_KEY")
+
+# HockeyTech API
+HOCKEYTECH_API_KEY = get_env_variable("HOCKEYTECH_API_KEY", "")
+HOCKEYTECH_PLAYER_ID = env_int("HOCKEYTECH_PLAYER_ID", 189)
+HOCKEYTECH_SEASON_ID = env_int("HOCKEYTECH_SEASON_ID", 0)
+# Career goals already scored before the campaign began (23 as of playoffs 2026)
+HOCKEYTECH_STARTING_GOALS = env_int("HOCKEYTECH_STARTING_GOALS", 23)

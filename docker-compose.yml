@@ -54,6 +54,10 @@ services:
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1,backend}
       DJANGO_DEBUG: ${DJANGO_DEBUG:-1}
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-dev-insecure-change-me}
+      HOCKEYTECH_API_KEY: ${HOCKEYTECH_API_KEY:-}
+      HOCKEYTECH_PLAYER_ID: ${HOCKEYTECH_PLAYER_ID:-}
+      HOCKEYTECH_SEASON_ID: ${HOCKEYTECH_SEASON_ID:-}
+      HOCKEYTECH_STARTING_GOALS: ${HOCKEYTECH_STARTING_GOALS:-}
       VALKEY_URL: ${VALKEY_URL:-redis://valkey:6379/0}
     volumes:
       - ./backend:/app:cached
@@ -70,6 +74,9 @@ services:
       # Nightly cleanup of orphaned charities
       ofelia.job-exec.cleanup-charities.schedule: "0 30 3 * * *"
       ofelia.job-exec.cleanup-charities.command: "uv run python manage.py cleanup_orphan_charities"
+      # Refresh the tracked player's goal total every 5 minutes
+      ofelia.job-exec.update-goals-scored.schedule: "@every 5m"
+      ofelia.job-exec.update-goals-scored.command: "uv run python manage.py update_goals_scored"
     depends_on:
       db:
         condition: service_healthy

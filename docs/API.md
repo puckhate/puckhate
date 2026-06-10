@@ -33,10 +33,9 @@ auth with `AllowAny` permission unless noted.
 - `verified_total` — sum of `amount` across verified donations (string; DRF
   serializes `DecimalField` to preserve precision).
 - `verified_count` — number of verified donations.
-- `goals_scored` — from the hand-maintained `SiteStats` singleton.
+- `goals_scored` — goals scored since campaign start, from the `SiteStats` singleton.
 - `ca_exchange_rate` — Canadian dollars per 1 USD, from the `SiteStats`
-  singleton (string; `DecimalField`). All stored amounts are USD; the frontend
-  can multiply by this to display CAD.
+  singleton.
 
 ## GET `/api/exchange-rate/`
 

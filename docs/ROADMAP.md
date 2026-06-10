@@ -2,8 +2,6 @@
 
 ## Future ideas
 
-- **Automatic goal/score import** — pull the player's scoring stats automatically
-  from publicly available data instead of tracking them by hand. (https://github.com/IsabelleLefebvre97/PWHL-Data-Reference)
 - **Score alerts** — notify subscribed users when the player scores so they can consider
   donating again.
 - **Email newsletter** - accept an optional email address when a user logs a donation. Send an email newsletter with updated total impact of the campaign.
