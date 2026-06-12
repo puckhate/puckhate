@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import client from "@client";
 import {
@@ -26,32 +26,25 @@ const FILE_WRONG_FORMAT_MESSAGE = "Only image and PDF files are accepted.";
 
 type FileUploadState = "new" | "uploading" | "success" | "error";
 
-export default function LogDonation() {
+interface LogDonationProps {
+  charities: Charity[];
+}
+
+export default function LogDonation({ charities }: LogDonationProps) {
   const [fileUploadStatus, setFileUploadStatus] =
     useState<FileUploadState>("new");
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [receiptToken, setReceiptToken] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [charityNames, setCharityNames] = useState<string[]>([]);
 
   /*
-   * Load approved charities to suggest in the typeahead.
+   * Names of approved charities to suggest in the typeahead.
    */
-  useEffect(() => {
-    const controller = new AbortController();
-    client
-      .get<Charity[]>(CONSTANTS.API_ENDPOINTS.CHARITIES, {
-        signal: controller.signal,
-      })
-      .then((response) => {
-        setCharityNames(response.data.map((charity) => charity.name));
-      })
-      .catch(() => {
-        // Suggestions are optional, ignore failures.
-      });
-    return () => controller.abort();
-  }, []);
+  const charityNames = useMemo(
+    () => charities.map((charity) => charity.name),
+    [charities],
+  );
 
   /*
    * Upload receipt image to API

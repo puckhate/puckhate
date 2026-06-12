@@ -1,6 +1,11 @@
 import { Container } from "@components";
-import constants from "@constants";
-import { Link } from "react-router-dom";
+import type { Charity } from "@types";
+
+import CharityPickerModal from "./components/CharityPickerModal";
+
+interface PlaybookCardProps {
+  charities: Charity[];
+}
 
 interface Step {
   number: string;
@@ -8,33 +13,32 @@ interface Step {
   desc: React.ReactNode;
 }
 
-const Steps: Step[] = [
-  {
-    number: "1",
-    title: "She scores. You pick.",
-    desc: (
-      <>
-        Curl lights the lamp, you pick a trans-supporting charity (
-        <Link to={constants.ROUTES.charities} className="link">
-          we have some suggestions
-        </Link>
-        )!
-      </>
-    ),
-  },
-  {
-    number: "2",
-    title: "Donate. Keep the receipt.",
-    desc: "Give what you can (even a single dollar) straight to the charity, then save the confirmation email or PDF.",
-  },
-  {
-    number: "3",
-    title: "Upload it. Make it count.",
-    desc: "Drop your receipt below and watch the protest total climb throughout the season.",
-  },
-];
+export default function PlaybookCard({ charities }: PlaybookCardProps) {
+  const Steps: Step[] = [
+    {
+      number: "1",
+      title: "She scores. You pick.",
+      desc: (
+        <>
+          Curl lights the lamp, you pick a trans-supporting charity.
+          <br />
+          <br />
+          <CharityPickerModal charities={charities} />
+        </>
+      ),
+    },
+    {
+      number: "2",
+      title: "Donate. Keep the receipt.",
+      desc: "Give what you can (even a single dollar) straight to the charity, then save the confirmation email or PDF.",
+    },
+    {
+      number: "3",
+      title: "Upload it. Make it count.",
+      desc: "Drop your receipt below and watch the protest total climb throughout the season.",
+    },
+  ];
 
-export default function Playbook() {
   return (
     <section className="bg-dark-amethyst-950/70 py-12">
       <Container>

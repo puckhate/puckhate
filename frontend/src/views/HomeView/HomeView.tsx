@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import client from "@client";
 import CONSTANTS from "@constants";
 import { useExchangeRate } from "@providers/ExchangeRateProvider";
-import type { SiteStats } from "@types";
+import type { Charity, SiteStats } from "@types";
 import { convertFromUSD } from "@utils/currency";
 
 import Hero from "./components/Hero";
@@ -13,6 +13,7 @@ import Playbook from "./components/PlaybookCard";
 export default function HomeView() {
   const [stats, setStats] = useState<SiteStats | null>(null);
   const [statsLoading, setStatsLoading] = useState<boolean>(true);
+  const [charities, setCharities] = useState<Charity[]>([]);
   const { setRate } = useExchangeRate();
 
   /*
@@ -35,6 +36,25 @@ export default function HomeView() {
       });
     return () => controller.abort();
   }, [setRate]);
+
+  /*
+   * Load approved charities to share with the playbook and donation form.
+   */
+  useEffect(() => {
+    const controller = new AbortController();
+    client
+      .get<Charity[]>(CONSTANTS.API_ENDPOINTS.CHARITIES, {
+        signal: controller.signal,
+      })
+      .then((response) => {
+        setCharities(response.data);
+      })
+      .catch(() => {
+        // Suggestions are optional, ignore failures.
+      });
+    return () => controller.abort();
+  }, []);
+
   return (
     <>
       <Hero
@@ -50,8 +70,8 @@ export default function HomeView() {
         goals={stats?.goals_scored}
         loading={statsLoading}
       />
-      <Playbook />
-      <LogDonation />
+      <Playbook charities={charities} />
+      <LogDonation charities={charities} />
     </>
   );
 }
