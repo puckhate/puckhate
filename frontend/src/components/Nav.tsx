@@ -8,7 +8,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
 const NavLinks = [
-  { label: "Game Plan", href: constants.ROUTES.plan },
+  { label: "Game Plan", href: constants.ROUTES.about },
   { label: "Charities", href: constants.ROUTES.charities },
   { label: "Donation List", href: constants.ROUTES.donations },
 ];

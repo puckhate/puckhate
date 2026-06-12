@@ -105,7 +105,7 @@ export default function Donations(): React.ReactNode {
           <h1 className="font-heading text-heading-pink text-4xl font-black tracking-tight uppercase">
             Donations List
           </h1>
-          <p className="text-sm">
+          <p className="text-muted text-sm">
             The list of donations in support of PUCKCURL! will update as
             donation receipts are validated. Donors can choose to provide their
             name or stay anonymous.

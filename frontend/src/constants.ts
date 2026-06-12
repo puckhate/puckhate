@@ -13,7 +13,7 @@ const CONSTANTS = {
     disclaimer: "/disclaimer",
     charities: "/charities",
     donations: "/donations",
-    plan: "/plan",
+    about: "/about",
   },
   SOCIAL: {
     bluesky: "https://bsky.app/profile/puckcurl.com",

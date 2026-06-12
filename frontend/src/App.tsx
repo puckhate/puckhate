@@ -14,11 +14,11 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 
-const Charities = lazy(() => import("@views/Charities"));
-const Disclaimer = lazy(() => import("@views/Disclaimer"));
-const Donations = lazy(() => import("@views/Donations"));
-const Plan = lazy(() => import("@views/Plan"));
-const Privacy = lazy(() => import("@views/Privacy"));
+const AboutView = lazy(() => import("@views/AboutView/AboutView"));
+const CharitiesView = lazy(() => import("@views/Charities"));
+const DisclaimerView = lazy(() => import("@views/Disclaimer"));
+const DonationsView = lazy(() => import("@views/Donations"));
+const PrivacyView = lazy(() => import("@views/Privacy"));
 
 function Root() {
   return (
@@ -42,11 +42,11 @@ const router = createBrowserRouter([
         element: <AppLayout />,
         children: [
           { index: true, element: <HomeView /> },
-          { path: constants.ROUTES.charities, element: <Charities /> },
-          { path: constants.ROUTES.disclaimer, element: <Disclaimer /> },
-          { path: constants.ROUTES.donations, element: <Donations /> },
-          { path: constants.ROUTES.plan, element: <Plan /> },
-          { path: constants.ROUTES.privacy, element: <Privacy /> },
+          { path: constants.ROUTES.about, element: <AboutView /> },
+          { path: constants.ROUTES.charities, element: <CharitiesView /> },
+          { path: constants.ROUTES.disclaimer, element: <DisclaimerView /> },
+          { path: constants.ROUTES.donations, element: <DonationsView /> },
+          { path: constants.ROUTES.privacy, element: <PrivacyView /> },
           { path: "*", element: <NotFoundView /> },
         ],
       },

@@ -28,7 +28,13 @@ export default function Charities(): React.ReactNode {
         signal: controller.signal,
       })
       .then((response) => {
-        setCharities(response.data);
+        // Shuffle once on mount so no charity is consistently listed first
+        const shuffled = [...response.data];
+        for (let i = shuffled.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        setCharities(shuffled);
         setLoading(false);
       })
       .catch(() => {
@@ -85,9 +91,9 @@ export default function Charities(): React.ReactNode {
       <article className="mx-auto max-w-3xl space-y-10">
         <header className="space-y-2">
           <h1 className="font-heading text-heading-pink text-4xl font-black tracking-tight uppercase">
-            Reccomended Charities List
+            Suggested Charities List
           </h1>
-          <p className="text-sm">
+          <p className="text-muted text-sm">
             These organizations are doing the work. Every donation to them is an
             assist. This list is curated by our organizers and community, and is
             by no means exhaustive.
