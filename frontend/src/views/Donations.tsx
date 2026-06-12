@@ -53,19 +53,16 @@ export default function Donations(): React.ReactNode {
     // loading state table
     tableBody = [1, 2, 3].map((idx) => (
       <TableRow key={idx}>
-        <TableCell className="text-muted whitespace-nowrap">
-          <Skeleton />
-        </TableCell>
-        <TableCell className="font-bold">
+        <TableCell className="hidden sm:table-cell">
           <Skeleton />
         </TableCell>
         <TableCell>
           <Skeleton />
         </TableCell>
-        <TableCell
-          align="right"
-          className="text-heading-blue font-bold whitespace-nowrap"
-        >
+        <TableCell className="hidden sm:table-cell">
+          <Skeleton />
+        </TableCell>
+        <TableCell>
           <Skeleton />
         </TableCell>
       </TableRow>
@@ -83,11 +80,18 @@ export default function Donations(): React.ReactNode {
     // donations list table
     tableBody = donations.map((donation) => (
       <TableRow key={donation.id}>
-        <TableCell className="text-muted whitespace-nowrap">
-          {formatAsLocaleDate(donation.created)}
+        <TableCell className="text-muted hidden whitespace-nowrap sm:table-cell">
+          <span className="md:hidden">
+            {formatAsLocaleDate(donation.created, "short")}
+          </span>
+          <span className="hidden md:inline">
+            {formatAsLocaleDate(donation.created, "long")}
+          </span>
         </TableCell>
         <TableCell className="font-bold">{donation.name}</TableCell>
-        <TableCell>{donation.charity}</TableCell>
+        <TableCell className="hidden sm:table-cell">
+          <span className="line-clamp-1">{donation.charity}</span>
+        </TableCell>
         <TableCell
           align="right"
           className="text-heading-blue font-bold whitespace-nowrap"
@@ -116,9 +120,13 @@ export default function Donations(): React.ReactNode {
           <Table>
             <TableHead>
               <TableRow header>
-                <TableHeaderCell>Date</TableHeaderCell>
+                <TableHeaderCell className="hidden sm:table-cell">
+                  Date
+                </TableHeaderCell>
                 <TableHeaderCell>Donor</TableHeaderCell>
-                <TableHeaderCell>Charity</TableHeaderCell>
+                <TableHeaderCell className="hidden sm:table-cell">
+                  Charity
+                </TableHeaderCell>
                 <TableHeaderCell align="right">Amount</TableHeaderCell>
               </TableRow>
             </TableHead>

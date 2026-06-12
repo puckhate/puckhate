@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@components";
 import CONSTANTS from "@constants";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import type { Charity } from "@types";
 import Skeleton from "react-loading-skeleton";
 
@@ -76,9 +77,10 @@ export default function Charities(): React.ReactNode {
               href={charity.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-heading-blue font-bold hover:underline"
+              className="link inline-flex items-center justify-items-end space-x-3 no-underline"
             >
-              Visit Site
+              <div>Visit Site</div>
+              <ArrowTopRightOnSquareIcon className="size-4" />
             </a>
           )}
         </TableCell>

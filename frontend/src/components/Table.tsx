@@ -89,7 +89,7 @@ export function TableHeaderCell({
     <th
       scope="col"
       className={clsx(
-        "text-muted px-4 py-3 text-xs font-bold tracking-wider uppercase",
+        "text-muted px-3 py-2 text-xs font-bold tracking-wider uppercase md:px-4 md:py-3",
         alignClass[align],
         className,
       )}
@@ -114,7 +114,11 @@ export function TableCell({
   return (
     <td
       colSpan={colSpan}
-      className={clsx("text-body px-4 py-3", alignClass[align], className)}
+      className={clsx(
+        "text-body px-3 py-2 md:px-4 md:py-3",
+        alignClass[align],
+        className,
+      )}
     >
       {children}
     </td>

@@ -46,7 +46,7 @@ export default function FAQ() {
               className="border-b-border-dark mb-3 border-b pb-3"
             >
               <DisclosureButton className="group justify-items-between flex w-full items-center justify-between gap-2">
-                <h2 className="text-heading-blue block text-xl font-bold">
+                <h2 className="text-heading-blue block text-left text-xl font-bold">
                   {faq.question}
                 </h2>
                 <ChevronDownIcon className="block size-5 group-data-open:rotate-180" />

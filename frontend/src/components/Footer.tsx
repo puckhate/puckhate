@@ -27,7 +27,7 @@ const SocialLinks = [
 export default function Footer() {
   return (
     <footer className="border-heading-pink bg-dark-amethyst-950 border-t-4">
-      <div className="text-muted flex flex-wrap justify-between gap-10 px-14 py-12 align-bottom">
+      <div className="text-muted flex flex-wrap justify-between gap-10 px-6 py-10 align-bottom md:px-14 md:py-12">
         <div>
           <p className="m-0 text-sm leading-relaxed">
             PUCKCURL! is an independent, fan-organized initiative not affiliated
@@ -38,8 +38,8 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="flex flex-col items-end gap-4 text-sm leading-loose">
-          <div className="flex items-end gap-5">
+        <div className="flex flex-col items-end text-sm leading-loose">
+          <div className="flex items-center gap-2 sm:gap-5">
             <Link to={constants.ROUTES.privacy} className="link">
               Privacy Policy
             </Link>

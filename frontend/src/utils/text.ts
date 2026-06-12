@@ -39,19 +39,26 @@ export function formatAsNumber(value: number | null | undefined): string {
 /**
  * Format a datetime string as a local date string
  * @param value - datetime compatible string
+ * @param length - "short" or "long"
  * @returns - formatted date as string
  */
-export function formatAsLocaleDate(value: string | null | undefined): string {
+export function formatAsLocaleDate(
+  value: string | null | undefined,
+  length: "short" | "long" = "long",
+): string {
   if (typeof value !== "string") {
     return "";
   }
-  return (
-    new Date(value).toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }) || ""
-  );
+
+  const dateOpts: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  if (length === "short") {
+    dateOpts.month = "numeric";
+  }
+  return new Date(value).toLocaleDateString(undefined, dateOpts) || "";
 }
 
 /**
