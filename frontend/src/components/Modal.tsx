@@ -124,7 +124,7 @@ export default function Modal(props: ModalProps): React.ReactNode {
                 opacity: 0,
                 transition: { duration: 0.2, ease: "easeOut" },
               }}
-              className="bg-dark-amethyst-950/30 fixed inset-0 backdrop-blur-md"
+              className="bg-protest/95 fixed inset-0 backdrop-blur-md"
             />
 
             <div className="fixed inset-0 flex items-center justify-center p-6">

@@ -125,9 +125,29 @@
   }
 }
 
+@utility button-base {
+  @apply font-heading cursor-pointer rounded-lg text-center;
+  @apply transition-all delay-30 duration-200 ease-in-out;
+  @apply not-disabled:hover:-translate-y-0.5 not-disabled:hover:scale-101;
+  @apply disabled:cursor-default;
+}
+
 @layer components {
   .link {
     @apply text-heading-blue underline underline-offset-2;
     @apply hover:text-sky-aqua-100;
+  }
+
+  .button-outline {
+    @apply button-base;
+    @apply border-border-light text-body inline-block border px-3 py-1.5 font-semibold;
+    @apply not-disabled:hover:border-heading-blue not-disabled:hover:text-heading-blue not-disabled:hover:bg-heading-blue/10;
+  }
+
+  .button-solid-blue {
+    @apply button-base;
+    @apply bg-heading-blue text-page px-3 py-1.5 font-semibold;
+    @apply not-disabled:hover:ring-cream-50 not-disabled:hover:bg-sky-aqua-300 not-disabled:hover:ring-1 not-disabled:hover:ring-inset;
+    @apply disabled:bg-heading-blue/10 disabled:text-body/30;
   }
 }

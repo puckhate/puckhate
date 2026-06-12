@@ -285,7 +285,7 @@ export default function LogDonation({ charities }: LogDonationProps) {
                       <button
                         type="submit"
                         disabled={isSubmitting || receiptToken === null}
-                        className="font-heading text-dark-amethyst-900 disabled:bg-space-indigo-700 w-full rounded-lg bg-sky-400 px-5 py-2.5 font-bold transition-colors hover:bg-sky-600 enabled:hover:text-white disabled:cursor-default"
+                        className="button-solid-blue mt-3 w-full py-3"
                       >
                         {isSubmitting ? "Submitting..." : "Submit Donation"}
                       </button>

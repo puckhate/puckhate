@@ -12,6 +12,7 @@ const SETTLE_TICK_MS = 150;
 interface CharitySlotMachineProps {
   charities: Charity[];
   onSelect?: () => void;
+  onSpinComplete?: (winner: Charity) => void;
 }
 
 interface ReelState {
@@ -30,6 +31,7 @@ interface ReelState {
 export default function CharitySlotMachine({
   charities,
   onSelect,
+  onSpinComplete,
 }: CharitySlotMachineProps): React.ReactNode {
   const reduceMotion = useReducedMotion();
   const [winner] = useState<Charity | undefined>(
@@ -84,6 +86,14 @@ export default function CharitySlotMachine({
     step();
     return () => window.clearTimeout(timer);
   }, [charities, winner, reduceMotion]);
+
+  /*
+   * Report the settled winner once the reel comes to rest
+   * (immediately in reduced-motion mode).
+   */
+  useEffect(() => {
+    if (!spinning && winner !== undefined) onSpinComplete?.(winner);
+  }, [spinning, winner, onSpinComplete]);
 
   const reelClasses =
     "bg-dark-amethyst-950 my-5 block w-full rounded-lg font-heading border p-4 text-2xl";

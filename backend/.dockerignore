@@ -10,3 +10,5 @@ htmlcov/
 .git
 .gitignore
 README.md
+spa/
+private_media/
