@@ -43,7 +43,7 @@ export default function FAQ() {
             <Disclosure
               as="div"
               key={faq.question}
-              className="border-b-border-dark mb-3 border-b pb-3"
+              className="border-b-border-dark mb-3 pb-3 not-last:border-b"
             >
               <DisclosureButton className="group justify-items-between flex w-full items-center justify-between gap-2">
                 <h2 className="text-heading-blue block text-left text-xl font-bold">

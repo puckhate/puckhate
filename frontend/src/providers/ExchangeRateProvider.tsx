@@ -9,7 +9,7 @@ import {
 } from "react";
 
 import client from "@client";
-import CONSTANTS from "@constants";
+import constants from "@constants";
 import type { ExchangeRate } from "@types";
 
 interface ExchangeRateContextValue {
@@ -37,7 +37,7 @@ export function ExchangeRateProvider({ children }: { children: ReactNode }) {
     if (rate !== null || fetching.current) return;
     fetching.current = true;
     client
-      .get<ExchangeRate>(CONSTANTS.API_ENDPOINTS.EXCHANGE_RATE)
+      .get<ExchangeRate>(constants.API_ENDPOINTS.EXCHANGE_RATE)
       .then((response) => {
         setRate(Number(response.data.ca_exchange_rate));
       })

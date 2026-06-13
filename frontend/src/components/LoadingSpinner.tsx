@@ -1,5 +1,5 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
-import clsx from "clsx";
+import cn from "@utils/classNames";
 
 export default function LoadingSpinner({
   className,
@@ -9,7 +9,7 @@ export default function LoadingSpinner({
   return (
     <ArrowPathIcon
       aria-label="Loading"
-      className={clsx("size-12 animate-spin", className)}
+      className={cn("size-12 animate-spin", className)}
     />
   );
 }

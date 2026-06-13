@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-import clsx from "clsx";
+import cn from "@utils/classNames";
 import { useField } from "formik";
 
 interface TextFieldProps extends Omit<
@@ -38,7 +38,7 @@ export default function TextField({
   const helpId = `${inputId}-help`;
   const errorId = `${inputId}-error`;
   const hasError = Boolean(meta.touched && meta.error);
-  const describedBy = clsx(help && helpId, hasError && errorId) || undefined;
+  const describedBy = cn(help && helpId, hasError && errorId) || undefined;
 
   return (
     <div>
@@ -66,7 +66,7 @@ export default function TextField({
             aria-required={required || undefined}
             aria-invalid={hasError || undefined}
             aria-describedby={describedBy}
-            className={clsx(
+            className={cn(
               "text-body placeholder:text-space-indigo-500 bg-dark-amethyst-800 block w-full rounded-lg border py-2 pr-3 focus:ring-2 focus:outline-none",
               leadingAddon ? "pl-7" : "pl-3",
               hasError

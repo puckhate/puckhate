@@ -24,7 +24,7 @@ export default function Nav() {
     >
       {({ open, close }) => (
         <>
-          <div className="flex items-center justify-between px-6 py-5 md:px-14">
+          <div className="flex items-center justify-between px-6 py-5 lg:px-14">
             <Link
               to={constants.ROUTES.home}
               className="flex items-center gap-3"

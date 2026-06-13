@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import clsx from "clsx";
+import cn from "@utils/classNames";
 import { AnimatePresence, motion } from "framer-motion";
 
 type ModalWidth = "small" | "medium" | "large";
@@ -143,7 +143,7 @@ export default function Modal(props: ModalProps): React.ReactNode {
                   y: 8,
                   transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] },
                 }}
-                className={clsx(
+                className={cn(
                   "border-border-dark bg-page relative max-h-[calc(100vh-3rem)] w-full overflow-y-auto rounded-2xl border p-7 shadow-2xl ring-1 shadow-black/50 ring-black/20",
                   WIDTHS[width],
                   className,

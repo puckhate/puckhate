@@ -10,7 +10,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@components";
-import CONSTANTS from "@constants";
+import constants from "@constants";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import type { Charity } from "@types";
 import Skeleton from "react-loading-skeleton";
@@ -25,7 +25,7 @@ export default function Charities(): React.ReactNode {
   useEffect(() => {
     const controller = new AbortController();
     client
-      .get<Charity[]>(CONSTANTS.API_ENDPOINTS.CHARITIES, {
+      .get<Charity[]>(constants.API_ENDPOINTS.CHARITIES, {
         signal: controller.signal,
       })
       .then((response) => {

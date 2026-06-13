@@ -7,7 +7,7 @@ import {
   ComboboxOptions,
 } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import clsx from "clsx";
+import cn from "@utils/classNames";
 import { useField } from "formik";
 
 interface ComboboxFieldProps {
@@ -48,7 +48,7 @@ export default function ComboboxField({
   const helpId = `${inputId}-help`;
   const errorId = `${inputId}-error`;
   const hasError = Boolean(meta.touched && meta.error);
-  const describedBy = clsx(help && helpId, hasError && errorId) || undefined;
+  const describedBy = cn(help && helpId, hasError && errorId) || undefined;
 
   // Only suggest once the user has started typing — an empty query shows
   // nothing, which keeps the panel hidden (see `empty:invisible` below).
@@ -87,7 +87,7 @@ export default function ComboboxField({
               helpers.setValue(event.target.value);
             }}
             onBlur={() => helpers.setTouched(true)}
-            className={clsx(
+            className={cn(
               "text-body placeholder:text-space-indigo-500 bg-dark-amethyst-800 block w-full rounded-lg border px-3 py-2 focus:ring-2 focus:outline-none",
               hasError
                 ? "border-red-500 focus:ring-red-500"
@@ -109,7 +109,7 @@ export default function ComboboxField({
                 <>
                   <CheckIcon
                     aria-hidden="true"
-                    className={clsx(
+                    className={cn(
                       "text-heading-blue size-4 shrink-0",
                       !selected && "invisible",
                     )}

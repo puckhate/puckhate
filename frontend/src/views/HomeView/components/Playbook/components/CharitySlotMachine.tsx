@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import type { Charity } from "@types";
-import clsx from "clsx";
+import cn from "@utils/classNames";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const SPIN_DURATION_MS = 500;
@@ -108,7 +108,7 @@ export default function CharitySlotMachine({
           rel="noopener noreferrer"
           onClick={onSelect}
           aria-label={`Donate to ${winner.name} (opens in a new tab)`}
-          className={clsx(
+          className={cn(
             reelClasses,
             "hover:text-heading-blue shadow-[0_0_14px] transition-[border,box-shadow] duration-300 ease-in-out",
             glowing
@@ -124,7 +124,7 @@ export default function CharitySlotMachine({
         // Hide from assistive tech until spinning complete
         <span
           aria-hidden={spinning || undefined}
-          className={clsx(reelClasses, "border-border-dark")}
+          className={cn(reelClasses, "border-border-dark")}
         >
           <span className="relative block h-16 overflow-hidden">
             <AnimatePresence mode="popLayout" initial={false}>

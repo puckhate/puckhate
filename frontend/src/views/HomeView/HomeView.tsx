@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 
 import client from "@client";
-import CONSTANTS from "@constants";
+import { Container } from "@components";
+import constants from "@constants";
 import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import type { Charity, SiteStats } from "@types";
 import { convertFromUSD } from "@utils/currency";
 
 import Hero from "./components/Hero";
 import LogDonation from "./components/LogDonation";
-import Playbook from "./components/PlaybookCard";
+import Playbook from "./components/Playbook";
+
+const sectionPadding = "py-6 md:py-12 xl:py-20";
 
 export default function HomeView() {
   const [stats, setStats] = useState<SiteStats | null>(null);
@@ -23,7 +26,7 @@ export default function HomeView() {
   useEffect(() => {
     const controller = new AbortController();
     client
-      .get<SiteStats>(CONSTANTS.API_ENDPOINTS.STATS, {
+      .get<SiteStats>(constants.API_ENDPOINTS.STATS, {
         signal: controller.signal,
       })
       .then((response) => {
@@ -43,7 +46,7 @@ export default function HomeView() {
   useEffect(() => {
     const controller = new AbortController();
     client
-      .get<Charity[]>(CONSTANTS.API_ENDPOINTS.CHARITIES, {
+      .get<Charity[]>(constants.API_ENDPOINTS.CHARITIES, {
         signal: controller.signal,
       })
       .then((response) => {
@@ -57,21 +60,31 @@ export default function HomeView() {
 
   return (
     <>
-      <Hero
-        raised={
-          stats
-            ? convertFromUSD(
-                Number(stats.verified_total),
-                Number(stats.ca_exchange_rate),
-              )
-            : undefined
-        }
-        donations={stats?.verified_count}
-        goals={stats?.goals_scored}
-        loading={statsLoading}
-      />
-      <Playbook charities={charities} />
-      <LogDonation charities={charities} />
+      {/* Content broken into three Containers instead of one, playbook exceeds standard Container width */}
+      <Container className={sectionPadding}>
+        <Hero
+          raised={
+            stats
+              ? convertFromUSD(
+                  Number(stats.verified_total),
+                  Number(stats.ca_exchange_rate),
+                )
+              : undefined
+          }
+          donations={stats?.verified_count}
+          goals={stats?.goals_scored}
+          loading={statsLoading}
+        />
+      </Container>
+      {/* Playbook has a full-width dark background that overflows the standard Container */}
+      <div className="bg-dark-amethyst-950/70">
+        <Container className={sectionPadding}>
+          <Playbook charities={charities} />
+        </Container>
+      </div>
+      <Container className={sectionPadding}>
+        <LogDonation charities={charities} />
+      </Container>
     </>
   );
 }

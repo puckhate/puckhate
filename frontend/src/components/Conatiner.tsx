@@ -1,9 +1,18 @@
-export default function Container({
-  children,
-}: {
-  children: React.ReactNode;
-}): React.ReactNode {
+import cn from "@utils/classNames";
+
+interface ContainerProps {
+  className?: string;
+}
+
+export default function Container(
+  props: React.PropsWithChildren<ContainerProps>,
+): React.ReactNode {
+  const { className, children } = props;
   return (
-    <div className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">{children}</div>
+    <div
+      className={cn("mx-auto w-full max-w-6xl flex-1 px-6 py-10", className)}
+    >
+      {children}
+    </div>
   );
 }

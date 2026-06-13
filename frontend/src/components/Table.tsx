@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import cn from "@utils/classNames";
 
 type Align = "left" | "right" | "center";
 
@@ -21,7 +21,7 @@ export function Table({
 }): React.ReactNode {
   return (
     <div className="border-border-dark overflow-x-auto rounded-xl border">
-      <table className={clsx("w-full border-collapse text-sm", className)}>
+      <table className={cn("w-full border-collapse text-sm", className)}>
         {children}
       </table>
     </div>
@@ -65,7 +65,7 @@ export function TableRow({
 }): React.ReactNode {
   return (
     <tr
-      className={clsx(
+      className={cn(
         !header && "hover:bg-dark-amethyst-800/40 transition-colors",
         className,
       )}
@@ -88,7 +88,7 @@ export function TableHeaderCell({
   return (
     <th
       scope="col"
-      className={clsx(
+      className={cn(
         "text-muted px-3 py-2 text-xs font-bold tracking-wider uppercase md:px-4 md:py-3",
         alignClass[align],
         className,
@@ -114,7 +114,7 @@ export function TableCell({
   return (
     <td
       colSpan={colSpan}
-      className={clsx(
+      className={cn(
         "text-body px-3 py-2 md:px-4 md:py-3",
         alignClass[align],
         className,

@@ -10,7 +10,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@components";
-import CONSTANTS from "@constants";
+import constants from "@constants";
 import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import type { Donation } from "@types";
 import { convertFromUSD } from "@utils/currency";
@@ -28,7 +28,7 @@ export default function Donations(): React.ReactNode {
   useEffect(() => {
     const controller = new AbortController();
     client
-      .get<Donation[]>(CONSTANTS.API_ENDPOINTS.DONATIONS, {
+      .get<Donation[]>(constants.API_ENDPOINTS.DONATIONS, {
         signal: controller.signal,
       })
       .then((response) => {
