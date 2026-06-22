@@ -71,7 +71,7 @@ export default function TextField({
               leadingAddon ? "pl-7" : "pl-3",
               hasError
                 ? "border-red-500 focus:ring-red-500"
-                : "border-border-dark focus:ring-border-light",
+                : "border-border-dark focus:ring-sky-aqua-500",
               className,
             )}
             {...field}

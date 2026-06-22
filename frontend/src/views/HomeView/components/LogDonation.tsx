@@ -174,7 +174,7 @@ export default function LogDonation({ charities }: LogDonationProps) {
               <div
                 {...getRootProps()}
                 className={cn(
-                  "flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-12 text-center transition-colors",
+                  "focus:ring-sky-aqua-500 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-12 text-center transition-colors focus:ring-2 focus:outline-0",
                   isDragActive
                     ? "border-border-light bg-dark-amethyst-900"
                     : "border-border-dark hover:border-border-light",
