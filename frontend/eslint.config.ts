@@ -5,9 +5,13 @@ import { configs, plugins } from "eslint-config-airbnb-extended";
 import { rules as prettierConfigRules } from "eslint-config-prettier";
 import prettierPlugin from "eslint-plugin-prettier";
 import globals from "globals";
+import fs from "node:fs";
 import path from "node:path";
 
 const gitignorePath = path.resolve("../", ".gitignore");
+const gitignoreConfig = fs.existsSync(gitignorePath)
+  ? [includeIgnoreFile(gitignorePath)]
+  : [];
 
 const jsConfig: Linter.Config[] = [
   // ESLint Recommended Rules
@@ -108,7 +112,7 @@ const nodeScriptsOverrides: Linter.Config = {
 };
 
 const config: Linter.Config[] = [
-  includeIgnoreFile(gitignorePath),
+  ...gitignoreConfig,
   // Javascript Config
   ...jsConfig,
   // React Config
