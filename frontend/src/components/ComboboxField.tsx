@@ -91,7 +91,7 @@ export default function ComboboxField({
               "text-body placeholder:text-space-indigo-500 bg-dark-amethyst-800 block w-full rounded-lg border px-3 py-2 focus:ring-2 focus:outline-none",
               hasError
                 ? "border-red-500 focus:ring-red-500"
-                : "border-border-dark focus:ring-border-light",
+                : "border-border-dark focus:ring-sky-aqua-500",
             )}
           />
         </label>
