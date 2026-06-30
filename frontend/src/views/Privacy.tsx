@@ -9,12 +9,12 @@ export default function Privacy(): React.ReactNode {
             Privacy Policy
           </h1>
           <p className="text-muted text-sm">
-            <strong>Last updated: June 6, 2026</strong>
+            <strong>Last updated: June 30, 2026</strong>
           </p>
         </header>
 
         <p className="text-muted leading-relaxed">
-          PUCKCURL ("we," "us," or "the site") is an independent, fan-organized
+          PUCKHATE ("we," "us," or "the site") is an independent, fan-organized
           initiative. This policy explains what information we collect, why we
           collect it, and how we handle it. We've tried to keep it short and in
           plain language.
@@ -119,8 +119,8 @@ export default function Privacy(): React.ReactNode {
               <strong>Deletion.</strong> You may request deletion of any receipt
               or personal information you've submitted at any time by contacting
               us at{" "}
-              <a href="mailto:privacy@puckcurl.com" className="link font-bold">
-                privacy@puckcurl.com
+              <a href="mailto:privacy@puckhate.com" className="link font-bold">
+                privacy@puckhate.com
               </a>
               . We will delete it promptly, though the anonymized amount may
               remain in published totals.
@@ -175,8 +175,8 @@ export default function Privacy(): React.ReactNode {
           </h2>
           <p className="text-muted leading-relaxed">
             Questions, deletion requests, or concerns:{" "}
-            <a href="mailto:hello@puckcurl.com" className="link font-bold">
-              hello@puckcurl.com
+            <a href="mailto:hello@puckhate.com" className="link font-bold">
+              hello@puckhate.com
             </a>
           </p>
         </section>

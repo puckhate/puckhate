@@ -1,8 +1,8 @@
 # Frontend development image
 FROM node:lts AS dev
 
-LABEL org.opencontainers.image.title="puckcurl-frontend"
-LABEL org.opencontainers.image.description="puckcurl frontend dev server"
+LABEL org.opencontainers.image.title="puckhate-frontend"
+LABEL org.opencontainers.image.description="puckhate frontend dev server"
 
 WORKDIR /app
 COPY package*.json ./

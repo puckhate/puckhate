@@ -23,7 +23,7 @@ class CurrencyLayerAPIClient:
             "Accept": "application/json",
             "Content-Type": "application/json; charset=utf-8",
             "Cache-Control": "no-cache",
-            "User-Agent": "PUCKCURL API/1.0",
+            "User-Agent": "PUCKHATE API/1.0",
         }
         for k in kwargs:
             headers[k] = kwargs[k]

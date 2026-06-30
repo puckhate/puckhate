@@ -1,11 +1,11 @@
-# Contributing to PUCKCURL!
+# Contributing to PUCKHATE!
 
 Thanks for your interest in contributing. This is a small fan project maintained
 by a small group, but thoughtful outside contributions are welcome.
 
-## What PUCKCURL! is (and isn't)
+## What PUCKHATE! is (and isn't)
 
-PUCKCURL! is a public record of charitable donations that fans self-report having
+PUCKHATE! is a public record of charitable donations that fans self-report having
 made elsewhere. It does not accept, process, or facilitate donations or
 payments. Please keep contributions within that scope.
 

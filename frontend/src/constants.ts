@@ -16,8 +16,8 @@ const CONSTANTS = {
     about: "/about",
   },
   SOCIAL: {
-    bluesky: "https://bsky.app/profile/puckcurl.com",
-    instagram: "https://www.instagram.com/puckcurl",
+    bluesky: "https://bsky.app/profile/puckhate.com",
+    instagram: "https://www.instagram.com/puckhate",
   },
 };
 

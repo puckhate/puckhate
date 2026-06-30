@@ -3,7 +3,7 @@
 .PHONY: help
 help:  ## Show this help message
 	@echo ""
-	@echo "PUCKCURL! Project Makefile"
+	@echo "PUCKHATE! Project Makefile"
 	@echo "Usage: make [target]"
 	@echo ""
 	@awk 'BEGIN {FS = ":.*##"} \
@@ -72,7 +72,7 @@ format-fe:  ## Format the frontend (prettier)
 ##@ Deployment
 
 STAGING_HOST := ares
-STAGING_DIR  := /opt/puckcurl_staging
+STAGING_DIR  := /opt/puckhate_staging
 STAGING_COMPOSE := docker compose -f docker-compose.staging.yml --env-file .env.staging
 
 .PHONY: secrets-hide

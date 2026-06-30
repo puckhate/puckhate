@@ -16,7 +16,7 @@ const GamePlanItems: GamePlanItem[] = [
   {
     title: "Why are we doing this?",
     description:
-      "PUCKCURL! is a fan-organized initiative designed to turn a negative into a positive. Since Britta Curl-Salemme has joined the PWHL, fans have made their feelings about her publicly stated views clear. Our goal is to provide a positive outlet for fans who feel frustrated and hurt by Curl's views. It is our belief that choosing to step away from supporting a team she is on only serves to remove good people from those spaces. We hope that this donation tracker will help bring fans together with a common goal of good.",
+      "PUCKHATE! is a fan-organized initiative designed to turn a negative into a positive. Since Britta Curl-Salemme has joined the PWHL, fans have made their feelings about her publicly stated views clear. Our goal is to provide a positive outlet for fans who feel frustrated and hurt by Curl's views. It is our belief that choosing to step away from supporting a team she is on only serves to remove good people from those spaces. We hope that this donation tracker will help bring fans together with a common goal of good.",
   },
 ];
 

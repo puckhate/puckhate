@@ -11,7 +11,7 @@ export default function Disclaimer(): React.ReactNode {
             Disclaimer
           </h1>
           <p className="text-muted text-sm">
-            <strong>Last updated: June 6, 2026</strong>
+            <strong>Last updated: June 30, 2026</strong>
           </p>
         </header>
 
@@ -20,7 +20,7 @@ export default function Disclaimer(): React.ReactNode {
             Independence and non-affiliation
           </h2>
           <p className="text-muted leading-relaxed">
-            PUCKCURL is an independent, fan-organized initiative. It is not
+            PUCKHATE is an independent, fan-organized initiative. It is not
             affiliated with, endorsed by, or sponsored by the Professional
             Women's Hockey League (PWHL), any of its teams, or any of its
             players, including Britta Curl-Salemme. All trademarks, team names,
@@ -35,7 +35,7 @@ export default function Disclaimer(): React.ReactNode {
           </h2>
           <p className="text-muted leading-relaxed">
             Participants choose their own recipient organizations and donate
-            directly to them. PUCKCURL does not collect, process, hold, or
+            directly to them. PUCKHATE does not collect, process, hold, or
             direct any donation funds at any time. We are not a charity, a
             fundraising platform, or a payment processor.
           </p>
@@ -89,7 +89,7 @@ export default function Disclaimer(): React.ReactNode {
           <p className="text-muted leading-relaxed">
             Because donations are made directly to organizations of each
             participant's choosing, any tax receipts or deductibility questions
-            are between the donor and that organization. PUCKCURL provides no
+            are between the donor and that organization. PUCKHATE provides no
             tax documentation and makes no representations about the
             deductibility of any donation.
           </p>
@@ -111,8 +111,8 @@ export default function Disclaimer(): React.ReactNode {
           <p className="text-muted leading-relaxed">
             Questions or concerns, including requests to correct or remove
             content:{" "}
-            <a href="mailto:hello@puckcurl.com" className="link font-bold">
-              hello@puckcurl.com
+            <a href="mailto:hello@puckhate.com" className="link font-bold">
+              hello@puckhate.com
             </a>
           </p>
           <p className="text-muted leading-relaxed">

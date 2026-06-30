@@ -1,4 +1,4 @@
-"""Django settings for puckcurl."""
+"""Django settings for PUCKHATE!"""
 
 import os
 from pathlib import Path
@@ -65,7 +65,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     # Serves the SPA for unrouted GET paths. Must precede CommonMiddleware so
     # APPEND_SLASH is applied before this fallback.
-    "puckcurl.middleware.SPAFallbackMiddleware",
+    "puckhate.middleware.SPAFallbackMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -75,7 +75,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "puckcurl.urls"
+ROOT_URLCONF = "puckhate.urls"
 
 TEMPLATES = [
     {
@@ -92,14 +92,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "puckcurl.wsgi.application"
+WSGI_APPLICATION = "puckhate.wsgi.application"
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": get_env_variable("DB_DEFAULT_NAME", "puckcurl"),
-        "USER": get_env_variable("DB_DEFAULT_USER", "puckcurl"),
-        "PASSWORD": get_env_variable("DB_DEFAULT_PASSWORD", "puckcurl"),
+        "NAME": get_env_variable("DB_DEFAULT_NAME", "puckhate"),
+        "USER": get_env_variable("DB_DEFAULT_USER", "puckhate"),
+        "PASSWORD": get_env_variable("DB_DEFAULT_PASSWORD", "puckhate"),
         "HOST": get_env_variable("DB_DEFAULT_HOST", "127.0.0.1"),
         "PORT": get_env_variable("DB_DEFAULT_PORT", "3306"),
         "CONN_MAX_AGE": env_int("CONN_MAX_AGE", 0),

@@ -110,7 +110,7 @@ export default function Donations(): React.ReactNode {
             Donations List
           </h1>
           <p className="text-muted text-sm">
-            The list of donations in support of PUCKCURL! will update as
+            The list of donations in support of PUCKHATE! will update as
             donation receipts are validated. Donors can choose to provide their
             name or stay anonymous.
           </p>

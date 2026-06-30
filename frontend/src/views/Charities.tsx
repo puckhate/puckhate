@@ -121,8 +121,8 @@ export default function Charities(): React.ReactNode {
           If you are a representative of a charity who's name appears on this
           list and would like to request that your organization be removed,
           please reach out to us at{" "}
-          <a href="mailto:hello@puckcurl.com" className="link">
-            hello@puckcurl.com
+          <a href="mailto:hello@puckhate.com" className="link">
+            hello@puckhate.com
           </a>
           .
         </p>

@@ -1,6 +1,6 @@
 # Currency (USD / CAD)
 
-PUCKCURL! operates in the US and Canada. Donations can be reported in USD or
+PUCKHATE! operates in the US and Canada. Donations can be reported in USD or
 CAD, are always stored in USD, and are displayed in the viewer's local
 currency.
 

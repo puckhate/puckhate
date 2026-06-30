@@ -10,9 +10,8 @@ RUN set -eux; npm run build
 
 # ── Stage 2: build the backend ─────────────────────────────
 FROM python:3.14-slim AS app
-
-LABEL org.opencontainers.image.title="puckcurl"
-LABEL org.opencontainers.image.description="puckcurl production monorepo image"
+LABEL org.opencontainers.image.title="puckhate"
+LABEL org.opencontainers.image.description="puckhate production monorepo image"
 
 # Build dependencies for mysqlclient
 RUN set -eux; \
@@ -48,4 +47,4 @@ RUN set -eux; \
     uv run python manage.py collectstatic --noinput
 
 EXPOSE 8000
-CMD ["uv", "run", "gunicorn", "puckcurl.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["uv", "run", "gunicorn", "puckhate.wsgi:application", "--bind", "0.0.0.0:8000"]

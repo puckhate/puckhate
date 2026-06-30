@@ -2,13 +2,13 @@
 
 ## What this is
 
-**PUCKCURL!** tracks fan-reported charitable donations made as part of a "donate in
+**PUCKHATE!** tracks fan-reported charitable donations made as part of a "donate in
 protest" campaign in the PWHL.
 
 The campaign responds to a particular PWHL player whose public views many fans regard
 as transphobic. Historically fans have booed this player. This project channels that
 energy into something constructive instead: when that player scores, fans are
-encouraged to donate to trans-supporting charities. PUCKCURL! records those donations so
+encouraged to donate to trans-supporting charities. PUCKHATE! records those donations so
 the cumulative impact of the campaign is publicly visible.
 
 ## What it does
@@ -22,7 +22,7 @@ the cumulative impact of the campaign is publicly visible.
 
 ## What it explicitly does not do
 
-- It does **not** accept, process, or facilitate donations. PUCKCURL! is a **record** of
+- It does **not** accept, process, or facilitate donations. PUCKHATE! is a **record** of
   donations made elsewhere — it is not a charity, a fundraising platform, or a payment
   processor. This is out of scope by design.
 

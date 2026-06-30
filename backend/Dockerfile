@@ -1,8 +1,8 @@
 # Backend development image
 FROM python:3.14-slim AS backend
 
-LABEL org.opencontainers.image.title="puckcurl-backend"
-LABEL org.opencontainers.image.description="puckcurl backend development image"
+LABEL org.opencontainers.image.title="puckhate-backend"
+LABEL org.opencontainers.image.description="puckhate backend development image"
 
 # Build dependencies
 RUN set -eux; \

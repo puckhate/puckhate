@@ -30,7 +30,7 @@ export default function Nav() {
               className="flex items-center gap-3"
             >
               <span className="font-heading text-body text-2xl font-extrabold tracking-wide">
-                PUCKCURL!
+                PUCKHATE!
               </span>
             </Link>
 

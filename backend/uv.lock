@@ -157,7 +157,7 @@ wheels = [
 ]
 
 [[package]]
-name = "puckcurl"
+name = "puckhate"
 version = "1.0.0"
 source = { virtual = "." }
 dependencies = [

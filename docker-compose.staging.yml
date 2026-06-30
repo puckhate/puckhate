@@ -48,7 +48,7 @@ services:
     restart: unless-stopped
     command: >
       sh -c "uv run python manage.py migrate --noinput &&
-             uv run gunicorn puckcurl.wsgi:application --bind 0.0.0.0:8000"
+             uv run gunicorn puckhate.wsgi:application --bind 0.0.0.0:8000"
     environment:
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
       DJANGO_DEBUG: ${DJANGO_DEBUG:-0}
@@ -101,17 +101,17 @@ services:
       ofelia.job-exec.update-goals-scored.schedule: "@every 5m"
       ofelia.job-exec.update-goals-scored.command: "uv run python manage.py update_goals_scored"
       # Trafik endpoint registration
-      traefik.http.routers.puckcurl-staging-http.entrypoints: "web"
-      traefik.http.routers.puckcurl-staging-http.rule: "Host(`staging.puckcurl.com`)"
-      traefik.http.routers.puckcurl-staging-http.middlewares: puckcurl-staging-redirect-https
-      traefik.http.middlewares.puckcurl-staging-redirect-https.redirectscheme.scheme: "https"
-      traefik.http.routers.puckcurl-staging.entrypoints: "websecure"
-      traefik.http.routers.puckcurl-staging.rule: "Host(`staging.puckcurl.com`)"
-      traefik.http.routers.puckcurl-staging.tls: "true"
-      traefik.http.routers.puckcurl-staging.tls.certresolver: "le"
+      traefik.http.routers.puckhate-staging-http.entrypoints: "web"
+      traefik.http.routers.puckhate-staging-http.rule: "Host(`staging.puckhate.com`)"
+      traefik.http.routers.puckhate-staging-http.middlewares: puckhate-staging-redirect-https
+      traefik.http.middlewares.puckhate-staging-redirect-https.redirectscheme.scheme: "https"
+      traefik.http.routers.puckhate-staging.entrypoints: "websecure"
+      traefik.http.routers.puckhate-staging.rule: "Host(`staging.puckhate.com`)"
+      traefik.http.routers.puckhate-staging.tls: "true"
+      traefik.http.routers.puckhate-staging.tls.certresolver: "le"
       # Hard cap on request body size (≈12MB)
-      traefik.http.routers.puckcurl-staging.middlewares: "puckcurl-staging-bodylimit"
-      traefik.http.middlewares.puckcurl-staging-bodylimit.buffering.maxRequestBodyBytes: "12582912"
+      traefik.http.routers.puckhate-staging.middlewares: "puckhate-staging-bodylimit"
+      traefik.http.middlewares.puckhate-staging-bodylimit.buffering.maxRequestBodyBytes: "12582912"
     depends_on:
       db:
         condition: service_healthy

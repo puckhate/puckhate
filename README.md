@@ -1,6 +1,6 @@
-# PUCKCURL!
+# PUCKHATE!
 
-PUCKCURL! tracks fan-reported charitable donations made as part of a "donate in protest"
+PUCKHATE! tracks fan-reported charitable donations made as part of a "donate in protest"
 campaign in the PWHL: when a particular player scores, fans are encouraged to donate to
 trans-supporting charities, and this app records those donations so the campaign's
 cumulative impact is publicly visible.
@@ -23,7 +23,7 @@ More detail lives in [`docs/`](docs/):
 
 ## Disclaimer
 
-PUCKCURL! is an independent, fan-organized initiative. It is not affiliated with,
+PUCKHATE! is an independent, fan-organized initiative. It is not affiliated with,
 endorsed by, or sponsored by the Professional Women's Hockey League (PWHL), any of its
 teams, or any of its players. Any commentary reflects the opinions of its organizers
 only. All trademarks, team names, league names, and player names belong to their
@@ -114,6 +114,6 @@ for the full workflow, conventions, and these rules in detail.
 ## License
 
 Released under the [MIT License](LICENSE). The license covers the project's
-source code only. It does not grant rights to the "PUCKCURL!" name or any
+source code only. It does not grant rights to the "PUCKHATE!" name or any
 trademarks, team names, or player names referenced in the app (see the
 [Disclaimer](#disclaimer)).
