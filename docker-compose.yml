@@ -51,13 +51,21 @@ services:
       DB_DEFAULT_PASSWORD: ${DB_DEFAULT_PASSWORD:-puckhate}
       DB_DEFAULT_PORT: ${DB_DEFAULT_PORT:-3306}
       DB_DEFAULT_USER: ${DB_DEFAULT_USER:-puckhate}
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL:-}
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1,backend}
       DJANGO_DEBUG: ${DJANGO_DEBUG:-1}
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-dev-insecure-change-me}
+      EMAIL_BACKEND: ${EMAIL_BACKEND:-}
+      EMAIL_HOST: ${EMAIL_HOST:-}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER:-}
+      EMAIL_PORT: ${EMAIL_PORT:-}
+      EMAIL_USE_TLS: ${EMAIL_USE_TLS:-}
       HOCKEYTECH_API_KEY: ${HOCKEYTECH_API_KEY:-}
       HOCKEYTECH_PLAYER_ID: ${HOCKEYTECH_PLAYER_ID:-}
       HOCKEYTECH_SEASON_ID: ${HOCKEYTECH_SEASON_ID:-}
       HOCKEYTECH_STARTING_GOALS: ${HOCKEYTECH_STARTING_GOALS:-}
+      SITE_URL: ${SITE_URL:-}
       VALKEY_URL: ${VALKEY_URL:-redis://valkey:6379/0}
     volumes:
       - ./backend:/app:cached
@@ -77,6 +85,12 @@ services:
       # Refresh the tracked player's goal total every 5 minutes
       ofelia.job-exec.update-goals-scored.schedule: "@every 5m"
       ofelia.job-exec.update-goals-scored.command: "uv run python manage.py update_goals_scored"
+      # Hourly summary of donations that entered the approval queue
+      ofelia.job-exec.hourly-email-summary.schedule: "@every 1h"
+      ofelia.job-exec.hourly-email-summary.command: "uv run python manage.py hourly_email_summary"
+      # Daily summary of the total pending-approval backlog
+      ofelia.job-exec.daily-email-summary.schedule: "0 0 8 * * *"
+      ofelia.job-exec.daily-email-summary.command: "uv run python manage.py daily_email_summary"
     depends_on:
       db:
         condition: service_healthy

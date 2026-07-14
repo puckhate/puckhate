@@ -1,0 +1,104 @@
+{% comment %}
+Base admin email. Table layout with inlined styles for email-client
+compatibility — keep styles inline; child templates override the blocks below.
+{% endcomment %}<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="x-apple-disable-message-reformatting" />
+<meta name="color-scheme" content="light" />
+<meta name="supported-color-schemes" content="light" />
+<title>{% block title %}{{ subject|default:"PUCKHATE!" }}{% endblock %}</title>
+<!--[if mso]>
+<style type="text/css">table,td,div,p,a{font-family:Arial,Helvetica,sans-serif !important;}</style>
+<xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
+<![endif]-->
+<style type="text/css">
+/* Resets — every visual style is also inlined below, so this block is progressive enhancement. */
+body{margin:0;padding:0;width:100%!important;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}
+table{border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0;}
+img{border:0;line-height:100%;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;}
+a{color:#2196c9;}
+a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!important;}
+@media only screen and (max-width:620px){
+  .pc-container{width:100%!important;}
+  .pc-pad{padding-left:24px!important;padding-right:24px!important;}
+  .pc-h1{font-size:26px!important;line-height:1.2!important;}
+  .pc-btn a{display:block!important;}
+}
+</style>
+</head>
+<body style="margin:0;padding:0;background-color:#e7ebc5;">
+
+<!-- Preheader: hidden inbox-preview text -->
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#e7ebc5;opacity:0;">
+  {% block preheader %}{% endblock %}
+</div>
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</div>
+
+<!-- Page background -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#e7ebc5;">
+<tr>
+<td align="center" style="padding:32px 12px;">
+
+<!-- Container: 600px card -->
+<table role="presentation" class="pc-container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(13,6,48,0.10);">
+
+  <!-- Header -->
+  <tr>
+    <td align="center" style="background-color:#0d0630;padding:34px 24px 30px 24px;">
+      <span style="font-family:'Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:26px;letter-spacing:0.5px;color:#ffffff;">PUCKHATE!</span>
+    </td>
+  </tr>
+
+  <!-- Body -->
+  <tr>
+    <td class="pc-pad" style="padding:44px 48px 20px 48px;">
+
+      <!-- Eyebrow: small uppercase label -->
+      {% block eyebrow_wrap %}<p style="margin:0 0 14px 0;font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#2196c9;">{% block eyebrow %}{% endblock %}</p>{% endblock %}
+
+      <!-- Heading -->
+      <h1 class="pc-h1" style="margin:0 0 18px 0;font-family:'Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:32px;line-height:1.15;color:#0d0630;">{% block heading %}{% endblock %}</h1>
+
+      <!-- Body copy -->
+      {% block body %}{% endblock %}
+
+      <!-- Detail box -->
+      {% block detail %}{% endblock %}
+
+      <!-- CTA button -->
+      {% block cta %}{% if cta_url %}<table role="presentation" class="pc-btn" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 8px 0;">
+        <tr>
+          <td align="center" bgcolor="#55cdfc" style="border-radius:10px;">
+            <a href="{{ cta_url }}" target="_blank" style="display:inline-block;padding:14px 32px;font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:16px;line-height:1;color:#0d0630;text-decoration:none;border-radius:10px;">{{ cta_label|default:"Review donations" }}</a>
+          </td>
+        </tr>
+      </table>{% endif %}{% endblock %}
+
+    </td>
+  </tr>
+
+  <!-- Divider -->
+  <tr>
+    <td class="pc-pad" style="padding:12px 48px 0 48px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td height="1" style="background-color:#ececef;font-size:0;line-height:0;">&nbsp;</td></tr></table>
+    </td>
+  </tr>
+
+  <!-- Footer -->
+  <tr>
+    <td align="center" style="background-color:#0d0630;padding:32px 40px;">
+      <p style="margin:0;font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;line-height:1.6;color:#7a768d;">{% block footer_note %}You&rsquo;re receiving this because you have a PUCKHATE! admin account.{% endblock %}</p>
+    </td>
+  </tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,5 +1,6 @@
 import logging
 import uuid
+from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 
@@ -39,7 +40,7 @@ class Charity(models.Model):
         return cls.objects.filter(approved=True)  # ty: ignore[unresolved-attribute]
 
 
-def make_receipt_path(instance, filename):
+def make_receipt_path(instance, filename) -> str:
     """Store receipts under <private root>/receipts/ with an opaque filename"""
     ext = Path(filename).suffix.lower()
     return f"receipts/{uuid.uuid4().hex}{ext}"
@@ -118,16 +119,16 @@ class Donation(models.Model):
         state = "verified" if self.is_verified else "draft"
         return f"${self.amount} from {self.get_name_display()} ({state})"
 
-    def get_name_display(self):
+    def get_name_display(self) -> str:
         """Donor name for display, falling back to "Anonymous" when blank."""
-        return self.name or "Anonymous"
+        return str(self.name or "Anonymous")
 
     @property
-    def is_verified(self):
+    def is_verified(self) -> bool:
         return self.verified is not None
 
     @classmethod
-    def verified_total(cls):
+    def verified_total(cls) -> Decimal:
         """Sum of `amount` across all verified donations"""
         total = cls.objects.filter(verified__isnull=False).aggregate(  # ty: ignore[unresolved-attribute]
             total=models.Sum("amount")
@@ -135,9 +136,21 @@ class Donation(models.Model):
         return total or Decimal("0")
 
     @classmethod
-    def verified_count(cls):
+    def verified_count(cls) -> int:
         """Total number of verified donations"""
         return cls.objects.filter(verified__isnull=False).count()  # ty: ignore[unresolved-attribute]
+
+    @classmethod
+    def pending_count(cls, since: datetime | None = None) -> int:
+        """Number of donations awaiting approval
+
+        Args:
+            since (datetime, optional): Only count drafts created on or after this datetime.
+        """
+        qs = cls.objects.filter(verified__isnull=True)  # ty: ignore[unresolved-attribute]
+        if since is not None:
+            qs = qs.filter(created__gte=since)
+        return qs.count()
 
     @classmethod
     def verified_donations(cls):

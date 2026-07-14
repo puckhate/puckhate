@@ -1,0 +1,6 @@
+In the past hour, {{ pending_count }} new donation{{ pending_count|pluralize }} entered the queue and {{ pending_count|pluralize:"is,are" }} now pending review.
+
+Review the pending queue:
+{{ cta_url }}
+
+You're receiving this because you have a PUCKHATE! admin account.

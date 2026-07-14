@@ -9,18 +9,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 def get_env_variable(name, default=None):
-    return os.environ.get(name, default)
+    # Treat an empty value the same as unset so the default applies
+    value = os.environ.get(name)
+    if not value:
+        return default
+    return value
 
 
 def env_bool(name, default=False):
+    # Treat an empty value the same as unset so the default applies
     value = os.environ.get(name)
-    if value is None:
+    if not value:
         return default
     return value.lower() in ("1", "true", "yes", "on")
 
 
 def env_list(name, default=""):
-    raw = os.environ.get(name, default)
+    # Treat an empty value the same as unset so the default applies
+    raw = os.environ.get(name) or default
     return [item.strip() for item in raw.split(",") if item.strip()]
 
 
@@ -122,6 +128,9 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
+# Absolute base URL used to build links in outbound admin emails
+SITE_URL = get_env_variable("SITE_URL", "http://localhost:8000").rstrip("/")
+
 # The Vite build emits the SPA (hashed assets + index.html) into this dir.
 SPA_DIR = BASE_DIR / "spa"
 
@@ -214,6 +223,23 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool(
     "SECURE_HSTS_INCLUDE_SUBDOMAINS", SECURE_HSTS_SECONDS > 0
 )
 SECURE_HSTS_PRELOAD = env_bool("SECURE_HSTS_PRELOAD", False)
+
+# Email
+# In development (DEBUG=1), mail is written to the console
+EMAIL_BACKEND = get_env_variable(
+    "EMAIL_BACKEND",
+    "django.core.mail.backends.console.EmailBackend"
+    if DEBUG
+    else "django.core.mail.backends.smtp.EmailBackend",
+)
+EMAIL_HOST = get_env_variable("EMAIL_HOST", "localhost")
+EMAIL_PORT = env_int("EMAIL_PORT", 587)
+EMAIL_HOST_USER = get_env_variable("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = get_env_variable("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
+DEFAULT_FROM_EMAIL = get_env_variable(
+    "DEFAULT_FROM_EMAIL", "PUCKHATE! <noreply@puckhate.com>"
+)
 
 # CurrencyLayer API
 CURRENCYLAYER_API_KEY = os.environ.get("CURRENCYLAYER_API_KEY")

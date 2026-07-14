@@ -19,6 +19,7 @@ More detail lives in [`docs/`](docs/):
 - **[ROADMAP.md](docs/ROADMAP.md)** — what's planned, and what's out of scope
 - **[DESIGN.md](docs/DESIGN.md)** — color palette and typography
 - **[API.md](docs/API.md)** — the DRF endpoints under `/api/` and their response shapes
+- **[EMAIL.md](docs/EMAIL.md)** — admin email: configuration, recipients, templates, and the donation summary jobs
 - **[CONTRIBUTING.md](docs/CONTRIBUTING.md)** — how to contribute, conventions, and the project's ground rules
 
 ## Disclaimer
