@@ -263,7 +263,7 @@ export default function LogDonation({ charities }: LogDonationProps) {
                         <TextField
                           name="name"
                           label="Your Name"
-                          help="Optional, will be displayed on leaderboard"
+                          help="Optional, will be displayed on public donation list"
                         />
                       </div>
                     </div>
