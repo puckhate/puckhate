@@ -13,10 +13,16 @@
 
 .receipt-thumb__small {
     display: block;
-    width: 120px;
+    width: 100px;
     height: auto;
     border-radius: 4px;
     border: 1px solid var(--border-color, #ccc);
+    /* Blur to obscure potentially offensive content until intentionally viewed. */
+    filter: blur(4px);
+}
+
+.receipt-thumb:hover .receipt-thumb__small {
+    filter: none;
 }
 
 .receipt-thumb__large {
