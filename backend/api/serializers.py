@@ -1,9 +1,11 @@
+import logging
 from decimal import ROUND_HALF_UP, Decimal
 
 from rest_framework import serializers
 
 from django.db import IntegrityError
 
+from api.banned_words import contains_banned_word
 from api.models import Charity, Donation, DonationReceipt, SiteStats
 from api.validators import (
     ERROR_FILE_TOO_LARGE,
@@ -12,6 +14,8 @@ from api.validators import (
     has_allowed_file_header,
     has_allowed_file_size,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class SiteStatsSerializer(serializers.Serializer):
@@ -87,9 +91,27 @@ class DonationCreateSerializer(serializers.ModelSerializer):
         allow_null=True,
     )
 
+    # Set True by validate() when a banned word is present in the name or charity fileds
+    banned_word_present = False
+
     class Meta:
         model = Donation
         fields = ["id", "amount", "currency", "name", "charity", "receipt"]
+
+    def validate(self, attrs):
+        """Flag submissions containing a banned word
+
+        Do not raise an exception, the user should not know they were banned
+        """
+        for field in ("name", "charity"):
+            matched = contains_banned_word(attrs.get(field, ""))
+            if matched:
+                logger.info(
+                    "Donation discarded by banned-word filter (matched: %r)", matched
+                )
+                self.banned_word_present = True
+                break
+        return attrs
 
     def validate_amount(self, amount):
         if amount <= 0:
@@ -106,6 +128,12 @@ class DonationCreateSerializer(serializers.ModelSerializer):
         ):
             raise serializers.ValidationError("This receipt has already been used.")
         return receipt
+
+    def save(self, **kwargs):
+        # If the banned word sentinel is set, return None instead of an instance.
+        if self.banned_word_present:
+            return None
+        return super().save(**kwargs)
 
     def create(self, validated_data):
         # All amounts are stored in USD. Convert to USD using the current rate

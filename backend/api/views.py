@@ -62,7 +62,10 @@ def donations(request: Request) -> Response:
     if request.method == "POST":
         serializer = DonationCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        if serializer.save() is None:
+            # A banned word was found: the serializer silently dropped the
+            # submission. Feign success with an empty body.
+            return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     serializer = DonationSerializer(Donation.verified_donations(), many=True)
     return Response(serializer.data)

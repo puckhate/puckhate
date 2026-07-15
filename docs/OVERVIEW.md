@@ -14,11 +14,15 @@ the cumulative impact of the campaign is publicly visible.
 ## What it does
 
 - Fans **self-report** donations they've already made, including a receipt.
-- Reported donations are stored as **drafts**.
+- Reported donations are stored as **drafts**. Submissions containing a banned word
+  are silently discarded before they are stored (see [MODERATION.md](./MODERATION.md)).
 - An **organizer** (a staff user with a login to the Django backend/admin) reviews each
   draft and, if it looks legitimate based on the receipt details, **approves** it.
 - Approved donations roll up into the **public totals** shown on the site (amount
   raised, number of donors, goals/scores answered).
+
+See [MODERATION.md](./MODERATION.md) for the full submission → screening → queue →
+approval flow.
 
 ## What it explicitly does not do
 
@@ -45,5 +49,6 @@ The MVP described above is the target but **not yet fully built** — see
 
 ## Related docs
 
+- [MODERATION.md](./MODERATION.md) — submission screening, the review queue, and approval
 - [DESIGN.md](./DESIGN.md) — palette and typography
 - [ROADMAP.md](./ROADMAP.md) — implementation status and future work

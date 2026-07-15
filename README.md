@@ -16,6 +16,7 @@ constraints).
 More detail lives in [`docs/`](docs/):
 
 - **[OVERVIEW.md](docs/OVERVIEW.md)** — what the product is, the approval flow, scope and legal constraints
+- **[MODERATION.md](docs/MODERATION.md)** — how submissions are screened, queued, and approved
 - **[ROADMAP.md](docs/ROADMAP.md)** — what's planned, and what's out of scope
 - **[DESIGN.md](docs/DESIGN.md)** — color palette and typography
 - **[API.md](docs/API.md)** — the DRF endpoints under `/api/` and their response shapes
@@ -48,7 +49,7 @@ In production the app is served from a single origin by Django:
 | `/admin/...`         | Django admin                                         |
 | `/static/...`        | WhiteNoise (hashed Vite assets + admin/DRF static)   |
 | `/private-media/...` | Staff-only view (donation receipts; never public)    |
-| everything else      | the frontend's `index.html`(react-router takes over) |
+| everything else      | the frontend's `index.html` (react-router takes over) |
 
 The Vite build emits into `backend/spa/`, Django's
 `collectstatic` gathers it into `STATIC_ROOT`, and WhiteNoise serves it. Any path that

@@ -13,7 +13,7 @@ auth with `AllowAny` permission unless noted.
 | POST   | `/api/receipts/`      | `receipts`      | Upload a proof-of-donation file |
 | GET    | `/api/charities/`     | `charities`     | List of approved charities      |
 
-## GET `/api/health`
+## GET `/api/health/`
 
 ```json
 { "status": "ok" }
@@ -74,33 +74,6 @@ All verified donations, most-recently-verified first.
 
 No PII (receipt file, verifier) is exposed.
 
-## POST `/api/receipts/`
-
-Accepts a single proof-of-donation upload (`multipart/form-data`) and returns
-a claim token. The frontend uploads the receipt, while the user finishes the form.
-The token is attached to the donation on submit. A receipt that no donation ever claims is
-reaped by the orphan-cleanup job.
-
-Request (multipart):
-
-- `file` — image or PDF, ≤ 10 MB. Type is validated by both extension and
-  content (leading-byte signature); other types/sizes are rejected.
-  Oversized requests are rejected up front with `413`.
-
-Response (`201 Created`):
-
-```json
-{
-  "token": "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
-  "created": "2026-06-07T18:30:00Z"
-}
-```
-
-The file is\*write-only. Receipts are private and
-reachable only via the staff-gated `/private-media/` route.
-
-This endpoint is rate-limited per client IP.
-
 ## POST `/api/donations/`
 
 Reports a fan donation. Lands as a **draft** (unverified) for an organizer to
@@ -135,6 +108,39 @@ Response (`201 Created`) echoes the accepted fields (`id`, `amount`, `name`,
 `charity` name, `receipt` token); `amount` is the stored USD value. Validation
 errors return `400` with per-field messages. This endpoint is rate-limited per
 client IP.
+
+Submissions are screened for banned words in the `name`/`charity` fields. A
+match is **silently discarded**: the response is still `201 Created` but with an
+**empty body**, nothing is persisted, and the submission never reaches the
+review queue. This is deliberately indistinguishable from success. See
+[MODERATION.md](./MODERATION.md).
+
+## POST `/api/receipts/`
+
+Accepts a single proof-of-donation upload (`multipart/form-data`) and returns
+a claim token. The frontend uploads the receipt, while the user finishes the form.
+The token is attached to the donation on submit. A receipt that no donation ever claims is
+reaped by the orphan-cleanup job.
+
+Request (multipart):
+
+- `file` — image or PDF, ≤ 10 MB. Type is validated by both extension and
+  content (leading-byte signature); other types/sizes are rejected.
+  Oversized requests are rejected up front with `413`.
+
+Response (`201 Created`):
+
+```json
+{
+  "token": "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
+  "created": "2026-06-07T18:30:00Z"
+}
+```
+
+The file is **write-only**. Receipts are private and
+reachable only via the staff-gated `/private-media/` route.
+
+This endpoint is rate-limited per client IP.
 
 ## GET `/api/charities/`
 

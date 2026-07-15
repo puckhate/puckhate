@@ -38,3 +38,4 @@ npm-debug.log*
 !.env.example
 .gitsecret/keys/random_seed
 !*.secret
+backend/api/banned_words.json

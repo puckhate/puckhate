@@ -7,7 +7,7 @@
 - **Test suite** - validate the backend api on build
 - **Score alerts** - notify subscribed users when the player scores so they can consider
   donating again. Discussion: is this better handled by social channels?
-- **Email newsletter** - accept an optional email address when a user logs a donation. Send an email newsletter with updated total impact of the campaign. Discussin: is this better handled by social channels?
+- **Email newsletter** - accept an optional email address when a user logs a donation. Send an email newsletter with updated total impact of the campaign. Discussion: is this better handled by social channels?
 
 ## Out of scope (do not build)
 

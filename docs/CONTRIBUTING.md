@@ -42,7 +42,7 @@ Contributions that cross these lines won't be merged, regardless of code quality
 ## Conventions
 
 - **No "vibe coding"**: contributions wholly authored by AI "vibe coding" will be rejected. The use of
-  AI tools in your development workflow is permissable, but you are accountable for the code you contribute.
+  AI tools in your development workflow is permissible, but you are accountable for the code you contribute.
 - **Commit messages**: we encourage [Conventional Commits](https://www.conventionalcommits.org/)
   (`feat:`, `fix:`, `chore:`, `docs:`, `build:`, …). It keeps history readable.
 - **Match the surrounding code.** Follow the style, naming, and structure already
