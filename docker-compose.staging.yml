@@ -109,7 +109,7 @@ services:
       ofelia.job-exec.update-goals-scored.schedule: "@every 5m"
       ofelia.job-exec.update-goals-scored.command: "uv run python manage.py update_goals_scored"
       # Hourly summary of donations that entered the approval queue
-      ofelia.job-exec.hourly-email-summary.schedule: "0 * * * *" # Run at the top of every hour
+      ofelia.job-exec.hourly-email-summary.schedule: "0 0 * * * *" # Run at the top of every hour
       ofelia.job-exec.hourly-email-summary.command: "uv run python manage.py hourly_email_summary"
       # Daily summary of the total pending-approval backlog
       ofelia.job-exec.daily-email-summary.schedule: "0 0 2 * * *" # Run at 02:00 (UTC) every day
