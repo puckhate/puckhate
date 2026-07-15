@@ -139,7 +139,8 @@ services:
   scheduler:
     image: mcuadros/ofelia:latest
     restart: unless-stopped
-    command: daemon --docker
+    # Scope to this project's containers only. Project name is derived from the deploy dir (/opt/puckhate).
+    command: daemon --docker --docker-filter label=com.docker.compose.project=puckhate
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
