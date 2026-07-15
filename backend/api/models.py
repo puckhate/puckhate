@@ -110,6 +110,10 @@ class Donation(models.Model):
         blank=True,
         related_name="verified_donations",
     )
+    approval_notes = models.TextField(
+        blank=True,
+        help_text="Optional internal notes about this donation's approval",
+    )
 
     class Meta:
         ordering = ["-created"]
