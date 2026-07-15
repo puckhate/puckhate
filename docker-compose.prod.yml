@@ -78,6 +78,7 @@ services:
       MEDIA_ROOT: /data/media
       NUM_PROXIES: ${NUM_PROXIES:-2}
       PRIVATE_MEDIA_ROOT: /data/private_media
+      ROBOTS_ALLOW: ${ROBOTS_ALLOW:-1}
       SECURE_HSTS_SECONDS: ${SECURE_HSTS_SECONDS:-0}
       SECURE_PROXY_SSL_HEADER: ${SECURE_PROXY_SSL_HEADER:-1}
       SECURE_SSL_REDIRECT: ${SECURE_SSL_REDIRECT:-1}
@@ -93,39 +94,46 @@ services:
       - internal
       - proxy
     labels:
-      traefik.enable: "true"
-      traefik.docker.network: "proxy"
-      # Hourly orphan/expired receipt cleanup
+      # Run scheduled jobs
       ofelia.enabled: "true"
+      # Hourly orphan/expired receipt cleanup
       ofelia.job-exec.cleanup-receipts.schedule: "@every 1h"
       ofelia.job-exec.cleanup-receipts.command: "uv run python manage.py cleanup_orphan_receipts"
       # Nightly exchange rate refresh
-      ofelia.job-exec.update-exchange-rate.schedule: "0 0 3 * * *"
+      ofelia.job-exec.update-exchange-rate.schedule: "0 0 3 * * *" # Run at 03:00 (UTC) every day
       ofelia.job-exec.update-exchange-rate.command: "uv run python manage.py update_exchange_rate"
       # Nightly cleanup of orphaned charities
-      ofelia.job-exec.cleanup-charities.schedule: "0 30 3 * * *"
+      ofelia.job-exec.cleanup-charities.schedule: "0 30 3 * * *" # Run at 03:30 (UTC) every day
       ofelia.job-exec.cleanup-charities.command: "uv run python manage.py cleanup_orphan_charities"
       # Refresh the tracked player's goal total every 5 minutes
       ofelia.job-exec.update-goals-scored.schedule: "@every 5m"
       ofelia.job-exec.update-goals-scored.command: "uv run python manage.py update_goals_scored"
       # Hourly summary of donations that entered the approval queue
-      ofelia.job-exec.hourly-email-summary.schedule: "@every 1h"
+      ofelia.job-exec.hourly-email-summary.schedule: "0 * * * *" # Run at the top of every hour
       ofelia.job-exec.hourly-email-summary.command: "uv run python manage.py hourly_email_summary"
       # Daily summary of the total pending-approval backlog
-      ofelia.job-exec.daily-email-summary.schedule: "0 0 8 * * *"
+      ofelia.job-exec.daily-email-summary.schedule: "0 0 2 * * *" # Run at 02:00 (UTC) every day
       ofelia.job-exec.daily-email-summary.command: "uv run python manage.py daily_email_summary"
-      # Trafik endpoint registration
+      # Trafik configuration
+      traefik.enable: "true"
+      traefik.docker.network: "proxy"
+      # HTTP to HTTPS redirect
       traefik.http.routers.puckhate-http.entrypoints: "web"
       traefik.http.routers.puckhate-http.rule: "Host(`puckhate.com`) || Host(`www.puckhate.com`)"
-      traefik.http.routers.puckhate-http.middlewares: puckhate-redirect-https
+      traefik.http.routers.puckhate-http.middlewares: puckhate-redirect-www,puckhate-redirect-https
       traefik.http.middlewares.puckhate-redirect-https.redirectscheme.scheme: "https"
+      traefik.http.middlewares.puckhate-redirect-https.redirectscheme.permanent: "true"
+      # WWW to apex host redirect
+      traefik.http.middlewares.puckhate-redirect-www.redirectregex.regex: "^https?://www\\.puckhate\\.com/(.*)"
+      traefik.http.middlewares.puckhate-redirect-www.redirectregex.replacement: "https://puckhate.com/$${1}"
+      traefik.http.middlewares.puckhate-redirect-www.redirectregex.permanent: "true"
+      # Endpoint registration
       traefik.http.routers.puckhate.entrypoints: "websecure"
       traefik.http.routers.puckhate.rule: "Host(`puckhate.com`) || Host(`www.puckhate.com`)"
       traefik.http.routers.puckhate.tls: "true"
       traefik.http.routers.puckhate.tls.certresolver: "le"
-      # Hard cap on request body size (≈12MB)
-      traefik.http.routers.puckhate.middlewares: "puckhate-bodylimit"
-      traefik.http.middlewares.puckhate-bodylimit.buffering.maxRequestBodyBytes: "12582912"
+      traefik.http.routers.puckhate.middlewares: "puckhate-redirect-www,puckhate-bodylimit"
+      traefik.http.middlewares.puckhate-bodylimit.buffering.maxRequestBodyBytes: "12582912" # Hard cap on request body size (≈12MB)
     depends_on:
       db:
         condition: service_healthy

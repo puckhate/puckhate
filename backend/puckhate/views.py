@@ -2,8 +2,46 @@ from pathlib import Path
 
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
-from django.http import FileResponse, Http404
+from django.http import FileResponse, Http404, HttpResponse
 from django.views.decorators.http import require_GET
+
+# Public routes worth advertising to crawlers
+# Must be manually maintained, see frontend/src/constants.ts#ROUTES
+SITEMAP_PATHS = ("/", "/about", "/charities", "/donations", "/privacy", "/disclaimer")
+
+
+@require_GET
+def robots_txt(request):
+    """Serve robots.txt, gated on the ROBOTS_ALLOW setting"""
+    if settings.ROBOTS_ALLOW:
+        lines = [
+            "User-agent: *",
+            "Allow: /",
+            f"Sitemap: {settings.SITE_URL}/sitemap.xml",
+            "Content-Signal: ai-train=no, search=yes, ai-input=yes",
+        ]
+    else:
+        lines = [
+            "User-agent: *",
+            "Disallow: /",
+            "Content-Signal: ai-train=no, search=no, ai-input=no",
+        ]
+    body = "\n".join(lines) + "\n"
+    return HttpResponse(body, content_type="text/plain")
+
+
+@require_GET
+def sitemap_xml(request):
+    """Serve a basic sitemap of the public SPA routes"""
+    urls = "".join(
+        f"<url><loc>{settings.SITE_URL}{path}</loc></url>" for path in SITEMAP_PATHS
+    )
+    body = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        f"{urls}</urlset>"
+    )
+    return HttpResponse(body, content_type="application/xml")
 
 
 @staff_member_required

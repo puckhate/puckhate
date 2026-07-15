@@ -72,24 +72,25 @@ services:
     ports:
       - "8000:8000"
     labels:
+      # Run scheduled jobs
+      ofelia.enabled: "false"
       # Hourly orphan/expired receipt cleanup
-      ofelia.enabled: "true"
       ofelia.job-exec.cleanup-receipts.schedule: "@every 1h"
       ofelia.job-exec.cleanup-receipts.command: "uv run python manage.py cleanup_orphan_receipts"
       # Nightly exchange rate refresh
-      ofelia.job-exec.update-exchange-rate.schedule: "0 0 3 * * *"
+      ofelia.job-exec.update-exchange-rate.schedule: "0 0 3 * * *" # Run at 03:00 (UTC) every day
       ofelia.job-exec.update-exchange-rate.command: "uv run python manage.py update_exchange_rate"
       # Nightly cleanup of orphaned charities
-      ofelia.job-exec.cleanup-charities.schedule: "0 30 3 * * *"
+      ofelia.job-exec.cleanup-charities.schedule: "0 30 3 * * *" # Run at 03:30 (UTC) every day
       ofelia.job-exec.cleanup-charities.command: "uv run python manage.py cleanup_orphan_charities"
       # Refresh the tracked player's goal total every 5 minutes
       ofelia.job-exec.update-goals-scored.schedule: "@every 5m"
       ofelia.job-exec.update-goals-scored.command: "uv run python manage.py update_goals_scored"
       # Hourly summary of donations that entered the approval queue
-      ofelia.job-exec.hourly-email-summary.schedule: "@every 1h"
+      ofelia.job-exec.hourly-email-summary.schedule: "0 * * * *" # Run at the top of every hour
       ofelia.job-exec.hourly-email-summary.command: "uv run python manage.py hourly_email_summary"
       # Daily summary of the total pending-approval backlog
-      ofelia.job-exec.daily-email-summary.schedule: "0 0 8 * * *"
+      ofelia.job-exec.daily-email-summary.schedule: "0 0 2 * * *" # Run at 02:00 (UTC) every day
       ofelia.job-exec.daily-email-summary.command: "uv run python manage.py daily_email_summary"
     depends_on:
       db:

@@ -131,6 +131,10 @@ USE_TZ = True
 # Absolute base URL used to build links in outbound admin emails
 SITE_URL = get_env_variable("SITE_URL", "http://localhost:8000").rstrip("/")
 
+# Controls the robots.txt served by puckhate.views.robots_txt
+# True to allow crawlers (prod), False to disallow crawling entirely (staging)
+ROBOTS_ALLOW = env_bool("ROBOTS_ALLOW", True)
+
 # The Vite build emits the SPA (hashed assets + index.html) into this dir.
 SPA_DIR = BASE_DIR / "spa"
 
