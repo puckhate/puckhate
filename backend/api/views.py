@@ -60,7 +60,9 @@ def exchange_rate(request: Request) -> Response:
 def donations(request: Request) -> Response:
     """List verified donations, or report a new one as a draft"""
     if request.method == "POST":
-        serializer = DonationCreateSerializer(data=request.data)
+        serializer = DonationCreateSerializer(
+            data=request.data, context={"request": request}
+        )
         serializer.is_valid(raise_exception=True)
         if serializer.save() is None:
             # A banned word was found: the serializer silently dropped the
@@ -89,7 +91,9 @@ def receipts(request: Request) -> Response:
                 {"file": [ERROR_FILE_TOO_LARGE]},
                 status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
             )
-    serializer = DonationReceiptSerializer(data=request.data)
+    serializer = DonationReceiptSerializer(
+        data=request.data, context={"request": request}
+    )
     serializer.is_valid(raise_exception=True)
     serializer.save()
     return Response(serializer.data, status=status.HTTP_201_CREATED)

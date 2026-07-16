@@ -19,6 +19,17 @@
             );
         "
     />
+    <input
+        type="submit"
+        value="{% translate 'Reject and ban' %}"
+        name="_reject_and_ban"
+        class="deletelink"
+        onclick="
+            return confirm(
+                'Reject this donation and ban the reporting IP address? This cannot be undone.',
+            );
+        "
+    />
 </div>
 {% endif %}
 {{ block.super }}

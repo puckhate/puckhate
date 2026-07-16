@@ -15,6 +15,39 @@ from django.dispatch import receiver
 logger = logging.getLogger(__name__)
 
 
+class Ban(models.Model):
+    """A blocked client IP address"""
+
+    class Type(models.TextChoices):
+        ADMIN = "admin", "Admin"
+        AUTO = "auto", "Auto"
+
+    type = models.CharField(max_length=5, choices=Type.choices)
+    created = models.DateTimeField(auto_now_add=True)
+    ip = models.GenericIPAddressField(unique=True)
+    reason = models.CharField(max_length=255)
+    banned_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="banned_ips",
+    )
+
+    class Meta:
+        ordering = ["-created"]
+
+    def __str__(self):
+        return f"{self.get_type_display()} ban on {self.ip}"  # ty: ignore[unresolved-attribute]
+
+    @classmethod
+    def is_banned(cls, ip: str | None) -> bool:
+        """Returns True if `ip` matches an existing ban"""
+        if not ip:
+            return False
+        return cls.objects.filter(ip=ip).exists()  # ty: ignore[unresolved-attribute]
+
+
 class Charity(models.Model):
     """A charity fans can attribute a donation to.
 
@@ -66,6 +99,11 @@ class DonationReceipt(models.Model):
         upload_to=make_receipt_path,
         storage=select_private_storage,
     )
+    ip = models.GenericIPAddressField(
+        null=True,
+        blank=True,
+        help_text="Client IP that uploaded this receipt",
+    )
 
     class Meta:
         ordering = ["-created"]
@@ -113,6 +151,11 @@ class Donation(models.Model):
     approval_notes = models.TextField(
         blank=True,
         help_text="Optional internal notes about this donation's approval",
+    )
+    ip = models.GenericIPAddressField(
+        null=True,
+        blank=True,
+        help_text="Client IP that reported this donation",
     )
 
     class Meta:

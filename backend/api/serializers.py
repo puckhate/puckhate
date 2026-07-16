@@ -4,9 +4,11 @@ from decimal import ROUND_HALF_UP, Decimal
 from rest_framework import serializers
 
 from django.db import IntegrityError
+from django.utils import timezone
 
 from api.banned_words import contains_banned_word
-from api.models import Charity, Donation, DonationReceipt, SiteStats
+from api.models import Ban, Charity, Donation, DonationReceipt, SiteStats
+from api.utils import get_client_ip
 from api.validators import (
     ERROR_FILE_TOO_LARGE,
     ERROR_FILE_TYPE_INVALID,
@@ -58,6 +60,9 @@ class DonationReceiptSerializer(serializers.ModelSerializer):
     Accepts the file and returns the new receipt's claim token.
     """
 
+    # Set True by validate() when the request IP matches a Ban record.
+    is_banned = False
+
     class Meta:
         model = DonationReceipt
         fields = ["token", "created", "file"]
@@ -74,6 +79,24 @@ class DonationReceiptSerializer(serializers.ModelSerializer):
         if not has_allowed_file_header(head):
             raise serializers.ValidationError(ERROR_FILE_TYPE_INVALID)
         return file
+
+    def validate(self, attrs):
+        """Flag uploads from a banned IP"""
+        if Ban.is_banned(get_client_ip(self.context.get("request"))):
+            self.is_banned = True
+        return attrs
+
+    def save(self, **kwargs):
+        if self.is_banned:
+            # Silently discard: return an unsaved receipt so the
+            # response still includes a token
+            self.instance = DonationReceipt(created=timezone.now())
+            return self.instance
+        return super().save(**kwargs)
+
+    def create(self, validated_data):
+        validated_data["ip"] = get_client_ip(self.context.get("request"))
+        return super().create(validated_data)
 
 
 class DonationCreateSerializer(serializers.ModelSerializer):
@@ -94,9 +117,19 @@ class DonationCreateSerializer(serializers.ModelSerializer):
     # Set True by validate() when a banned word is present in the name or charity fileds
     banned_word_present = False
 
+    # Set True by run_validation() when the request IP matches a Ban record.
+    is_banned = False
+
     class Meta:
         model = Donation
         fields = ["id", "amount", "currency", "name", "charity", "receipt"]
+
+    def run_validation(self, data=serializers.empty):
+        """Drop submissions from a banned IP *before* field validation runs."""
+        if Ban.is_banned(get_client_ip(self.context.get("request"))):
+            self.is_banned = True
+            return {}
+        return super().run_validation(data)
 
     def validate(self, attrs):
         """Flag submissions containing a banned word
@@ -110,6 +143,15 @@ class DonationCreateSerializer(serializers.ModelSerializer):
                     "Donation discarded by banned-word filter (matched: %r)", matched
                 )
                 self.banned_word_present = True
+                ip = get_client_ip(self.context.get("request"))
+                if ip:
+                    Ban.objects.get_or_create(  # ty: ignore[unresolved-attribute]
+                        ip=ip,
+                        defaults={
+                            "type": Ban.Type.AUTO,
+                            "reason": f"Donation discarded by banned-word filter (matched: {matched})",
+                        },
+                    )
                 break
         return attrs
 
@@ -130,12 +172,14 @@ class DonationCreateSerializer(serializers.ModelSerializer):
         return receipt
 
     def save(self, **kwargs):
-        # If the banned word sentinel is set, return None instead of an instance.
-        if self.banned_word_present:
+        # Silently drop banned-IP or banned-word submissions.
+        # Return None instead of an instance so the view can feign success.
+        if self.is_banned or self.banned_word_present:
             return None
         return super().save(**kwargs)
 
     def create(self, validated_data):
+        validated_data["ip"] = get_client_ip(self.context.get("request"))
         # All amounts are stored in USD. Convert to USD using the current rate
         currency = validated_data.pop("currency", "USD")
         rate = Decimal("1.0000")

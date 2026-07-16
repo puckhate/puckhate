@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 
-from api.models import Charity, Donation, DonationReceipt, SiteStats
+from api.models import Ban, Charity, Donation, DonationReceipt, SiteStats
 
 
 def receipt_preview(file):
@@ -111,10 +111,11 @@ class DonationAdmin(admin.ModelAdmin):
         "verified",
         "verified_by",
         "receipt_link",
+        "ip",
     )
     exclude = ("receipt",)
     autocomplete_fields = ("charity",)
-    actions = ("approve", "reject")
+    actions = ("approve", "reject", "reject_and_ban")
 
     class Media:
         css = {"all": ("api/receipt_admin.css",)}
@@ -132,17 +133,79 @@ class DonationAdmin(admin.ModelAdmin):
                 self.message_user(request, "Donation verified.", level=messages.SUCCESS)
             return HttpResponseRedirect(request.get_full_path())
         if "_reject" in request.POST:
-            if obj.is_verified:
-                self.message_user(
-                    request,
-                    "Cannot reject a verified donation.",
-                    level=messages.ERROR,
-                )
+            if not self._reject_one(request, obj):
                 return HttpResponseRedirect(request.get_full_path())
-            obj.delete()
             self.message_user(request, "Donation rejected.", level=messages.SUCCESS)
             return HttpResponseRedirect(reverse("admin:api_donation_changelist"))
+        if "_reject_and_ban" in request.POST:
+            # Capture the IP before the donation is deleted.
+            ip = obj.ip
+            if not self._reject_one(request, obj):
+                return HttpResponseRedirect(request.get_full_path())
+            if ip:
+                self._ban_ip(request, ip)
+                self.message_user(
+                    request,
+                    "Donation rejected and IP banned.",
+                    level=messages.SUCCESS,
+                )
+            else:
+                self.message_user(
+                    request,
+                    "Donation rejected, but no IP on record to ban.",
+                    level=messages.WARNING,
+                )
+            return HttpResponseRedirect(reverse("admin:api_donation_changelist"))
         return super().response_change(request, obj)
+
+    def _ban_ip(self, request, ip) -> bool:
+        """Ban `ip` as an admin. Returns True if a new Ban row was created."""
+        _, created = Ban.objects.get_or_create(  # ty: ignore[unresolved-attribute]
+            ip=ip,
+            defaults={
+                "type": Ban.Type.ADMIN,
+                "reason": "Banned by admin",
+                "banned_by": request.user,
+            },
+        )
+        return created
+
+    def _reject_one(self, request, obj) -> bool:
+        """Delete a single draft donation.
+
+        Returns False (and warns) if the donation is verified and so cannot be
+        rejected; the caller is responsible for the redirect.
+        """
+        if obj.is_verified:
+            self.message_user(
+                request,
+                "Cannot reject a verified donation.",
+                level=messages.ERROR,
+            )
+            return False
+        obj.delete()
+        return True
+
+    def _reject_drafts(self, request, queryset):
+        """Delete the unverified donations in `queryset`, warn about the rest.
+
+        Returns (deleted_count, ips) where `ips` is the set of non-null IPs the
+        deleted drafts carried, so a caller can ban them.
+        """
+        drafts = queryset.filter(verified__isnull=True)
+        skipped = queryset.filter(verified__isnull=False).count()
+        # Capture IPs before deletion.
+        ips = {ip for ip in drafts.values_list("ip", flat=True) if ip}
+        deleted = drafts.count()
+        drafts.delete()
+        if skipped:
+            self.message_user(
+                request,
+                f"Skipped {skipped} verified donation(s); verified donations "
+                "cannot be rejected.",
+                level=messages.WARNING,
+            )
+        return deleted, ips
 
     @admin.display(boolean=True, description="Verified")
     def is_verified(self, obj):
@@ -163,18 +226,24 @@ class DonationAdmin(admin.ModelAdmin):
 
     @admin.action(description="Reject selected donations")
     def reject(self, request, queryset):
-        drafts = queryset.filter(verified__isnull=True)
-        skipped = queryset.filter(verified__isnull=False).count()
-        deleted = drafts.count()
-        drafts.delete()
-        if skipped:
-            self.message_user(
-                request,
-                f"Skipped {skipped} verified donation(s); verified donations "
-                "cannot be rejected.",
-                level=messages.WARNING,
-            )
+        deleted, _ = self._reject_drafts(request, queryset)
         self.message_user(request, f"Rejected {deleted} donation(s).")
+
+    @admin.action(description="Reject and ban selected donations")
+    def reject_and_ban(self, request, queryset):
+        deleted, ips = self._reject_drafts(request, queryset)
+        banned = sum(self._ban_ip(request, ip) for ip in ips)
+        self.message_user(
+            request, f"Rejected {deleted} donation(s) and banned {banned} IP(s)."
+        )
+
+
+@admin.register(Ban)
+class BanAdmin(admin.ModelAdmin):
+    list_display = ("ip", "type", "reason", "created")
+    list_filter = ("type",)
+    search_fields = ("ip", "reason")
+    readonly_fields = ("created",)
 
 
 @admin.register(SiteStats)
