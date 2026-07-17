@@ -62,7 +62,7 @@ export default function PrivacyView(): React.ReactNode {
         </section>
 
         <section className="space-y-3">
-          <H2> A note on sensitivity</H2>
+          <H2>A note on sensitivity</H2>
           <p className="text-muted leading-relaxed">
             We recognize that your choice of recipient organization may reveal
             information about your beliefs or identity. We treat all submitted

@@ -2,7 +2,7 @@
 export interface SiteStats {
   verified_total: string;
   verified_count: number;
-  largest_donation: string;
+  largest_donation: string | null;
   charities_donated_to: number;
   goals_scored: number;
   ca_exchange_rate: string;

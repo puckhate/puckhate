@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import client from "@client";
 import { Container, H1 } from "@components";
 import constants from "@constants";
+import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import type { Donation, SiteStats } from "@types";
 import { convertFromUSD, getLocaleCurrency } from "@utils/currency";
 import { formatAsCurrency, formatAsNumber } from "@utils/text";
@@ -14,6 +15,14 @@ export default function Stats(): React.ReactNode {
   const [statsLoading, setStatsLoading] = useState<boolean>(true);
   const [donations, setDonations] = useState<Donation[]>([]);
   const [donationsLoading, setDonationsLoading] = useState<boolean>(true);
+  const { rate, ensureRate } = useExchangeRate();
+
+  /*
+   * Ensure the shared exchange rate is populated for currency conversion
+   */
+  useEffect(() => {
+    ensureRate();
+  }, [ensureRate]);
 
   /*
    * Load campaign stats
@@ -54,18 +63,16 @@ export default function Stats(): React.ReactNode {
     return () => controller.abort();
   }, []);
 
+  // Resolve the display currency once per render for the card titles
+  const { currency } = useMemo(() => getLocaleCurrency(), []);
+
   // Prepare stats calculated in-browser
+  const exchangeRate = rate ?? 1;
   const totalRaised = stats
-    ? convertFromUSD(
-        Number(stats.verified_total),
-        Number(stats.ca_exchange_rate),
-      )
+    ? convertFromUSD(Number(stats.verified_total), exchangeRate)
     : 0;
   const largestDonation = stats
-    ? convertFromUSD(
-        Number(stats.largest_donation),
-        Number(stats.ca_exchange_rate),
-      )
+    ? convertFromUSD(Number(stats.largest_donation), exchangeRate)
     : 0;
   // Guard against division by zero (no donations / no goals yet)
   const verifiedCount = stats?.verified_count ?? 0;
@@ -92,13 +99,13 @@ export default function Stats(): React.ReactNode {
                 loading={statsLoading}
               />
               <StatCard
-                title={`Total Raised (${getLocaleCurrency().currency})`}
+                title={`Total Raised (${currency})`}
                 className="col-span-2"
                 value={formatAsCurrency(totalRaised)}
                 loading={statsLoading}
               />
               <StatCard
-                title={`Avg. Donation (${getLocaleCurrency().currency})`}
+                title={`Avg. Donation (${currency})`}
                 value={formatAsCurrency(averageDonation)}
                 loading={statsLoading}
               />
@@ -109,7 +116,7 @@ export default function Stats(): React.ReactNode {
                 loading={statsLoading}
               />
               <StatCard
-                title={`Avg. Donation per Goal (${getLocaleCurrency().currency})`}
+                title={`Avg. Donation per Goal (${currency})`}
                 value={formatAsCurrency(averageAmountPerGoal)}
                 loading={statsLoading}
               />
@@ -143,7 +150,7 @@ export default function Stats(): React.ReactNode {
             </header>
             <section>
               <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-                {donationsLoading || statsLoading
+                {donationsLoading
                   ? [1, 2, 3].map((key) => (
                       <DonorCard
                         key={key}
@@ -158,12 +165,7 @@ export default function Stats(): React.ReactNode {
                         key={donation.id}
                         name={donation.name}
                         amount={formatAsCurrency(
-                          donation && stats
-                            ? convertFromUSD(
-                                Number(donation.amount),
-                                Number(stats.ca_exchange_rate),
-                              )
-                            : 0,
+                          convertFromUSD(Number(donation.amount), exchangeRate),
                         )}
                         charity={donation.charity}
                         rank={index + 1}

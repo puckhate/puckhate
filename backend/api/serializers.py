@@ -26,7 +26,9 @@ class SiteStatsSerializer(serializers.Serializer):
     verified_total = serializers.DecimalField(max_digits=10, decimal_places=2)
     verified_count = serializers.IntegerField()
     goals_scored = serializers.IntegerField()
-    largest_donation = serializers.DecimalField(max_digits=10, decimal_places=2)
+    largest_donation = serializers.DecimalField(
+        max_digits=10, decimal_places=2, allow_null=True
+    )
     ca_exchange_rate = serializers.DecimalField(max_digits=10, decimal_places=4)
     charities_donated_to = serializers.IntegerField()
 

@@ -51,7 +51,7 @@ export default function AboutView(): React.ReactNode {
 
           {GamePlanItems.map((item) => (
             <section className="space-y-3" key={item.title}>
-              <H2> {item.title}</H2>
+              <H2>{item.title}</H2>
               <p className="text-muted leading-relaxed">{item.description}</p>
             </section>
           ))}
