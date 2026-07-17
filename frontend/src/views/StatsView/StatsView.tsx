@@ -158,7 +158,7 @@ export default function Stats(): React.ReactNode {
                         key={donation.id}
                         name={donation.name}
                         amount={formatAsCurrency(
-                          donation.amount && stats.ca_exchange_rate
+                          donation && stats
                             ? convertFromUSD(
                                 Number(donation.amount),
                                 Number(stats.ca_exchange_rate),

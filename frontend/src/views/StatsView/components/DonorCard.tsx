@@ -44,8 +44,8 @@ export default function DonorCard(props: DonorCardProps): React.ReactNode {
           className={clsx(
             "font-heading animate-ripple from-sky-aqua-100 to-sky-aqua-100 via-sky-aqua-600 mb-2 bg-linear-to-r bg-size-[200%_auto] bg-clip-text text-5xl font-bold text-transparent",
             {
-              "delay-[400ms]": rank === 2,
-              "delay-[800ms]": rank === 3,
+              "delay-400": rank === 2,
+              "delay-800": rank === 3,
             },
           )}
         >
