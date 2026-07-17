@@ -74,6 +74,17 @@ All verified donations, most-recently-verified first.
 
 No PII (receipt file, verifier) is exposed.
 
+### Query parameters
+
+- `top` — return the top _N_ verified donations by `amount` (descending)
+  instead of the full most-recently-verified list. Must be a positive integer.
+  Example: `GET /api/donations/?top=3` returns the three largest donations. A
+  non-integer or value below `1` responds with `400`:
+
+  ```json
+  { "top": ["Must be a positive integer."] }
+  ```
+
 ## POST `/api/donations/`
 
 Reports a fan donation. Lands as a **draft** (unverified) for an organizer to

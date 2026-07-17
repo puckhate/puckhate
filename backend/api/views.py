@@ -71,6 +71,7 @@ def exchange_rate(request: Request) -> Response:
 @throttle_classes([DonationReportThrottle])
 def donations(request: Request) -> Response:
     """List verified donations, or report a new one as a draft"""
+    # Create a new Donation
     if request.method == "POST":
         serializer = DonationCreateSerializer(
             data=request.data, context={"request": request}
@@ -81,7 +82,27 @@ def donations(request: Request) -> Response:
             # submission. Feign success with an empty body.
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    serializer = DonationSerializer(Donation.verified_donations(), many=True)
+
+    # Return a list of verified donations
+    donations = Donation.verified_donations()
+
+    # Optionally limit by "top" (top N donations by amount)
+    top = request.query_params.get("top")
+    if top is not None:
+        try:
+            count = int(top)
+        except ValueError:
+            return Response(
+                {"top": ["Must be a positive integer."]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if count < 1:
+            return Response(
+                {"top": ["Must be a positive integer."]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        donations = donations.order_by("-amount")[:count]
+    serializer = DonationSerializer(donations, many=True)
     return Response(serializer.data)
 
 

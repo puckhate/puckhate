@@ -99,6 +99,19 @@
   --color-dark-amethyst-800: #180b5b;
   --color-dark-amethyst-900: #0c062d; /* Root Color */
   --color-dark-amethyst-950: #090420;
+
+  /* Animations */
+  --animate-ripple: ripple 3s linear infinite;
+}
+
+@keyframes ripple {
+  0%,
+  60% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 @layer base {

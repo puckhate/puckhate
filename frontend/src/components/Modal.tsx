@@ -21,8 +21,7 @@ interface ModalTriggerProps {
 }
 
 type ModalSection =
-  | ((props: ModalRenderProps) => React.ReactNode)
-  | React.ReactNode;
+  ((props: ModalRenderProps) => React.ReactNode) | React.ReactNode;
 
 interface ModalProps {
   label: string;
