@@ -54,7 +54,7 @@ export default function DonorCard(props: DonorCardProps): React.ReactNode {
       )}
 
       <div className="font-heading text-muted space-x-2 text-xs font-bold tracking-widest uppercase">
-        {loading ? <Skeleton /> : `Donated to ${charity}`}
+        {loading ? <Skeleton /> : `To ${charity}`}
       </div>
     </div>
   );
