@@ -1,4 +1,4 @@
-import { Container } from "@components";
+import { Container, H1 } from "@components";
 import constants from "@constants";
 import { Link } from "react-router-dom";
 
@@ -10,9 +10,7 @@ export default function ErrorView(): React.ReactNode {
           <p className="font-heading text-heading-blue text-7xl font-black">
             Error
           </p>
-          <h1 className="font-heading text-heading-pink text-4xl font-black tracking-tight uppercase">
-            Something went wrong.
-          </h1>
+          <H1>Something went wrong.</H1>
           <p className="text-muted leading-relaxed">
             An internal error ocurred that we can't recover from.
           </p>

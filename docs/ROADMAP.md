@@ -3,7 +3,6 @@
 ## Future ideas
 
 - **Donation list pagination** - implement paginate (or infinite scroll) on the donation list
-- **Stats page** - display different donation stats. Examples might be: largest donation, total amount donated, number of donations, average donation amount, average per goal.
 - **Test suite** - validate the backend api on build
 - **Score alerts** - notify subscribed users when the player scores so they can consider
   donating again. Discussion: is this better handled by social channels?

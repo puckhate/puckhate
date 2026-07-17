@@ -1,4 +1,4 @@
-import { Container } from "@components";
+import { Container, H1 } from "@components";
 import constants from "@constants";
 import { Link } from "react-router-dom";
 
@@ -9,9 +9,7 @@ export default function NotFoundView(): React.ReactNode {
         <p className="font-heading text-heading-blue text-7xl font-black">
           404
         </p>
-        <h1 className="font-heading text-heading-pink text-4xl font-black tracking-tight uppercase">
-          Page not found
-        </h1>
+        <H1>Page not found</H1>
         <p className="text-muted leading-relaxed">
           The page you're looking for doesn't exist or has moved.
         </p>

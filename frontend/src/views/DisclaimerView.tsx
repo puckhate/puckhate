@@ -1,24 +1,20 @@
-import { Container } from "@components";
+import { Container, H1, H2 } from "@components";
 import constants from "@constants";
 import { Link } from "react-router-dom";
 
-export default function Disclaimer(): React.ReactNode {
+export default function DisclaimerView(): React.ReactNode {
   return (
     <Container>
       <article className="mx-auto max-w-3xl space-y-10">
         <header className="space-y-2">
-          <h1 className="font-heading text-heading-pink text-4xl font-black tracking-tight uppercase">
-            Disclaimer
-          </h1>
+          <H1>Disclaimer</H1>
           <p className="text-muted text-sm">
             <strong>Last updated: June 30, 2026</strong>
           </p>
         </header>
 
         <section className="space-y-3">
-          <h2 className="font-heading text-heading-blue text-xl font-bold">
-            Independence and non-affiliation
-          </h2>
+          <H2>Independence and non-affiliation</H2>
           <p className="text-muted leading-relaxed">
             PUCKHATE is an independent, fan-organized initiative. It is not
             affiliated with, endorsed by, or sponsored by the Professional
@@ -30,9 +26,7 @@ export default function Disclaimer(): React.ReactNode {
         </section>
 
         <section className="space-y-3">
-          <h2 className="font-heading text-heading-blue text-xl font-bold">
-            How this campaign works
-          </h2>
+          <H2>How this campaign works</H2>
           <p className="text-muted leading-relaxed">
             Participants choose their own recipient organizations and donate
             directly to them. PUCKHATE does not collect, process, hold, or
@@ -47,9 +41,7 @@ export default function Disclaimer(): React.ReactNode {
         </section>
 
         <section className="space-y-3">
-          <h2 className="font-heading text-heading-blue text-xl font-bold">
-            Donation totals
-          </h2>
+          <H2>Donation totals</H2>
           <p className="text-muted leading-relaxed">
             Published totals reflect donation receipts voluntarily submitted by
             participants and reviewed in good faith by the site's organizers.
@@ -60,9 +52,7 @@ export default function Disclaimer(): React.ReactNode {
         </section>
 
         <section className="space-y-3">
-          <h2 className="font-heading text-heading-blue text-xl font-bold">
-            Statistics
-          </h2>
+          <H2>Statistics</H2>
           <p className="text-muted leading-relaxed">
             Goal and game statistics are compiled from publicly available
             sources. They are unofficial and are not verified by or endorsed by
@@ -71,9 +61,7 @@ export default function Disclaimer(): React.ReactNode {
         </section>
 
         <section className="space-y-3">
-          <h2 className="font-heading text-heading-blue text-xl font-bold">
-            Opinions
-          </h2>
+          <H2>Opinions</H2>
           <p className="text-muted leading-relaxed">
             Commentary on this site reflects the opinions of its organizers,
             based on publicly available statements and reporting. Nothing on
@@ -83,9 +71,7 @@ export default function Disclaimer(): React.ReactNode {
         </section>
 
         <section className="space-y-3">
-          <h2 className="font-heading text-heading-blue text-xl font-bold">
-            Tax matters
-          </h2>
+          <H2>Tax matters</H2>
           <p className="text-muted leading-relaxed">
             Because donations are made directly to organizations of each
             participant's choosing, any tax receipts or deductibility questions
@@ -96,18 +82,14 @@ export default function Disclaimer(): React.ReactNode {
         </section>
 
         <section className="space-y-3">
-          <h2 className="font-heading text-heading-blue text-xl font-bold">
-            No legal or financial advice
-          </h2>
+          <H2>No legal or financial advice</H2>
           <p className="text-muted leading-relaxed">
             Nothing on this site constitutes legal, financial, or tax advice.
           </p>
         </section>
 
         <section className="space-y-3">
-          <h2 className="font-heading text-heading-blue text-xl font-bold">
-            Contact
-          </h2>
+          <H2>Contact</H2>
           <p className="text-muted leading-relaxed">
             Questions or concerns, including requests to correct or remove
             content:{" "}

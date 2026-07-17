@@ -1,4 +1,4 @@
-import { Container } from "@components";
+import { Container, H1, H2 } from "@components";
 
 import FAQ from "./components/FAQ";
 
@@ -46,16 +46,12 @@ export default function AboutView(): React.ReactNode {
       <Container>
         <article className="mx-auto max-w-3xl space-y-10">
           <header className="space-y-2">
-            <h1 className="font-heading text-heading-pink text-4xl font-black tracking-tight uppercase">
-              The Game Plan
-            </h1>
+            <H1>The Game Plan</H1>
           </header>
 
           {GamePlanItems.map((item) => (
             <section className="space-y-3" key={item.title}>
-              <h2 className="font-heading text-heading-blue text-xl font-bold">
-                {item.title}
-              </h2>
+              <H2> {item.title}</H2>
               <p className="text-muted leading-relaxed">{item.description}</p>
             </section>
           ))}

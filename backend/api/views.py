@@ -33,10 +33,22 @@ def health(request: Request) -> Response:
 def site_stats(request: Request) -> Response:
     """Public campaign stats"""
     stats = SiteStats.load()
+    largest_donation = (
+        Donation.objects.filter(verified__isnull=False).order_by("-amount").first()  # ty: ignore[unresolved-attribute]
+    )
+    charities_donated_to = (
+        Charity.objects.filter(  # ty: ignore[unresolved-attribute]
+            donations__verified__isnull=False
+        )
+        .distinct()
+        .count()
+    )
     serializer = SiteStatsSerializer(
         {
             "verified_total": Donation.verified_total(),
             "verified_count": Donation.verified_count(),
+            "largest_donation": largest_donation.amount if largest_donation else None,
+            "charities_donated_to": charities_donated_to,
             "goals_scored": stats.goals_scored,
             "ca_exchange_rate": stats.ca_exchange_rate,
         }
