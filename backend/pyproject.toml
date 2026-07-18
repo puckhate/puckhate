@@ -15,6 +15,7 @@ dependencies = [
     "whitenoise",
     "requests",
     "redis>=8.0.0",
+    "faker",
 ]
 
 [dependency-groups]
