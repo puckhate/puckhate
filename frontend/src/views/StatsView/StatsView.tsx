@@ -107,23 +107,25 @@ export default function Stats(): React.ReactNode {
               <StatCard
                 title={`Avg. Donation (${currency})`}
                 value={formatAsCurrency(averageDonation)}
+                className="col-span-2 md:col-span-1"
                 loading={statsLoading}
               />
               <StatCard
                 title="Avg. Donations per Goal"
-                value={formatAsNumber(averageDonationPerGoal)}
+                value={formatAsNumber(Math.round(averageDonationPerGoal))}
                 valueVariant="pink"
-                loading={statsLoading}
-              />
-              <StatCard
-                title={`Avg. Donation per Goal (${currency})`}
-                value={formatAsCurrency(averageAmountPerGoal)}
                 loading={statsLoading}
               />
               <StatCard
                 title="Charities Donated To"
                 value={formatAsNumber(stats?.charities_donated_to ?? 0)}
                 valueVariant="pink"
+                loading={statsLoading}
+              />
+              <StatCard
+                title={`Avg. Donation per Goal (${currency})`}
+                className="col-span-2 md:col-span-1"
+                value={formatAsCurrency(averageAmountPerGoal)}
                 loading={statsLoading}
               />
               <StatCard
@@ -176,6 +178,7 @@ export default function Stats(): React.ReactNode {
           </article>
         </Container>
       )}
+      <div className="pb-12" />
     </>
   );
 }
