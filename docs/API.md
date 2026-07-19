@@ -53,37 +53,43 @@ donation list) without the full stats payload.
 
 ## GET `/api/donations/`
 
-All verified donations, most-recently-verified first.
+All verified donations, most-recently-verified first. The response is
+**paginated** (limit/offset):
 
 ```json
-[
-  {
-    "id": 12,
-    "created": "2026-06-04T18:30:00Z",
-    "amount": "50.00",
-    "name": "Sam R.",
-    "charity": "Trevor Project"
-  }
-]
+{
+  "count": 240,
+  "next": "https://.../api/donations/?limit=100&offset=100",
+  "previous": null,
+  "results": [
+    {
+      "id": 12,
+      "created": "2026-06-04T18:30:00Z",
+      "amount": "50.00",
+      "name": "Sam R.",
+      "charity": "Trevor Project"
+    }
+  ]
+}
 ```
 
-- `created` — when the donation was reported (ISO 8601).
-- `amount` — donation amount (string; `DecimalField`, precision preserved).
-- `name` — donor's display name, or `"Anonymous"` when left blank.
-- `charity` — the attributed charity's name.
+- `count` — total number of matching donations across all pages.
+- `next` / `previous` — URLs for the adjacent pages, or `null` at the ends.
+- `results` — the donations on the current page:
+  - `created` — when the donation was reported (ISO 8601).
+  - `amount` — donation amount (string; `DecimalField`, precision preserved).
+  - `name` — donor's display name, or `"Anonymous"` when left blank.
+  - `charity` — the attributed charity's name.
 
 No PII (receipt file, verifier) is exposed.
 
 ### Query parameters
 
-- `top` — return the top _N_ verified donations by `amount` (descending)
-  instead of the full most-recently-verified list. Must be a positive integer.
-  Example: `GET /api/donations/?top=3` returns the three largest donations. A
-  non-integer or value below `1` responds with `400`:
-
-  ```json
-  { "top": ["Must be a positive integer."] }
-  ```
+- `limit` — number of donations to return per page (defaults to `100`).
+- `offset` — index of the first donation to return (defaults to `0`).
+- `top` — when the `top` parameter is included, results are
+  ordered by `amount` (descending) instead of most-recently-verified first. No
+  value is required. Combine with `limit` to fetch the largest donations — e.g. `GET /api/donations/?top&limit=3` returns the three largest.
 
 ## POST `/api/donations/`
 

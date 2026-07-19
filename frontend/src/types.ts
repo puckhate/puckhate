@@ -1,3 +1,11 @@
+/** Utility types */
+export interface PaginatedResults<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}
+
 /** Public campaign status - /api/stats/ */
 export interface SiteStats {
   verified_total: string;

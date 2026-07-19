@@ -2,7 +2,7 @@
 
 ## Future ideas
 
-- **Donation list pagination** - implement paginate (or infinite scroll) on the donation list
+- **Error toasts** - add explicit error toasts for failed requests when those failures would break the display
 - **Test suite** - validate the backend api on build
 - **Score alerts** - notify subscribed users when the player scores so they can consider
   donating again. Discussion: is this better handled by social channels?

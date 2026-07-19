@@ -56,7 +56,7 @@ export default function Playbook({ charities }: PlaybookProps) {
             <div className="font-heading text-body mb-2.5 text-lg font-extrabold">
               {step.title}
             </div>
-            <p className="text-muted">{step.desc}</p>
+            <div className="text-muted">{step.desc}</div>
           </div>
         ))}
       </div>

@@ -7,6 +7,7 @@ from rest_framework.decorators import (
 from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
 
 from api.models import Charity, Donation, SiteStats
 from api.serializers import (
@@ -86,24 +87,15 @@ def donations(request: Request) -> Response:
     # Return a list of verified donations
     donations = Donation.verified_donations()
 
-    # Optionally limit by "top" (top N donations by amount)
-    top = request.query_params.get("top")
-    if top is not None:
-        try:
-            count = int(top)
-        except ValueError:
-            return Response(
-                {"top": ["Must be a positive integer."]},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        if count < 1:
-            return Response(
-                {"top": ["Must be a positive integer."]},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        donations = donations.order_by("-amount")[:count]
-    serializer = DonationSerializer(donations, many=True)
-    return Response(serializer.data)
+    # Optionally order by amount (highest first) when `?top` is present.
+    if "top" in request.query_params:
+        donations = donations.order_by("-amount")
+
+    # Paginate results using configured default pagination class (limit-offset)
+    paginator = api_settings.DEFAULT_PAGINATION_CLASS()
+    page = paginator.paginate_queryset(donations, request)
+    serializer = DonationSerializer(page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(["POST"])

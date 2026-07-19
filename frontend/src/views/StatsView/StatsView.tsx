@@ -4,7 +4,7 @@ import client from "@client";
 import { Container, H1 } from "@components";
 import constants from "@constants";
 import { useExchangeRate } from "@providers/ExchangeRateProvider";
-import type { Donation, SiteStats } from "@types";
+import type { Donation, PaginatedResults, SiteStats } from "@types";
 import { convertFromUSD, getLocaleCurrency } from "@utils/currency";
 import { formatAsCurrency, formatAsNumber } from "@utils/text";
 
@@ -49,12 +49,12 @@ export default function Stats(): React.ReactNode {
   useEffect(() => {
     const controller = new AbortController();
     client
-      .get<Donation[]>(constants.API_ENDPOINTS.DONATIONS, {
-        params: { top: 3 },
+      .get<PaginatedResults<Donation>>(constants.API_ENDPOINTS.DONATIONS, {
+        params: { top: true, limit: 3 },
         signal: controller.signal,
       })
       .then((response) => {
-        setDonations(response.data);
+        setDonations(response.data.results);
         setDonationsLoading(false);
       })
       .catch(() => {
