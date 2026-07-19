@@ -15,10 +15,11 @@ import {
 } from "react-router-dom";
 
 const AboutView = lazy(() => import("@views/AboutView/AboutView"));
-const CharitiesView = lazy(() => import("@views/Charities"));
-const DisclaimerView = lazy(() => import("@views/Disclaimer"));
-const DonationsView = lazy(() => import("@views/Donations"));
-const PrivacyView = lazy(() => import("@views/Privacy"));
+const CharitiesView = lazy(() => import("@views/CharitiesView"));
+const DisclaimerView = lazy(() => import("@views/DisclaimerView"));
+const DonationsView = lazy(() => import("@views/DonationsView"));
+const PrivacyView = lazy(() => import("@views/PrivacyView"));
+const StatsView = lazy(() => import("@views/StatsView/StatsView"));
 
 function Root() {
   return (
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
           { path: constants.ROUTES.disclaimer, element: <DisclaimerView /> },
           { path: constants.ROUTES.donations, element: <DonationsView /> },
           { path: constants.ROUTES.privacy, element: <PrivacyView /> },
+          { path: constants.ROUTES.stats, element: <StatsView /> },
           { path: "*", element: <NotFoundView /> },
         ],
       },

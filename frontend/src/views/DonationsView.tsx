@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import client from "@client";
 import {
   Container,
+  H1,
   Table,
   TableBody,
   TableCell,
@@ -17,7 +18,7 @@ import { convertFromUSD } from "@utils/currency";
 import { formatAsCurrency, formatAsLocaleDate } from "@utils/text";
 import Skeleton from "react-loading-skeleton";
 
-export default function Donations(): React.ReactNode {
+export default function DonationsView(): React.ReactNode {
   const [donations, setDonations] = useState<Donation[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const { rate, ensureRate } = useExchangeRate();
@@ -106,9 +107,7 @@ export default function Donations(): React.ReactNode {
     <Container>
       <article className="mx-auto max-w-3xl space-y-10">
         <header className="space-y-2">
-          <h1 className="font-heading text-heading-pink text-4xl font-black tracking-tight uppercase">
-            Donations List
-          </h1>
+          <H1>Donations List</H1>
           <p className="text-muted text-sm">
             The list of donations in support of PUCKHATE! will update as
             donation receipts are validated. Donors can choose to provide their

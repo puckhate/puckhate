@@ -1,4 +1,4 @@
-import { Container } from "@components";
+import { Container, H1, H2 } from "@components";
 import {
   Disclosure,
   DisclosureButton,
@@ -81,9 +81,7 @@ export default function FAQ() {
     <Container>
       <article className="mx-auto -my-10 max-w-3xl space-y-10">
         <header className="space-y-2">
-          <h1 className="font-heading text-heading-pink text-4xl font-black tracking-tight uppercase">
-            FAQ
-          </h1>
+          <H1>FAQ</H1>
         </header>
         <section>
           {FAQItems.map((faq) => (
@@ -93,9 +91,7 @@ export default function FAQ() {
               className="border-b-border-dark mb-3 pb-3 not-last:border-b"
             >
               <DisclosureButton className="group justify-items-between flex w-full items-center justify-between gap-2">
-                <h2 className="text-heading-blue block text-left text-xl font-bold">
-                  {faq.question}
-                </h2>
+                <H2>{faq.question}</H2>
                 <ChevronDownIcon className="block size-5 group-data-open:rotate-180" />
               </DisclosureButton>
               <DisclosurePanel

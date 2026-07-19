@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 const NavLinks = [
   { label: "Game Plan", href: constants.ROUTES.about },
   { label: "Charities", href: constants.ROUTES.charities },
+  { label: "Stats", href: constants.ROUTES.stats },
   { label: "Donation List", href: constants.ROUTES.donations },
 ];
 

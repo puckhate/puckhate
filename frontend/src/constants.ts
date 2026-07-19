@@ -8,12 +8,13 @@ const CONSTANTS = {
     STATS: `${import.meta.env.VITE_API_BASE_URL}/stats/`,
   },
   ROUTES: {
+    about: "/about",
+    charities: "/charities",
+    disclaimer: "/disclaimer",
+    donations: "/donations",
     home: "/",
     privacy: "/privacy",
-    disclaimer: "/disclaimer",
-    charities: "/charities",
-    donations: "/donations",
-    about: "/about",
+    stats: "/stats",
   },
   SOCIAL: {
     bluesky: "https://bsky.app/profile/puckhate.com",

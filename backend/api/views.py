@@ -33,10 +33,22 @@ def health(request: Request) -> Response:
 def site_stats(request: Request) -> Response:
     """Public campaign stats"""
     stats = SiteStats.load()
+    largest_donation = (
+        Donation.objects.filter(verified__isnull=False).order_by("-amount").first()  # ty: ignore[unresolved-attribute]
+    )
+    charities_donated_to = (
+        Charity.objects.filter(  # ty: ignore[unresolved-attribute]
+            donations__verified__isnull=False
+        )
+        .distinct()
+        .count()
+    )
     serializer = SiteStatsSerializer(
         {
             "verified_total": Donation.verified_total(),
             "verified_count": Donation.verified_count(),
+            "largest_donation": largest_donation.amount if largest_donation else None,
+            "charities_donated_to": charities_donated_to,
             "goals_scored": stats.goals_scored,
             "ca_exchange_rate": stats.ca_exchange_rate,
         }
@@ -59,6 +71,7 @@ def exchange_rate(request: Request) -> Response:
 @throttle_classes([DonationReportThrottle])
 def donations(request: Request) -> Response:
     """List verified donations, or report a new one as a draft"""
+    # Create a new Donation
     if request.method == "POST":
         serializer = DonationCreateSerializer(
             data=request.data, context={"request": request}
@@ -69,7 +82,27 @@ def donations(request: Request) -> Response:
             # submission. Feign success with an empty body.
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    serializer = DonationSerializer(Donation.verified_donations(), many=True)
+
+    # Return a list of verified donations
+    donations = Donation.verified_donations()
+
+    # Optionally limit by "top" (top N donations by amount)
+    top = request.query_params.get("top")
+    if top is not None:
+        try:
+            count = int(top)
+        except ValueError:
+            return Response(
+                {"top": ["Must be a positive integer."]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if count < 1:
+            return Response(
+                {"top": ["Must be a positive integer."]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        donations = donations.order_by("-amount")[:count]
+    serializer = DonationSerializer(donations, many=True)
     return Response(serializer.data)
 
 

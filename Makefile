@@ -64,6 +64,7 @@ format-be:  ## Format the backend (ruff)
 .PHONY: lint-fe
 lint-fe:  ## Lint the frontend (eslint)
 	$(DOCKERRUNFE) npm run lint
+	$(DOCKERRUNFE) npx tsc --noEmit
 
 .PHONY: format-fe
 format-fe:  ## Format the frontend (prettier)

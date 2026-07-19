@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import client from "@client";
 import {
   Container,
+  H1,
   Table,
   TableBody,
   TableCell,
@@ -15,7 +16,7 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import type { Charity } from "@types";
 import Skeleton from "react-loading-skeleton";
 
-export default function Charities(): React.ReactNode {
+export default function CharitiesView(): React.ReactNode {
   const [charities, setCharities] = useState<Charity[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -92,9 +93,7 @@ export default function Charities(): React.ReactNode {
     <Container>
       <article className="mx-auto max-w-3xl space-y-10">
         <header className="space-y-2">
-          <h1 className="font-heading text-heading-pink text-4xl font-black tracking-tight uppercase">
-            Suggested Charities List
-          </h1>
+          <H1>Suggested Charities List</H1>
           <p className="text-muted text-sm">
             These organizations are doing the work. Every donation to them is an
             assist. This list is curated by our organizers and community, and is
