@@ -74,6 +74,27 @@ const FAQItems: FAQItem[] = [
       </>
     ),
   },
+  {
+    question: "Can I donate directly to PUCKHATE?",
+    answer: (
+      <>
+        While we appreciate your support for what we're trying to do, we'd
+        rather see your contributions go to a group working to help support the
+        trans community. PUCKHATE! cannot accept donations and will never
+        solicit them.
+      </>
+    ),
+  },
+  {
+    question: "Where does the money go?",
+    answer: (
+      <>
+        Your money goes directly to whatever charity you chose to donate to.
+        PUCKHATE! serves only as a way to track donations: we do not accept,
+        process, or solicit any donations.
+      </>
+    ),
+  },
 ];
 
 export default function FAQ() {
