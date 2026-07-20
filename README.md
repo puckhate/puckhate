@@ -21,6 +21,7 @@ More detail lives in [`docs/`](docs/):
 - **[DESIGN.md](docs/DESIGN.md)** — color palette and typography
 - **[API.md](docs/API.md)** — the DRF endpoints under `/api/` and their response shapes
 - **[EMAIL.md](docs/EMAIL.md)** — admin email: configuration, recipients, templates, and the donation summary jobs
+- **[TESTS.md](docs/TESTS.md)** — the backend test suite: how to run it, write tests, and use the factories
 - **[CONTRIBUTING.md](docs/CONTRIBUTING.md)** — how to contribute, conventions, and the project's ground rules
 
 ## Disclaimer
@@ -43,12 +44,12 @@ user-facing version.
 
 In production the app is served from a single origin by Django:
 
-| Path                 | Served by                                            |
-| -------------------- | ---------------------------------------------------- |
-| `/api/...`           | DRF (the `api` app)                                  |
-| `/admin/...`         | Django admin                                         |
-| `/static/...`        | WhiteNoise (hashed Vite assets + admin/DRF static)   |
-| `/private-media/...` | Staff-only view (donation receipts; never public)    |
+| Path                 | Served by                                             |
+| -------------------- | ----------------------------------------------------- |
+| `/api/...`           | DRF (the `api` app)                                   |
+| `/admin/...`         | Django admin                                          |
+| `/static/...`        | WhiteNoise (hashed Vite assets + admin/DRF static)    |
+| `/private-media/...` | Staff-only view (donation receipts; never public)     |
 | everything else      | the frontend's `index.html` (react-router takes over) |
 
 The Vite build emits into `backend/spa/`, Django's
@@ -105,8 +106,8 @@ donation drafts.
 
 ## Contributing
 
-Contributions are welcome. Fork this repo, make your change, run the lint/format/type
-checks, and open a pull request against `master`.
+Contributions are welcome. Fork this repo, make your change, add tests for it, run the
+lint/format/type checks and the test suite, and open a pull request against `master`.
 
 Because this is a protest project, a few ground rules are non-negotiable: only
 publicly verifiable claims, no threats or harassment, and no copyrighted/branded

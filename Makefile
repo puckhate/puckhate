@@ -38,6 +38,10 @@ createsuperuser:  ## Create a django superuser
 manage:  ## Run an arbitrary manage.py command, e.g. make manage ARGS="createsuperuser"
 	$(MANAGEPY) $(ARGS)
 
+.PHONY: test-be
+test-be:  ## Run the backend test suite, e.g. make test-be ARGS="api.tests.views"
+	$(MANAGEPY) test $(ARGS)
+
 .PHONY: clean
 clean:  ## Remove build artifacts and local cache
 	docker compose down --remove-orphans --rmi=local

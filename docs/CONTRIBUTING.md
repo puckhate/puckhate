@@ -35,9 +35,11 @@ Contributions that cross these lines won't be merged, regardless of code quality
    time in it. Bug fixes and small improvements don't need this.
 2. Fork the repository and create a branch for your change.
 3. Make your change, following the conventions below.
-4. Run the checks and preview your change in the running app (see
+4. Add tests. New features should come with tests. See
+   [TESTS.md](TESTS.md) for the harness, factories, and how to run them.
+5. Run the checks and preview your change in the running app (see
    [Before you open a PR](#before-you-open-a-pr)).
-5. Open a pull request against `master`. Describe what you changed and why.
+6. Open a pull request against `master`. Describe what you changed and why.
 
 ## Conventions
 
@@ -47,6 +49,8 @@ Contributions that cross these lines won't be merged, regardless of code quality
   (`feat:`, `fix:`, `chore:`, `docs:`, `build:`, …). It keeps history readable.
 - **Match the surrounding code.** Follow the style, naming, and structure already
   present in the file you're editing.
+- **Cover new behavior with tests.** Features and fixes need tests, and the suite
+  must pass before you open a PR. See [TESTS.md](TESTS.md).
 
 ## Before you open a PR
 
@@ -55,6 +59,7 @@ Please make sure these pass locally.
 ```bash
 make format-be   # backend (ruff format)
 make lint-be     # backend (ruff + ty check)
+make test-be     # backend (django test suite)
 ```
 
 ```bash
@@ -71,8 +76,8 @@ browser (and the Django admin, if relevant) to confirm it works as intended.
 
 A short note in your PR about how you verified the change helps reviewers.
 
-> There's no automated test suite yet. Backend tests are planned, if your change
-> is a good candidate for one, tests are very welcome.
+Features and bug fixes must include tests, and the suite (`make test-be`) must
+pass before you open a PR. See [TESTS.md](TESTS.md) for how to write them.
 
 ## Reporting issues
 

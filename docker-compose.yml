@@ -8,6 +8,9 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
     volumes:
       - db-data:/var/lib/mysql
+    configs:
+      - source: db-config-permissions
+        target: /docker-entrypoint-initdb.d/permissions.sql
     ports:
       - "3306:3306"
     healthcheck:
@@ -127,3 +130,11 @@ services:
 
 volumes:
   db-data:
+
+configs:
+  db-config-permissions:
+    # Grant rights on Django's test databases (test_puckhate and test_puckhate_<n>).
+    # test\_% matches all of the parallel runner test databases at once.
+    content: |
+      GRANT ALL PRIVILEGES ON `test\_%`.* TO '${MYSQL_USER:-puckhate}'@'%';
+      FLUSH PRIVILEGES;
