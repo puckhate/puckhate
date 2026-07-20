@@ -1,5 +1,7 @@
+import logging
 import shutil
 import tempfile
+import warnings
 from copy import deepcopy
 from unittest import mock
 
@@ -8,8 +10,15 @@ from rest_framework.test import APITestCase
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
+from django.core.files.storage import FileSystemStorage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings
+
+from api.models import Charity, DonationReceipt
+
+# WhiteNoise warns once per run that STATIC_ROOT is missing
+# It's irrelevant to the API and clutters output.
+warnings.filterwarnings("ignore", message="No directory at", category=UserWarning)
 
 # An 8-byte PNG signature that will satisfy the magic-byte check
 # in api.validators.has_allowed_file_header without needing a real image.
@@ -76,6 +85,28 @@ class ApiTestCase(APITestCase):
         )
         overrides.enable()
         self.addCleanup(overrides.disable)
+
+        # Point DonationReceipt's file field's storage at the temp dir
+        receipt_storage = FileSystemStorage(
+            location=self._private_root,
+            base_url=settings.PRIVATE_MEDIA_URL,
+        )
+        field_patcher = mock.patch.object(
+            DonationReceipt._meta.get_field("file"),  # ty: ignore[unresolved-attribute]
+            "storage",
+            receipt_storage,
+        )
+        field_patcher.start()
+        self.addCleanup(field_patcher.stop)
+
+        # Django logs a WARNING for every 4xx response. Mute these expected warnings.
+        request_logger = logging.getLogger("django.request")
+        previous_level = request_logger.level
+        request_logger.setLevel(logging.ERROR)
+        self.addCleanup(request_logger.setLevel, previous_level)
+
+        # Approved charities are seeed by migration. Empty the table to avoid polluting tests.
+        Charity.objects.all().delete()  # ty: ignore[unresolved-attribute]
 
         cache.clear()
         self.addCleanup(cache.clear)
