@@ -3,7 +3,6 @@
 ## Planned Features
 
 - **Error toasts** - add explicit error toasts for failed requests when those failures would break the display
-- **Backend test suite** - validate the backend api on build
 - **Expanded daily admin summary** - add more detail to the daily admin summary, such as number of bans, number of unconfirmed charities, number of confirmed donations
 
 ## Future Ideas (required discussion)
