@@ -7,7 +7,7 @@ export default function PrivacyView(): React.ReactNode {
         <header className="space-y-2">
           <H1>Privacy Policy</H1>
           <p className="text-muted text-sm">
-            <strong>Last updated: June 30, 2026</strong>
+            <strong>Last updated: July 20, 2026</strong>
           </p>
         </header>
 
@@ -41,19 +41,22 @@ export default function PrivacyView(): React.ReactNode {
           </p>
           <p className="text-muted leading-relaxed">
             <strong>Technical information.</strong> We do not use analytics
-            tools or advertising trackers. Our hosting provider may
-            automatically log basic technical data, such as IP addresses, as
-            part of operating the service.
+            tools or advertising trackers. We, along with our hosting providers
+            and network operators, may automatically log basic technical data,
+            such as IP addresses, as part of operating the service.
           </p>
         </section>
 
         <section className="space-y-3">
           <H2>Why we collect it</H2>
           <p className="text-muted leading-relaxed">
-            We collect donation receipts for one purpose: to verify, in good
-            faith, that reported donations occurred, so that the totals
-            published on this site are as accurate as possible. We use contact
-            information to respond to you.
+            We collect donation receipts in order to verify in good faith that
+            reported donations occurred, so that the totals published on this
+            site are as accurate as possible.
+          </p>
+          <p className="text-muted leading-relaxed">
+            We record the IP address associated with submissions to help us
+            process them and prevent abuse.
           </p>
           <p className="text-muted leading-relaxed">
             We do not use your information for advertising, and we never sell
@@ -76,7 +79,7 @@ export default function PrivacyView(): React.ReactNode {
             Submitted receipts are retained for up to <strong>one year</strong>{" "}
             from the date of submission, after which they are permanently
             deleted. We retain logged donation data (such as amount, date,
-            organization, name, and email) indefinitely.
+            organization, name, and submission IP address) indefinitely.
           </p>
           <p className="text-muted leading-relaxed">
             Emails and correspondence are kept only as long as needed to handle
@@ -144,8 +147,7 @@ export default function PrivacyView(): React.ReactNode {
         <section className="space-y-3">
           <H2>Changes to this policy</H2>
           <p className="text-muted leading-relaxed">
-            If we change this policy, we will update the date above and note
-            material changes on this page.
+            If we change this policy, we will update the date above.
           </p>
         </section>
 
