@@ -111,7 +111,7 @@ export default function FAQ() {
               key={faq.question}
               className="border-b-border-dark mb-3 pb-3 not-last:border-b"
             >
-              <DisclosureButton className="group justify-items-between flex w-full items-center justify-between gap-2">
+              <DisclosureButton className="group justify-items-between flex w-full items-center justify-between gap-2 text-left">
                 <H2>{faq.question}</H2>
                 <ChevronDownIcon className="block size-5 group-data-open:rotate-180" />
               </DisclosureButton>
