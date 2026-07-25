@@ -8,10 +8,10 @@ import HomeView from "@views/HomeView/HomeView";
 import NotFoundView from "@views/NotFoundView";
 import { SkeletonTheme } from "react-loading-skeleton";
 import {
+  createBrowserRouter,
   Outlet,
   RouterProvider,
   ScrollRestoration,
-  createBrowserRouter,
 } from "react-router-dom";
 
 const AboutView = lazy(() => import("@views/AboutView/AboutView"));

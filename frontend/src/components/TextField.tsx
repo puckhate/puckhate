@@ -3,10 +3,8 @@ import { useId } from "react";
 import cn from "@utils/classNames";
 import { useField } from "formik";
 
-interface TextFieldProps extends Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "id"
-> {
+interface TextFieldProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "id"> {
   /** Formik field name. */
   name: string;
   /** Visible label text. */

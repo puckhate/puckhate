@@ -21,7 +21,8 @@ interface ModalTriggerProps {
 }
 
 type ModalSection =
-  ((props: ModalRenderProps) => React.ReactNode) | React.ReactNode;
+  | ((props: ModalRenderProps) => React.ReactNode)
+  | React.ReactNode;
 
 interface ModalProps {
   label: string;
@@ -102,7 +103,7 @@ export default function Modal(props: ModalProps): React.ReactNode {
 
   return (
     <>
-      {trigger && trigger(triggerProps)}
+      {trigger?.(triggerProps)}
       <AnimatePresence>
         {isOpen && (
           <Dialog

@@ -1,26 +1,3 @@
-# ───────────────────────── Node / frontend ─────────────────────────
-node_modules
-dist
-dist-ssr
-*.local
-
-# ───────────────────────── Python / backend ────────────────────────
-# SPA build output (emitted by Vite) + collected static
-backend/spa/
-backend/staticfiles/
-backend/private_media/
-backend/media/
-__pycache__/
-*.py[cod]
-*.egg-info/
-.venv/
-venv/
-.ruff_cache/
-.pytest_cache/
-.coverage
-.ropeproject
-htmlcov/
-
 # ───────────────────────── Editors / OS ────────────────────────────
 .vscode/*
 !.vscode/extensions.json

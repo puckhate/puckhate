@@ -63,8 +63,8 @@ make test-be     # backend (django test suite)
 ```
 
 ```bash
-make format-fe   # frontend (prettier)
-make lint-fe     # frontend (eslint)
+make format-fe   # frontend (biome)
+make lint-fe     # frontend (biome)
 ```
 
 Also confirm migrations apply cleanly (`make migrate`), and include any new

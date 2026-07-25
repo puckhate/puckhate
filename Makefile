@@ -66,12 +66,11 @@ format-be:  ## Format the backend (ruff)
 	$(DOCKERRUNBE) uv run ruff format .
 
 .PHONY: lint-fe
-lint-fe:  ## Lint the frontend (eslint)
+lint-fe:  ## Lint and type-check the frontend (biome + tsc)
 	$(DOCKERRUNFE) npm run lint
-	$(DOCKERRUNFE) npx tsc --noEmit
 
 .PHONY: format-fe
-format-fe:  ## Format the frontend (prettier)
+format-fe:  ## Format and auto-fix the frontend (biome)
 	$(DOCKERRUNFE) npm run format
 
 ##@ Deployment
