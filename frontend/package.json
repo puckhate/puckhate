@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build --mode=production",
-    "lint": "tsc --noEmit && biome check . --error-on-warnings",
+    "lint": "tsc -b && biome check . --error-on-warnings",
     "format": "biome check --write ."
   },
   "dependencies": {
