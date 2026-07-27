@@ -22,6 +22,14 @@ DOCKERRUNFE := docker compose run --rm --no-deps frontend
 dev:  ## Bring up the local dev stack
 	docker compose up --build
 
+.PHONY: stop
+stop:  ## Stop the local dev stack
+	docker compose down
+
+.PHONY: rebuild
+rebuild: ## Rebuild the local dev stack
+	docker compose build
+
 .PHONY: makemigrations
 makemigrations:  ## Generate django migrations
 	$(MANAGEPY) makemigrations
