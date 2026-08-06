@@ -8,6 +8,7 @@ const instance = axios.create({
   withXSRFToken: true,
   xsrfCookieName: "csrftoken",
   xsrfHeaderName: "X-CSRFToken",
+  timeout: 5000,
 });
 
 export default instance;

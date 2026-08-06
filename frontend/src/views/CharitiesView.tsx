@@ -7,6 +7,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableError,
   TableHead,
   TableHeaderCell,
   TableRow,
@@ -14,11 +15,13 @@ import {
 import constants from "@constants";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import type { Charity } from "@types";
+import { isCancel } from "axios";
 import Skeleton from "react-loading-skeleton";
 
 export default function CharitiesView(): React.ReactNode {
   const [charities, setCharities] = useState<Charity[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   /*
    * Load the list of approved charities
@@ -39,8 +42,11 @@ export default function CharitiesView(): React.ReactNode {
         setCharities(shuffled);
         setLoading(false);
       })
-      .catch(() => {
-        // Persist loading state on error, do not raise exception
+      .catch((err) => {
+        if (!isCancel(err)) {
+          setError("Failed to load charities");
+          setLoading(false);
+        }
       });
     return () => controller.abort();
   }, []);
@@ -102,15 +108,19 @@ export default function CharitiesView(): React.ReactNode {
         </header>
 
         <section className="space-y-3">
-          <Table>
-            <TableHead>
-              <TableRow header>
-                <TableHeaderCell>Charity</TableHeaderCell>
-                <TableHeaderCell align="right">Website</TableHeaderCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{tableBody}</TableBody>
-          </Table>
+          {error ? (
+            <TableError message={error} />
+          ) : (
+            <Table>
+              <TableHead>
+                <TableRow header>
+                  <TableHeaderCell>Charity</TableHeaderCell>
+                  <TableHeaderCell align="right">Website</TableHeaderCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{tableBody}</TableBody>
+            </Table>
+          )}
         </section>
 
         <p className="text-muted mt-5 text-xs">

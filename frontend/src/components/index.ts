@@ -9,6 +9,7 @@ export {
   Table,
   TableBody,
   TableCell,
+  TableError,
   TableHead,
   TableHeaderCell,
   TableRow,

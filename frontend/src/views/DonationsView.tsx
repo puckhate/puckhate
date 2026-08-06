@@ -7,6 +7,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableError,
   TableHead,
   TableHeaderCell,
   TableRow,
@@ -17,6 +18,7 @@ import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import type { Donation, PaginatedResults } from "@types";
 import { convertFromUSD } from "@utils/currency";
 import { formatAsCurrency, formatAsLocaleDate } from "@utils/text";
+import { isCancel } from "axios";
 import Skeleton from "react-loading-skeleton";
 
 const PAGE_SIZE = 20;
@@ -27,6 +29,7 @@ export default function DonationsView(): React.ReactNode {
   const [donationsPageHasNext, setDonationsPageHasNext] =
     useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const { rate, ensureRate } = useExchangeRate();
 
   /*
@@ -55,8 +58,12 @@ export default function DonationsView(): React.ReactNode {
         setDonationsPageHasNext(!!response.data.next);
         setLoading(false);
       })
-      .catch(() => {
-        // Persist loading state on error, do not raise exception
+      .catch((err) => {
+        if (!isCancel(err)) {
+          setError("Failed to load donations");
+          setLoading(false);
+          setDonationsPageHasNext(false);
+        }
       });
     return () => controller.abort();
   }, [donationsPageOffset]);
@@ -150,21 +157,25 @@ export default function DonationsView(): React.ReactNode {
         </header>
 
         <section className="space-y-3">
-          <Table>
-            <TableHead>
-              <TableRow header>
-                <TableHeaderCell className="hidden sm:table-cell">
-                  Date
-                </TableHeaderCell>
-                <TableHeaderCell>Donor</TableHeaderCell>
-                <TableHeaderCell className="hidden sm:table-cell">
-                  Charity
-                </TableHeaderCell>
-                <TableHeaderCell align="right">Amount</TableHeaderCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{tableBody}</TableBody>
-          </Table>
+          {error ? (
+            <TableError message={error} />
+          ) : (
+            <Table>
+              <TableHead>
+                <TableRow header>
+                  <TableHeaderCell className="hidden sm:table-cell">
+                    Date
+                  </TableHeaderCell>
+                  <TableHeaderCell>Donor</TableHeaderCell>
+                  <TableHeaderCell className="hidden sm:table-cell">
+                    Charity
+                  </TableHeaderCell>
+                  <TableHeaderCell align="right">Amount</TableHeaderCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{tableBody}</TableBody>
+            </Table>
+          )}
 
           {!loading && donationsPageHasNext && (
             <div className="flex justify-center pt-6">

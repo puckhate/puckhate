@@ -55,6 +55,7 @@ export default function LogDonation({ charities }: LogDonationProps) {
       const { data } = await client.post<DonationReceipt>(
         constants.API_ENDPOINTS.RECEIPTS,
         body,
+        { timeout: 120000 },
       );
       setReceiptToken(data.token);
       setFileUploadStatus("success");

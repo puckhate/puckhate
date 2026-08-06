@@ -28,9 +28,9 @@ export default function DonorCard(props: DonorCardProps): React.ReactNode {
                 "text-yellow-800": rank === 3,
               })}
             />
-            <span className="font-heading text-2xl font-bold tracking-tighter">
+            <div className="font-heading text-2xl font-bold tracking-tighter text-ellipsis overflow-hidden grow">
               {name}
-            </span>
+            </div>
           </>
         )}
       </div>
@@ -53,7 +53,7 @@ export default function DonorCard(props: DonorCardProps): React.ReactNode {
         </span>
       )}
 
-      <div className="font-heading text-muted space-x-2 text-xs font-bold tracking-widest uppercase">
+      <div className="font-heading text-muted space-x-2 text-xs font-bold tracking-widest uppercase text-ellipsis overflow-hidden">
         {loading ? <Skeleton /> : `To ${charity}`}
       </div>
     </div>

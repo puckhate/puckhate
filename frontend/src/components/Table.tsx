@@ -1,3 +1,4 @@
+import { FaceFrownIcon } from "@heroicons/react/24/outline";
 import cn from "@utils/classNames";
 
 type Align = "left" | "right" | "center";
@@ -122,5 +123,31 @@ export function TableCell({
     >
       {children}
     </td>
+  );
+}
+
+/** An alternate table component representing an error state */
+export function TableError({
+  message = "Failed to load data",
+  colSpan,
+}: {
+  message?: string;
+  colSpan?: number;
+}): React.ReactNode {
+  return (
+    <Table>
+      <TableBody>
+        <TableRow>
+          <TableCell colSpan={colSpan} className="text-center">
+            <div>
+              <FaceFrownIcon className="mx-auto text-muted/20 size-12" />
+              <div role="alert" className="pt-4 text-muted">
+                {message}
+              </div>
+            </div>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 }
