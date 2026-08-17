@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import type { Charity } from "@types";
 import cn from "@utils/classNames";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 const SPIN_DURATION_MS = 500;
 const SLOWDOWN_DURATION_MS = 500;
