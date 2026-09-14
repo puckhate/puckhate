@@ -7,7 +7,7 @@ import {
   ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/24/outline";
 import type { Charity } from "@types";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 import CharitySlotMachine from "./CharitySlotMachine";
 

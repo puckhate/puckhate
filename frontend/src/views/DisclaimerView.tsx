@@ -1,6 +1,6 @@
 import { Container, H1, H2 } from "@components";
 import constants from "@constants";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export default function DisclaimerView(): React.ReactNode {
   return (

@@ -1,12 +1,15 @@
-import { getLocaleCurrency } from "@utils/currency";
+import type { LocaleCurrency } from "@utils/currency";
 
 /**
- * Format a numeric value as a currency string in the user's locale
+ * Format a numeric value as a currency string in the given locale
  * @param value - monetary amount (e.g. 123)
+ * @param localeCurrency - locale and currency from `useExchangeRate()`
  * @returns - formatted currency string (e.g. $123)
  */
-export function formatAsCurrency(value: number | null | undefined): string {
-  const { locale, currency } = getLocaleCurrency();
+export function formatAsCurrency(
+  value: number | null | undefined,
+  { locale, currency }: LocaleCurrency,
+): string {
   const numberFormat = Intl.NumberFormat(locale, {
     style: "currency",
     currency,

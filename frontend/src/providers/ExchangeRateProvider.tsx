@@ -3,6 +3,7 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -11,8 +12,13 @@ import {
 import client from "@client";
 import constants from "@constants";
 import type { ExchangeRate } from "@types";
+import {
+  CANONICAL_LOCALE_CURRENCY,
+  getLocaleCurrency,
+  type LocaleCurrency,
+} from "@utils/currency";
 
-interface ExchangeRateContextValue {
+interface ExchangeRateContextValue extends LocaleCurrency {
   rate: number | null;
   setRate: (rate: number) => void;
   ensureRate: () => void;
@@ -23,15 +29,25 @@ const ExchangeRateContext = createContext<ExchangeRateContextValue | null>(
 );
 
 /**
- * Shares the exchange rate across views so amounts (stored in USD)
- * can be localized without each page refetching it.
+ * Shares the exchange rate and display currency across views so amounts
+ * (stored in USD) can be localized.
  *
- * The home page populates it from its stats call
+ * The home page populates the rate from its stats call
  * Other views call `ensureRate()` to fetch it from the rate-only endpoint.
  */
 export function ExchangeRateProvider({ children }: { children: ReactNode }) {
   const [rate, setRate] = useState<number | null>(null);
+  const [localeCurrency, setLocaleCurrency] = useState<LocaleCurrency>(
+    CANONICAL_LOCALE_CURRENCY,
+  );
   const fetching = useRef<boolean>(false);
+
+  /*
+   * Resolve the visitor's locale after mount.
+   */
+  useEffect(() => {
+    setLocaleCurrency(getLocaleCurrency());
+  }, []);
 
   const ensureRate = useCallback(() => {
     if (rate !== null || fetching.current) return;
@@ -50,8 +66,8 @@ export function ExchangeRateProvider({ children }: { children: ReactNode }) {
   }, [rate]);
 
   const value = useMemo<ExchangeRateContextValue>(
-    () => ({ rate, setRate, ensureRate }),
-    [rate, ensureRate],
+    () => ({ rate, setRate, ensureRate, ...localeCurrency }),
+    [rate, ensureRate, localeCurrency],
   );
 
   return (

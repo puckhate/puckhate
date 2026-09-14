@@ -1,6 +1,6 @@
 import { Container, H1 } from "@components";
 import constants from "@constants";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export default function NotFoundView(): React.ReactNode {
   return (

@@ -30,7 +30,8 @@ export default function DonationsView(): React.ReactNode {
     useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { rate, ensureRate } = useExchangeRate();
+  const { rate, ensureRate, locale, currency } = useExchangeRate();
+  const localeCurrency = { locale, currency };
 
   /*
    * Load next page of donations
@@ -131,7 +132,8 @@ export default function DonationsView(): React.ReactNode {
               className="text-heading-blue font-bold whitespace-nowrap"
             >
               {formatAsCurrency(
-                convertFromUSD(Number(donation.amount), rate ?? 1),
+                convertFromUSD(Number(donation.amount), rate ?? 1, currency),
+                localeCurrency,
               )}
             </TableCell>
           </TableRow>

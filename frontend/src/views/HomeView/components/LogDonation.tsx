@@ -7,9 +7,9 @@ import {
   CheckBadgeIcon,
   DocumentArrowUpIcon,
 } from "@heroicons/react/24/outline";
+import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import type { Charity, DonationReceipt } from "@types";
 import cn from "@utils/classNames";
-import { getLocaleCurrency } from "@utils/currency";
 import { Form, Formik } from "formik";
 import { useDropzone } from "react-dropzone";
 import * as Yup from "yup";
@@ -32,6 +32,7 @@ export default function LogDonation({ charities }: LogDonationProps) {
   const [receiptToken, setReceiptToken] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const { currency } = useExchangeRate();
 
   /*
    * Names of approved charities to suggest in the typeahead.
@@ -222,7 +223,7 @@ export default function LogDonation({ charities }: LogDonationProps) {
                       charity: values.charity.trim(),
                       name: values.name.trim(),
                       receipt: receiptToken,
-                      currency: getLocaleCurrency().currency,
+                      currency,
                     });
                     setSubmitted(true);
                   } catch {
@@ -248,7 +249,7 @@ export default function LogDonation({ charities }: LogDonationProps) {
                           step="0.01"
                           placeholder="7"
                           required
-                          help={`Total in ${getLocaleCurrency().currency}`}
+                          help={`Total in ${currency}`}
                         />
                       </div>
                       <div className="flex-1">

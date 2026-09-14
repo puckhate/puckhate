@@ -44,21 +44,20 @@ user-facing version.
 
 In production the app is served from a single origin by Django:
 
-| Path                 | Served by                                             |
-| -------------------- | ----------------------------------------------------- |
-| `/api/...`           | DRF (the `api` app)                                   |
-| `/admin/...`         | Django admin                                          |
-| `/static/...`        | WhiteNoise (hashed Vite assets + admin/DRF static)    |
-| `/private-media/...` | Staff-only view (donation receipts; never public)     |
-| everything else      | the frontend's `index.html` (react-router takes over) |
+| Path                 | Served by                                           |
+| -------------------- | --------------------------------------------------- |
+| `/api/...`           | DRF (the `api` app)                                 |
+| `/admin/...`         | Django admin                                        |
+| `/static/...`        | WhiteNoise (hashed Vite assets + admin/DRF static)  |
+| `/private-media/...` | Staff-only view (donation receipts; never public)   |
+| everything else      | the prerendered HTML for that route (then hydrated) |
 
-The Vite build emits into `backend/spa/`, Django's
-`collectstatic` gathers it into `STATIC_ROOT`, and WhiteNoise serves it. Any path that
-no backend route claims is served `index.html` by `SPAFallbackMiddleware` so client-side
-routes resolve.
+The frontend uses React Router in framework mode with prerendering, so the build emits a
+static `index.html` per route into `backend/spa/client/`. `collectstatic` gathers it into
+`STATIC_ROOT` and WhiteNoise serves the assets. `SPAFallbackMiddleware` serves each route's prerendered document.
 
-In development the Vite dev server (with HMR) serves the SPA at `:5173` and proxies
-`/api` to Django at `:8000`.
+In development the dev server (with HMR) serves the SPA at `:5173` and proxies `/api` to
+Django at `:8000`.
 
 ## Development (Requires Docker)
 

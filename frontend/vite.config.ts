@@ -1,16 +1,14 @@
-import path from "node:path";
+import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
-import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 const proxyTarget = process.env.VITE_PROXY_TARGET || "http://localhost:8000";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => ({
-  // Built assets are served by Django + WhiteNoise under /static/; the Vite
-  // dev server runs the app at the root.
+  // Built assets are served by Django + WhiteNoise under /static/; the dev server under /
   base: command === "build" ? "/static/" : "/",
-  plugins: [react(), tailwindcss()],
+  plugins: [tailwindcss(), reactRouter()],
   resolve: {
     tsconfigPaths: true,
   },
@@ -25,9 +23,6 @@ export default defineConfig(({ command }) => ({
     },
   },
   build: {
-    // Emit the SPA into the Django project so WhiteNoise can serve it.
-    outDir: path.resolve(import.meta.dirname, "../backend/spa"),
-    emptyOutDir: true,
     sourcemap: "hidden",
   },
 }));

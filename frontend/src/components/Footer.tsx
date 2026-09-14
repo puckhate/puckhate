@@ -1,5 +1,5 @@
 import constants from "@constants";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 type IconProps = React.SVGProps<SVGSVGElement>;
 

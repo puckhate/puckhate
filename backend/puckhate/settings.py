@@ -154,8 +154,9 @@ SITE_URL = get_env_variable("SITE_URL", "http://localhost:8000").rstrip("/")
 # True to allow crawlers (prod), False to disallow crawling entirely (staging)
 ROBOTS_ALLOW = env_bool("ROBOTS_ALLOW", True)
 
-# The Vite build emits the SPA (hashed assets + index.html) into this dir.
-SPA_DIR = BASE_DIR / "spa"
+# The react-router build emits the SPA (hashed assets plus one prerendered
+# index.html per route) into this dir.
+SPA_DIR = BASE_DIR / "spa/client"
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"

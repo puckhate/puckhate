@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from django.conf import settings
@@ -5,9 +6,19 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import FileResponse, Http404, HttpResponse
 from django.views.decorators.http import require_GET
 
-# Public routes worth advertising to crawlers
-# Must be manually maintained, see frontend/src/constants.ts#ROUTES
-SITEMAP_PATHS = ("/", "/about", "/charities", "/donations", "/privacy", "/disclaimer")
+
+def sitemap_paths():
+    """Public routes worth advertising to crawlers.
+
+    The react-router build writes routes.json listing every path it
+    prerendered.
+    """
+    manifest = Path(settings.SPA_DIR) / "routes.json"
+    try:
+        paths = json.loads(manifest.read_text())
+    except OSError, ValueError:
+        return list(["/"])
+    return [path for path in paths if isinstance(path, str)]
 
 
 @require_GET
@@ -34,7 +45,7 @@ def robots_txt(request):
 def sitemap_xml(request):
     """Serve a basic sitemap of the public SPA routes"""
     urls = "".join(
-        f"<url><loc>{settings.SITE_URL}{path}</loc></url>" for path in SITEMAP_PATHS
+        f"<url><loc>{settings.SITE_URL}{path}</loc></url>" for path in sitemap_paths()
     )
     body = (
         '<?xml version="1.0" encoding="UTF-8"?>'

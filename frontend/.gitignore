@@ -1,5 +1,9 @@
 # ───────────────────────── Node / frontend ─────────────────────────
 node_modules
+build
 dist
 dist-ssr
 *.local
+
+# react-router typegen output
+.react-router

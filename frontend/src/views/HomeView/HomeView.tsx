@@ -17,7 +17,7 @@ export default function HomeView() {
   const [stats, setStats] = useState<SiteStats | null>(null);
   const [statsLoading, setStatsLoading] = useState<boolean>(true);
   const [charities, setCharities] = useState<Charity[]>([]);
-  const { setRate } = useExchangeRate();
+  const { setRate, currency } = useExchangeRate();
 
   /*
    * Load campaign stats
@@ -68,6 +68,7 @@ export default function HomeView() {
               ? convertFromUSD(
                   Number(stats.verified_total),
                   Number(stats.ca_exchange_rate),
+                  currency,
                 )
               : undefined
           }

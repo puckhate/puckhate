@@ -1,4 +1,4 @@
-import { getLocaleCurrency } from "@utils/currency";
+import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import { formatAsCurrency, formatAsNumber } from "@utils/text";
 import Skeleton from "react-loading-skeleton";
 
@@ -11,6 +11,7 @@ export interface RaisedCardProps {
 
 export default function RaisedCard(props: RaisedCardProps) {
   const { raised, donations, goals, loading = false } = props;
+  const { locale, currency } = useExchangeRate();
   return (
     <div className="border-border-light bg-dark-amethyst-950 flex w-full flex-col justify-center rounded-3xl border p-10 px-11 shadow-xl lg:w-1/2">
       <div className="mb-4 flex items-center gap-2.5">
@@ -19,13 +20,17 @@ export default function RaisedCard(props: RaisedCardProps) {
           <span className="bg-heading-pink relative inline-flex size-4 rounded-full" />
         </span>
         <span className="font-heading text-muted text-sm font-bold tracking-widest uppercase">
-          Raised In Protest ({getLocaleCurrency().currency})
+          Raised In Protest ({currency})
         </span>
       </div>
 
       {/* Total raised */}
       <div className="font-heading text-heading-blue leading-tightest text-5xl font-black tracking-tight tabular-nums [text-shadow:0_0_30px_rgb(54_196_252/0.4)] md:text-7xl">
-        {loading ? <Skeleton /> : formatAsCurrency(raised)}
+        {loading ? (
+          <Skeleton />
+        ) : (
+          formatAsCurrency(raised, { locale, currency })
+        )}
       </div>
 
       <div className="mt-7 flex gap-10 border-t border-white/10 pt-6">

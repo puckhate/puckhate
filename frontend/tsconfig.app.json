@@ -7,6 +7,9 @@
     "types": ["vite/client"],
     "skipLibCheck": true,
 
+    /* React Router writes generated route types into .react-router/types */
+    "rootDirs": [".", "./.react-router/types"],
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -36,5 +39,5 @@
       "@views/*": ["./src/views/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": [".react-router/types/**/*", "src/**/*"]
 }

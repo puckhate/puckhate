@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { Footer, Nav } from "@components";
 import LoadingView from "@views/LoadingView";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 
 export default function AppLayout(): React.ReactNode {
   return (

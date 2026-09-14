@@ -5,7 +5,7 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const NavLinks = [
   { label: "Game Plan", href: constants.ROUTES.about },
