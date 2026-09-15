@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import client from "@client";
-import { Container } from "@components";
+import Container from "@components/Container";
 import constants from "@constants";
 import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import type { Charity, SiteStats } from "@types";

@@ -1,4 +1,5 @@
-import { Container, H1 } from "@components";
+import Container from "@components/Container";
+import { H1 } from "@components/Headings";
 import constants from "@constants";
 import { Link } from "react-router";
 

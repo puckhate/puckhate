@@ -25,9 +25,9 @@ export default function RaisedCard(props: RaisedCardProps) {
       </div>
 
       {/* Total raised */}
-      <div className="font-heading text-heading-blue leading-tightest text-5xl font-black tracking-tight tabular-nums [text-shadow:0_0_30px_rgb(54_196_252/0.4)] md:text-7xl">
+      <div className="font-heading text-heading-blue text-4xl font-black tracking-tight tabular-nums [text-shadow:0_0_30px_rgb(54_196_252/0.4)] sm:text-5xl md:text-7xl">
         {loading ? (
-          <Skeleton />
+          <Skeleton inline />
         ) : (
           formatAsCurrency(raised, { locale, currency })
         )}
@@ -37,7 +37,7 @@ export default function RaisedCard(props: RaisedCardProps) {
         {/* Donations count */}
         <div>
           <div className="font-heading text-3xl font-black tabular-nums">
-            {loading ? <Skeleton /> : formatAsNumber(donations)}
+            {loading ? <Skeleton inline /> : formatAsNumber(donations)}
           </div>
           <div className="font-heading text-muted mt-1 text-xs font-bold tracking-wider uppercase">
             Donations
@@ -47,7 +47,7 @@ export default function RaisedCard(props: RaisedCardProps) {
         {/* Goals count */}
         <div>
           <div className="font-heading text-heading-pink text-3xl font-black tabular-nums">
-            {loading ? <Skeleton /> : formatAsNumber(goals)}
+            {loading ? <Skeleton inline /> : formatAsNumber(goals)}
           </div>
           <div className="font-heading text-muted mt-1 text-xs font-bold tracking-wider uppercase">
             Goals Answered

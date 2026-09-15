@@ -1,4 +1,5 @@
-import { Container, H1, H2 } from "@components";
+import Container from "@components/Container";
+import { H1, H2 } from "@components/Headings";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export interface FAQItem {

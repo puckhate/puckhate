@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import client from "@client";
-import { ComboboxField, LoadingSpinner, TextField } from "@components";
+import ComboboxField from "@components/ComboboxField";
+import LoadingSpinner from "@components/LoadingSpinner";
+import TextField from "@components/TextField";
 import constants from "@constants";
 import {
   CheckBadgeIcon,

@@ -1,4 +1,5 @@
-import { Container, H1 } from "@components";
+import Container from "@components/Container";
+import { H1 } from "@components/Headings";
 import constants from "@constants";
 import { routeMeta } from "@utils/meta";
 import { Link, type MetaFunction } from "react-router";

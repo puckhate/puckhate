@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 import client from "@client";
+import Container from "@components/Container";
+import { H1 } from "@components/Headings";
 import {
-  Container,
-  H1,
   Table,
   TableBody,
   TableCell,
@@ -11,7 +11,7 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
-} from "@components";
+} from "@components/Table";
 import constants from "@constants";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import type { Charity } from "@types";

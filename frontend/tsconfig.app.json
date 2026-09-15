@@ -28,7 +28,7 @@
     /* Path aliases */
     "paths": {
       "@client": ["./src/client.ts"],
-      "@components": ["./src/components/"],
+      "@components/*": ["./src/components/*"],
       "@constants": ["./src/constants.ts"],
       "@hooks/*": ["./src/hooks/*"],
       "@layouts": ["./src/layouts/"],

@@ -29,6 +29,13 @@ export const links: LinksFunction = () => [
     type: "font/woff2",
     crossOrigin: "anonymous",
   },
+  {
+    rel: "preload",
+    href: asset("fonts/open-sans-latin-v1.woff2"),
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  },
   { rel: "manifest", href: asset("site.webmanifest") },
   {
     rel: "icon",

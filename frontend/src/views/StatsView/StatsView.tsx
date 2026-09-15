@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
 import client from "@client";
-import { Container, H1 } from "@components";
+import Container from "@components/Container";
+import { H1 } from "@components/Headings";
 import constants from "@constants";
 import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import type { Donation, PaginatedResults, SiteStats } from "@types";
