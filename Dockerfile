@@ -2,6 +2,8 @@
 
 # ── Stage 1: build the frontend ─────────────────────────────
 FROM node:lts AS frontend-builder
+ARG VITE_SITE_URL=""
+ENV VITE_SITE_URL=$VITE_SITE_URL
 WORKDIR /app
 COPY frontend/package*.json ./
 RUN set -eux; npm install

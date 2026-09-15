@@ -3,6 +3,16 @@ import { asset } from "@utils/asset";
 import type { MetaDescriptor } from "react-router";
 
 /*
+ * Absolute URL for a route
+ */
+function absoluteUrl(path: RoutePath): string | null {
+  if (path === "*" || !constants.SITE_URL) return null;
+  return path === "/"
+    ? `${constants.SITE_URL}/`
+    : `${constants.SITE_URL}${path}`;
+}
+
+/*
  * Build the complete head metadata for a route.
  *
  * React Router renders only the deepest route module that exports `meta`, so
@@ -10,6 +20,7 @@ import type { MetaDescriptor } from "react-router";
  */
 export function routeMeta(path: RoutePath): MetaDescriptor[] {
   const { title, description, robots = "index, follow" } = constants.META[path];
+  const url = absoluteUrl(path);
   return [
     { title },
     { name: "description", content: description },
@@ -19,12 +30,13 @@ export function routeMeta(path: RoutePath): MetaDescriptor[] {
     { property: "og:image", content: asset("og.png") },
     { property: "og:image:width", content: "1200" },
     { property: "og:image:height", content: "630" },
-    { property: "og:url", content: "https://puckhate.com" },
+    ...(url ? [{ property: "og:url", content: url }] : []),
     { property: "og:type", content: "website" },
     { property: "og:site_name", content: "PUCKHATE!" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
     { name: "twitter:image", content: asset("og.png") },
+    ...(url ? [{ tagName: "link" as const, rel: "canonical", href: url }] : []),
   ];
 }

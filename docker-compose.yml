@@ -109,6 +109,7 @@ services:
     environment:
       VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
       VITE_PROXY_TARGET: ${VITE_PROXY_TARGET:-http://backend:8000}
+      VITE_SITE_URL: ${VITE_SITE_URL:-http://localhost:5173}
     volumes:
       - ./frontend:/app:cached
       - /app/node_modules

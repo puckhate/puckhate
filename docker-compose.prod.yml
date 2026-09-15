@@ -45,6 +45,8 @@ services:
       context: ./
       dockerfile: Dockerfile
       target: app
+      args:
+        VITE_SITE_URL: ${SITE_URL:-https://puckhate.com}
     restart: unless-stopped
     command: >
       sh -c "uv run python manage.py migrate --noinput &&

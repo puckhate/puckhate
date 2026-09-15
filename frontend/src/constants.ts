@@ -71,6 +71,7 @@ const CONSTANTS = {
   },
   META,
   ROUTES,
+  SITE_URL: (import.meta.env.VITE_SITE_URL ?? "").replace(/\/+$/, ""),
   SOCIAL: {
     bluesky: "https://bsky.app/profile/puckhate.com",
     instagram: "https://www.instagram.com/puckhate",

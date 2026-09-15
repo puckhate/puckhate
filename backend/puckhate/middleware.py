@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse, HttpResponse, HttpResponsePermanentRedirect
 from django.urls import Resolver404, resolve
 
 
@@ -25,7 +25,7 @@ class SPAFallbackMiddleware:
             try:
                 resolve(request.path_info)
             except Resolver404:
-                return self._spa_response(request.path_info)
+                return self._spa_response(request)
         return response
 
     @staticmethod
@@ -42,9 +42,25 @@ class SPAFallbackMiddleware:
             return None
         return candidate if candidate.is_file() else None
 
+    @staticmethod
+    def _canonical_path(path_info):
+        """Collapse a request path to a slash-free form."""
+        return "/" + path_info.strip("/")
+
     @classmethod
-    def _spa_response(cls, path_info):
+    def _spa_response(cls, request):
         """Serve the SPA as an HTTPResponse"""
+        path_info = request.path_info
+
+        # /about/ and /about answer with the same document.
+        # redirect to the cannonical version with a trailing slash.
+        canonical = cls._canonical_path(path_info)
+        if canonical != path_info and cls._prerendered_index_html(canonical):
+            query = request.META.get("QUERY_STRING")
+            return HttpResponsePermanentRedirect(
+                f"{canonical}?{query}" if query else canonical
+            )
+
         prerendered = cls._prerendered_index_html(path_info)
         if prerendered is not None:
             return cls._html(prerendered, 200)

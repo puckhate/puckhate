@@ -116,10 +116,32 @@ class SPAFallbackTests(SPABuildMixin, ApiTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("route:/", self.body(response))
 
-    def test_trailing_slash_resolves_to_the_same_route(self):
+    def test_trailing_slash_redirects_to_the_canonical_path(self):
+        """One page must not answer at two URLs."""
         response = self.client.get("/about/")
-        self.assertEqual(response.status_code, 200)
-        self.assertIn("route:/about", self.body(response))
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response["Location"], "/about")
+
+    def test_redirect_keeps_the_query_string(self):
+        """Share links carry tracking parameters worth preserving."""
+        response = self.client.get("/about/?utm_source=bsky")
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response["Location"], "/about?utm_source=bsky")
+
+    def test_canonical_path_never_yields_a_protocol_relative_url(self):
+        """A Location of //evil.test would send visitors to another host."""
+        for path in ("//evil.test", "/about/", "//about//", "/"):
+            with self.subTest(path=path):
+                canonical = SPAFallbackMiddleware._canonical_path(path)
+                self.assertTrue(canonical.startswith("/"))
+                self.assertFalse(canonical.startswith("//"))
+        self.assertEqual(SPAFallbackMiddleware._canonical_path("//about//"), "/about")
+
+    def test_unknown_path_with_a_trailing_slash_is_not_redirected(self):
+        """Redirecting into a second 404 helps no one."""
+        response = self.client.get("/wp-admin/")
+        self.assertEqual(response.status_code, 404)
+        self.assertIn("spa-fallback", self.body(response))
 
     def test_unknown_path_returns_404_with_the_spa_shell(self):
         """Users still get the styled NotFoundView; crawlers get a real 404."""
