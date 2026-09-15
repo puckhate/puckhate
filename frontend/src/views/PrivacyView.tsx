@@ -1,4 +1,9 @@
 import { Container, H1, H2 } from "@components";
+import constants from "@constants";
+import { routeMeta } from "@utils/meta";
+import type { MetaFunction } from "react-router";
+
+export const meta: MetaFunction = () => routeMeta(constants.ROUTES.privacy);
 
 export default function PrivacyView(): React.ReactNode {
   return (

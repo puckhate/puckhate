@@ -6,9 +6,13 @@ import constants from "@constants";
 import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import type { Donation, PaginatedResults, SiteStats } from "@types";
 import { convertFromUSD } from "@utils/currency";
+import { routeMeta } from "@utils/meta";
 import { formatAsCurrency, formatAsNumber } from "@utils/text";
+import type { MetaFunction } from "react-router";
 
 import { DonorCard, EmptyStatCard, StatCard } from "./components";
+
+export const meta: MetaFunction = () => routeMeta(constants.ROUTES.stats);
 
 export default function Stats(): React.ReactNode {
   const [stats, setStats] = useState<SiteStats | null>(null);

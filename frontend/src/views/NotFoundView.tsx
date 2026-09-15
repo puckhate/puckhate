@@ -1,6 +1,9 @@
 import { Container, H1 } from "@components";
 import constants from "@constants";
-import { Link } from "react-router";
+import { routeMeta } from "@utils/meta";
+import { Link, type MetaFunction } from "react-router";
+
+export const meta: MetaFunction = () => routeMeta("*");
 
 export default function NotFoundView(): React.ReactNode {
   return (

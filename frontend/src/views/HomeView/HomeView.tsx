@@ -6,10 +6,14 @@ import constants from "@constants";
 import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import type { Charity, SiteStats } from "@types";
 import { convertFromUSD } from "@utils/currency";
+import { routeMeta } from "@utils/meta";
+import type { MetaFunction } from "react-router";
 
 import Hero from "./components/Hero";
 import LogDonation from "./components/LogDonation";
 import Playbook from "./components/Playbook";
+
+export const meta: MetaFunction = () => routeMeta(constants.ROUTES.home);
 
 const sectionPadding = "py-6 md:py-12 xl:py-20";
 

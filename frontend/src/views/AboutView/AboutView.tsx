@@ -1,6 +1,11 @@
 import { Container, H1, H2 } from "@components";
+import constants from "@constants";
+import { routeMeta } from "@utils/meta";
+import type { MetaFunction } from "react-router";
 
 import FAQ from "./components/FAQ";
+
+export const meta: MetaFunction = () => routeMeta(constants.ROUTES.about);
 
 interface GamePlanItem {
   title: string;

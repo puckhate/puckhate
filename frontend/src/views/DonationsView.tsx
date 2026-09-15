@@ -17,9 +17,13 @@ import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { useExchangeRate } from "@providers/ExchangeRateProvider";
 import type { Donation, PaginatedResults } from "@types";
 import { convertFromUSD } from "@utils/currency";
+import { routeMeta } from "@utils/meta";
 import { formatAsCurrency, formatAsLocaleDate } from "@utils/text";
 import { isCancel } from "axios";
 import Skeleton from "react-loading-skeleton";
+import type { MetaFunction } from "react-router";
+
+export const meta: MetaFunction = () => routeMeta(constants.ROUTES.donations);
 
 const PAGE_SIZE = 20;
 

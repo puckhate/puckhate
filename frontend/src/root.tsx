@@ -1,6 +1,8 @@
 import { StrictMode } from "react";
 
 import { ExchangeRateProvider } from "@providers/ExchangeRateProvider";
+import { asset } from "@utils/asset";
+import { routeMeta } from "@utils/meta";
 import ErrorView from "@views/ErrorView";
 import { SkeletonTheme } from "react-loading-skeleton";
 import {
@@ -15,29 +17,8 @@ import {
 
 import "./index.css";
 
-const DESCRIPTION =
-  "Every goal #77 Britta Curl-Salemme scores becomes a donation to support the trans community.";
-
-// Asset file path depends on the Vite base URL - /static/ in a build, / in dev
-const asset = (file: string) => `${import.meta.env.BASE_URL}${file}`;
-
-export const meta: MetaFunction = () => [
-  { title: "PUCKHATE!" },
-  { name: "description", content: DESCRIPTION },
-  { name: "robots", content: "index, follow" },
-  { property: "og:title", content: "PUCKHATE!" },
-  { property: "og:description", content: DESCRIPTION },
-  { property: "og:image", content: asset("og.png") },
-  { property: "og:image:width", content: "1200" },
-  { property: "og:image:height", content: "630" },
-  { property: "og:url", content: "https://puckhate.com" },
-  { property: "og:type", content: "website" },
-  { property: "og:site_name", content: "PUCKHATE!" },
-  { name: "twitter:card", content: "summary_large_image" },
-  { name: "twitter:title", content: "PUCKHATE!" },
-  { name: "twitter:description", content: DESCRIPTION },
-  { name: "twitter:image", content: asset("og.png") },
-];
+// All views delcare their own meta - so only handle the fallback here
+export const meta: MetaFunction = () => routeMeta("*");
 
 export const links: LinksFunction = () => [
   // Montserrat renders the headline

@@ -15,8 +15,12 @@ import {
 import constants from "@constants";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import type { Charity } from "@types";
+import { routeMeta } from "@utils/meta";
 import { isCancel } from "axios";
 import Skeleton from "react-loading-skeleton";
+import type { MetaFunction } from "react-router";
+
+export const meta: MetaFunction = () => routeMeta(constants.ROUTES.charities);
 
 export default function CharitiesView(): React.ReactNode {
   const [charities, setCharities] = useState<Charity[]>([]);
