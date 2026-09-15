@@ -40,6 +40,14 @@ export const meta: MetaFunction = () => [
 ];
 
 export const links: LinksFunction = () => [
+  // Montserrat renders the headline
+  {
+    rel: "preload",
+    href: asset("fonts/montserrat-latin-v1.woff2"),
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  },
   { rel: "manifest", href: asset("site.webmanifest") },
   {
     rel: "icon",
