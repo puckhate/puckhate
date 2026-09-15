@@ -20,7 +20,7 @@ const META: Record<RoutePath, RouteMeta> = {
   "/": {
     title: "PUCKHATE!",
     description:
-      "A fan-run donation tracker: every goal #77 Britta Curl-Salemme scores becomes a donation supporting the trans community.",
+      "Every goal #77 Britta Curl-Salemme scores becomes a donation supporting the trans community. PUCKHATE! is a fan-run donation tracker.",
   },
   "/about": {
     title: "The Game Plan | PUCKHATE!",
@@ -69,6 +69,7 @@ const CONSTANTS = {
     RECEIPTS: `${import.meta.env.VITE_API_BASE_URL}/receipts/`,
     STATS: `${import.meta.env.VITE_API_BASE_URL}/stats/`,
   },
+  EMAIL: "hello@puckhate.com",
   META,
   ROUTES,
   SITE_URL: (import.meta.env.VITE_SITE_URL ?? "").replace(/\/+$/, ""),

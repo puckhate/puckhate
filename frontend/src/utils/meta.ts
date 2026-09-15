@@ -13,6 +13,28 @@ function absoluteUrl(path: RoutePath): string | null {
 }
 
 /*
+ * Sitewide schema.org Organization block.
+ */
+function organizationLd(): MetaDescriptor[] {
+  const url = absoluteUrl("/");
+  if (!url) return [];
+  return [
+    {
+      "script:ld+json": {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "PUCKHATE!",
+        url,
+        logo: `${constants.SITE_URL}${asset("android-chrome-512x512.png")}`,
+        description: constants.META["/"].description,
+        email: constants.EMAIL,
+        sameAs: Object.values(constants.SOCIAL),
+      },
+    },
+  ];
+}
+
+/*
  * Build the complete head metadata for a route.
  *
  * React Router renders only the deepest route module that exports `meta`, so
@@ -38,5 +60,6 @@ export function routeMeta(path: RoutePath): MetaDescriptor[] {
     { name: "twitter:description", content: description },
     { name: "twitter:image", content: asset("og.png") },
     ...(url ? [{ tagName: "link" as const, rel: "canonical", href: url }] : []),
+    ...organizationLd(),
   ];
 }

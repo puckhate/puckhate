@@ -23,6 +23,6 @@ export default defineConfig(({ command }) => ({
     },
   },
   build: {
-    sourcemap: "hidden",
+    sourcemap: command !== "build",
   },
 }));
