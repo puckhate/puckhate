@@ -1,11 +1,28 @@
 import { Container, H1, H2 } from "@components";
 import constants from "@constants";
 import { routeMeta } from "@utils/meta";
+import { nodeToText } from "@utils/text";
 import type { MetaFunction } from "react-router";
 
-import FAQ from "./components/FAQ";
+import FAQ, { FAQItems } from "./components/FAQ";
 
-export const meta: MetaFunction = () => routeMeta(constants.ROUTES.about);
+export const meta: MetaFunction = () => [
+  ...routeMeta(constants.ROUTES.about),
+  {
+    "script:ld+json": {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: FAQItems.map(({ question, answer }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: nodeToText(answer),
+        },
+      })),
+    },
+  },
+];
 
 interface GamePlanItem {
   title: string;

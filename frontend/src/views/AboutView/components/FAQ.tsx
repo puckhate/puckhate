@@ -1,17 +1,12 @@
 import { Container, H1, H2 } from "@components";
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-} from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
-interface FAQItem {
+export interface FAQItem {
   question: string;
   answer: React.ReactNode;
 }
 
-const FAQItems: FAQItem[] = [
+export const FAQItems: FAQItem[] = [
   {
     question: "Is this the best approach?",
     answer: (
@@ -33,7 +28,7 @@ const FAQItems: FAQItem[] = [
         voices heard. Regardless of the impact on the league, at least this
         method of protest puts money into the organizations that fight for
         inclusion on a daily basis, and we think that matters. There may not be
-        one right approach, but we beleive that this method of protest is
+        one right approach, but we believe that this method of protest is
         constructive.
       </>
     ),
@@ -106,22 +101,16 @@ export default function FAQ() {
         </header>
         <section>
           {FAQItems.map((faq) => (
-            <Disclosure
-              as="div"
+            <details
               key={faq.question}
-              className="border-b-border-dark mb-3 pb-3 not-last:border-b"
+              className="faq-answer border-b-border-dark group mb-3 pb-3 not-last:border-b"
             >
-              <DisclosureButton className="group justify-items-between flex w-full items-center justify-between gap-2 text-left">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-2 text-left [&::-webkit-details-marker]:hidden">
                 <H2>{faq.question}</H2>
-                <ChevronDownIcon className="block size-5 group-data-open:rotate-180" />
-              </DisclosureButton>
-              <DisclosurePanel
-                transition
-                className="text-muted mt-4 origin-top transition duration-200 ease-out data-closed:-translate-y-6 data-closed:opacity-0"
-              >
-                {faq.answer}
-              </DisclosurePanel>
-            </Disclosure>
+                <ChevronDownIcon className="block size-5 group-open:rotate-180" />
+              </summary>
+              <div className="text-muted mt-4">{faq.answer}</div>
+            </details>
           ))}
         </section>
       </article>

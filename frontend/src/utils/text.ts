@@ -1,3 +1,5 @@
+import { isValidElement } from "react";
+
 import type { LocaleCurrency } from "@utils/currency";
 
 /**
@@ -100,4 +102,35 @@ export function toTitleCase(value?: string): string {
     .split(" ")
     .map((val) => val.charAt(0).toUpperCase() + val.slice(1))
     .join(" ");
+}
+
+/**
+ * Flatten a React node to plain text for machine-readable output
+ * @param node - any renderable React node
+ * @returns - text content, with `<br />` folded into paragraph breaks
+ */
+export function nodeToText(node: React.ReactNode): string {
+  const walk = (n: React.ReactNode): string => {
+    if (n === null || n === undefined || typeof n === "boolean") {
+      return "";
+    }
+    if (typeof n === "string" || typeof n === "number") {
+      return String(n);
+    }
+    if (Array.isArray(n)) {
+      return n.map(walk).join("");
+    }
+    if (isValidElement(n)) {
+      if (n.type === "br") {
+        return "\n";
+      }
+      return walk((n.props as { children?: React.ReactNode }).children);
+    }
+    return "";
+  };
+
+  return walk(node)
+    .replace(/[^\S\n]+/g, " ")
+    .replace(/\s*\n\s*/g, "\n\n")
+    .trim();
 }

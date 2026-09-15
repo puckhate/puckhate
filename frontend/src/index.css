@@ -196,6 +196,25 @@
 }
 
 @layer components {
+  .faq-answer {
+    interpolate-size: allow-keywords;
+  }
+
+  .faq-answer::details-content {
+    block-size: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition-property: block-size, content-visibility, opacity;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+    transition-behavior: allow-discrete;
+  }
+
+  .faq-answer[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+
   .link {
     @apply text-heading-blue underline underline-offset-2 outline-0;
     @apply hover:text-sky-aqua-100;
